@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { Ontology } from '@/lib/types'
-import { PlusIcon, BoxIcon, NetworkIcon, TrashIcon, ArrowRightIcon } from 'lucide-react'
+import { PlusIcon, BoxIcon, NetworkIcon, TrashIcon, ArrowRightIcon, UploadIcon } from 'lucide-react'
+import { UploadOntologyModal } from './UploadOntologyModal'
 
 interface Props {
   initialOntologies: Omit<Ontology, 'nodes' | 'edges'>[]
@@ -23,6 +24,7 @@ export function OntologyHome({ initialOntologies }: Props) {
   const router = useRouter()
   const [ontologies, setOntologies] = useState(initialOntologies)
   const [creating, setCreating] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [form, setForm] = useState({ name: '', description: '', domain: '' })
   const [deleting, setDeleting] = useState<string | null>(null)
 
@@ -70,20 +72,36 @@ export function OntologyHome({ initialOntologies }: Props) {
             </p>
           </div>
         </div>
-        <button
-          onClick={() => setCreating(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-all"
-          style={{
-            background: 'var(--accent-dim)',
-            border: '1px solid var(--accent)',
-            color: 'var(--accent)',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(245,158,11,0.2)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'var(--accent-dim)')}
-        >
-          <PlusIcon size={14} />
-          New Ontology
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setUploading(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-all"
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              color: 'var(--text-muted)',
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border2)'; (e.currentTarget as HTMLElement).style.color = 'var(--text)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)'; (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)' }}
+          >
+            <UploadIcon size={14} />
+            Upload
+          </button>
+          <button
+            onClick={() => setCreating(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-all"
+            style={{
+              background: 'var(--accent-dim)',
+              border: '1px solid var(--accent)',
+              color: 'var(--accent)',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(245,158,11,0.2)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'var(--accent-dim)')}
+          >
+            <PlusIcon size={14} />
+            New Ontology
+          </button>
+        </div>
       </header>
 
       {/* Body */}
@@ -190,6 +208,9 @@ export function OntologyHome({ initialOntologies }: Props) {
           </>
         )}
       </div>
+
+      {/* Upload modal */}
+      {uploading && <UploadOntologyModal onClose={() => setUploading(false)} />}
 
       {/* Create modal */}
       {creating && (
