@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { getOntology } from '@/lib/storage'
 import { notFound } from 'next/navigation'
 import { OntologyEditor } from '@/components/OntologyEditor'
@@ -8,5 +9,9 @@ export default async function OntologyPage({ params }: { params: Promise<{ id: s
   const { id } = await params
   const ontology = getOntology(id)
   if (!ontology) notFound()
-  return <OntologyEditor initialOntology={ontology} />
+  return (
+    <Suspense>
+      <OntologyEditor initialOntology={ontology} />
+    </Suspense>
+  )
 }

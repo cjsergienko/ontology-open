@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useRef, useState } from 'react'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import {
   ReactFlow,
   Background,
@@ -70,17 +71,49 @@ const NODE_TYPE_OPTIONS: { type: NodeType; icon: React.ReactNode; desc: string }
 const EDGE_TYPE_OPTIONS: EdgeType[] = ['is_a', 'has_property', 'has_value', 'relates_to', 'part_of', 'constrains', 'instance_of']
 
 export function OntologyEditor({ initialOntology }: Props) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+
   const [ontology, setOntology] = useState(initialOntology)
   const [nodes, setNodes, onNodesChange] = useNodesState(toFlowNodes(initialOntology.nodes))
   const [edges, setEdges, onEdgesChange] = useEdgesState(toFlowEdges(initialOntology.edges))
-  const [selectedNode, setSelectedNode] = useState<OntologyNode | null>(null)
-  const [selectedEdge, setSelectedEdge] = useState<OntologyEdge | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-  const [previewOpen, setPreviewOpen] = useState(false)
   const [addEdgeType, setAddEdgeType] = useState<EdgeType>('relates_to')
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   const [reactFlowInstance, setReactFlowInstance] = useState<ReturnType<typeof import('@xyflow/react').useReactFlow> | null>(null)
+
+  // URL-derived UI state
+  const previewOpen = searchParams.get('panel') === 'preview'
+  const selectedNodeId = searchParams.get('node')
+  const selectedEdgeId = searchParams.get('edge')
+
+  const selectedNode = selectedNodeId
+    ? (nodes.find(n => n.id === selectedNodeId)?.data as unknown as OntologyNode) ?? null
+    : null
+  const selectedEdge = selectedEdgeId
+    ? (() => {
+        const e = edges.find(e => e.id === selectedEdgeId)
+        if (!e) return null
+        return {
+          id: e.id, source: e.source, target: e.target,
+          label: (e.data as { label: string })?.label ?? String(e.label ?? ''),
+          type: (e.data as { type: EdgeType })?.type ?? 'relates_to',
+        } as OntologyEdge
+      })()
+    : null
+
+  // Update one or more URL params without adding history entries
+  const setParams = useCallback((updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString())
+    for (const [k, v] of Object.entries(updates)) {
+      if (v === null) params.delete(k)
+      else params.set(k, v)
+    }
+    const qs = params.toString()
+    router.replace(`${pathname}${qs ? `?${qs}` : ''}`)
+  }, [searchParams, pathname, router])
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -123,47 +156,32 @@ export function OntologyEditor({ initialOntology }: Props) {
   }, [setNodes, reactFlowWrapper])
 
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
-    setSelectedNode(node.data as unknown as OntologyNode)
-    setSelectedEdge(null)
-  }, [])
+    setParams({ node: node.id, edge: null })
+  }, [setParams])
 
   const onEdgeClick = useCallback((_: React.MouseEvent, edge: Edge) => {
-    setSelectedEdge({
-      id: edge.id,
-      source: edge.source,
-      target: edge.target,
-      label: (edge.data as { label: string })?.label ?? String(edge.label ?? ''),
-      type: (edge.data as { type: EdgeType })?.type ?? 'relates_to',
-    })
-    setSelectedNode(null)
-  }, [])
+    setParams({ edge: edge.id, node: null })
+  }, [setParams])
 
   const onPaneClick = useCallback(() => {
-    setSelectedNode(null)
-    setSelectedEdge(null)
-  }, [])
+    setParams({ node: null, edge: null })
+  }, [setParams])
 
   const updateNode = useCallback((updated: OntologyNode) => {
-    setNodes(ns =>
-      ns.map(n =>
-        n.id === updated.id
-          ? { ...n, data: { ...updated } }
-          : n,
-      ),
-    )
-    setSelectedNode(updated)
+    setNodes(ns => ns.map(n => n.id === updated.id ? { ...n, data: { ...updated } } : n))
+    // node stays selected; URL unchanged
   }, [setNodes])
 
   const deleteNode = useCallback((id: string) => {
     setNodes(ns => ns.filter(n => n.id !== id))
     setEdges(es => es.filter(e => e.source !== id && e.target !== id))
-    setSelectedNode(null)
-  }, [setNodes, setEdges])
+    setParams({ node: null })
+  }, [setNodes, setEdges, setParams])
 
   const deleteEdge = useCallback((id: string) => {
     setEdges(es => es.filter(e => e.id !== id))
-    setSelectedEdge(null)
-  }, [setEdges])
+    setParams({ edge: null })
+  }, [setEdges, setParams])
 
   const save = useCallback(async () => {
     setSaving(true)
@@ -249,7 +267,7 @@ export function OntologyEditor({ initialOntology }: Props) {
             {nodes.length} nodes · {edges.length} edges
           </span>
           <button
-            onClick={() => setPreviewOpen(true)}
+            onClick={() => setParams({ panel: 'preview' })}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-all"
             style={{ background: 'var(--accent-dim)', border: '1px solid var(--accent)', color: 'var(--accent)' }}
           >
@@ -414,7 +432,7 @@ export function OntologyEditor({ initialOntology }: Props) {
         <JDPreviewPanel
           ontologyId={ontology.id}
           ontologyName={ontology.name}
-          onClose={() => setPreviewOpen(false)}
+          onClose={() => setParams({ panel: null })}
         />
       )}
     </div>

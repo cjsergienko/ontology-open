@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import type { Ontology } from '@/lib/types'
 import { PlusIcon, BoxIcon, NetworkIcon, TrashIcon, ArrowRightIcon, UploadIcon } from 'lucide-react'
 import { UploadOntologyModal } from './UploadOntologyModal'
@@ -22,11 +22,18 @@ const DOMAIN_COLORS: Record<string, string> = {
 
 export function OntologyHome({ initialOntologies }: Props) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
   const [ontologies, setOntologies] = useState(initialOntologies)
-  const [creating, setCreating] = useState(false)
-  const [uploading, setUploading] = useState(false)
   const [form, setForm] = useState({ name: '', description: '', domain: '' })
   const [deleting, setDeleting] = useState<string | null>(null)
+
+  const modal = searchParams.get('modal')
+  const creating = modal === 'create'
+  const uploading = modal === 'upload'
+
+  function openModal(name: string) { router.push(`${pathname}?modal=${name}`) }
+  function closeModal() { router.replace(pathname) }
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault()
@@ -74,7 +81,7 @@ export function OntologyHome({ initialOntologies }: Props) {
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setUploading(true)}
+            onClick={() => openModal('upload')}
             className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-all"
             style={{
               background: 'var(--surface)',
@@ -88,7 +95,7 @@ export function OntologyHome({ initialOntologies }: Props) {
             Upload
           </button>
           <button
-            onClick={() => setCreating(true)}
+            onClick={() => openModal('create')}
             className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-all"
             style={{
               background: 'var(--accent-dim)',
@@ -120,7 +127,7 @@ export function OntologyHome({ initialOntologies }: Props) {
               </p>
             </div>
             <button
-              onClick={() => setCreating(true)}
+              onClick={() => openModal('create')}
               className="flex items-center gap-2 px-5 py-2.5 rounded text-sm font-medium"
               style={{
                 background: 'var(--accent)',
@@ -210,14 +217,14 @@ export function OntologyHome({ initialOntologies }: Props) {
       </div>
 
       {/* Upload modal */}
-      {uploading && <UploadOntologyModal onClose={() => setUploading(false)} />}
+      {uploading && <UploadOntologyModal onClose={closeModal} />}
 
       {/* Create modal */}
       {creating && (
         <div
           className="fixed inset-0 flex items-center justify-center z-50"
           style={{ background: 'rgba(8,12,20,0.85)' }}
-          onClick={(e) => e.target === e.currentTarget && setCreating(false)}
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
           <div
             className="rounded-xl p-8 w-full max-w-md animate-fade-in"
@@ -280,7 +287,7 @@ export function OntologyHome({ initialOntologies }: Props) {
               <div className="flex gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setCreating(false)}
+                  onClick={() => closeModal()}
                   className="flex-1 py-2.5 rounded text-sm"
                   style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
                 >
