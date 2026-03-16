@@ -23,9 +23,10 @@ import { NodePanel } from './NodePanel'
 import {
   SaveIcon, ArrowLeftIcon, PlusIcon, NetworkIcon,
   BoxIcon, LinkIcon, LayersIcon, ZapIcon, CrownIcon, FilterIcon,
-  DownloadIcon,
+  DownloadIcon, PlayIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+import { JDPreviewPanel } from './JDPreviewPanel'
 
 const nodeTypes: NodeTypes = {
   ontology: OntologyNodeComponent,
@@ -76,6 +77,7 @@ export function OntologyEditor({ initialOntology }: Props) {
   const [selectedEdge, setSelectedEdge] = useState<OntologyEdge | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [previewOpen, setPreviewOpen] = useState(false)
   const [addEdgeType, setAddEdgeType] = useState<EdgeType>('relates_to')
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   const [reactFlowInstance, setReactFlowInstance] = useState<ReturnType<typeof import('@xyflow/react').useReactFlow> | null>(null)
@@ -247,6 +249,14 @@ export function OntologyEditor({ initialOntology }: Props) {
             {nodes.length} nodes · {edges.length} edges
           </span>
           <button
+            onClick={() => setPreviewOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-all"
+            style={{ background: 'var(--accent-dim)', border: '1px solid var(--accent)', color: 'var(--accent)' }}
+          >
+            <PlayIcon size={11} />
+            Preview JD
+          </button>
+          <button
             onClick={exportJSON}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs transition-all"
             style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
@@ -399,6 +409,14 @@ export function OntologyEditor({ initialOntology }: Props) {
           />
         )}
       </div>
+
+      {previewOpen && (
+        <JDPreviewPanel
+          ontologyId={ontology.id}
+          ontologyName={ontology.name}
+          onClose={() => setPreviewOpen(false)}
+        />
+      )}
     </div>
   )
 }
