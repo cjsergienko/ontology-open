@@ -272,7 +272,7 @@ export function OntologyEditor({ initialOntology }: Props) {
             style={{ background: 'var(--accent-dim)', border: '1px solid var(--accent)', color: 'var(--accent)' }}
           >
             <PlayIcon size={11} />
-            Preview JD
+            Preview
           </button>
           <button
             onClick={exportJSON}

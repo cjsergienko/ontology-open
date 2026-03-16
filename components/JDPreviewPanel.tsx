@@ -3,45 +3,38 @@
 import { useEffect, useRef, useState } from 'react'
 import { XIcon, PlayIcon, AlertCircleIcon, ClockIcon } from 'lucide-react'
 
-interface UsageStat {
-  stage: string
-  model: string
+interface NodeCoverageItem {
+  label: string
+  type: string
+}
+
+interface NodeCoverage {
+  total: number
+  mentioned: number
+  pct: number
+  nodes: NodeCoverageItem[]
+}
+
+interface Usage {
   input_tokens: number
   output_tokens: number
   cache_read_tokens: number
   cache_write_tokens: number
-  duration_ms: number
   cost_usd: number
 }
 
 interface PreviewResult {
-  jd_text: string
-  jd_output: Record<string, unknown>
-  dimension_assignments: Record<string, unknown>
-  usage_stats: UsageStat[]
-  pipeline_duration_ms: number
+  output: string
+  duration_ms: number
+  usage: Usage
+  node_coverage: NodeCoverage
+  model: string
 }
 
 interface Props {
   ontologyId: string
   ontologyName: string
   onClose: () => void
-}
-
-const STAGE_LABELS: Record<string, string> = {
-  strategy: 'Strategy (CPO)',
-  router: 'Router',
-  role_identity: 'Role Identity',
-  culture_fit: 'Culture Fit',
-  technical_reqs: 'Technical Reqs',
-  value_prop: 'Value Prop',
-  messaging: 'Messaging',
-  compliance: 'Compliance',
-  combiner: 'Combiner',
-}
-
-function isHaiku(model: string) {
-  return model.includes('haiku')
 }
 
 function fmt(n: number): string {
@@ -55,7 +48,7 @@ function fmtMs(ms: number): string {
 }
 
 function fmtCost(usd: number): string {
-  if (usd < 0.001) return `$${(usd * 1000).toFixed(3)}m` // milli-dollars
+  if (usd < 0.001) return `$${(usd * 1000).toFixed(3)}m`
   return `$${usd.toFixed(4)}`
 }
 
@@ -79,15 +72,25 @@ function ElapsedTimer({ running }: { running: boolean }) {
   )
 }
 
+const NODE_TYPE_COLORS: Record<string, string> = {
+  class: '#3b82f6',
+  dimension: '#10b981',
+  property: '#8b5cf6',
+  concept: '#f59e0b',
+  entity: '#06b6d4',
+  default: '#64748b',
+}
+
+function nodeColor(type: string): string {
+  return NODE_TYPE_COLORS[type.toLowerCase()] ?? NODE_TYPE_COLORS.default
+}
+
 export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
-  const [prompt, setPrompt] = useState(
-    'Generate a senior software engineer job description for a fast-growing B2B SaaS startup building developer tools. The role is fully remote.'
-  )
-  const [companyName, setCompanyName] = useState('')
+  const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<PreviewResult | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'jd' | 'dimensions' | 'usage'>('jd')
+  const [activeTab, setActiveTab] = useState<'output' | 'coverage' | 'usage'>('output')
 
   const generate = async () => {
     setLoading(true)
@@ -97,10 +100,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
       const resp = await fetch(`/api/ontologies/${ontologyId}/preview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt,
-          company_context: companyName ? { name: companyName } : {},
-        }),
+        body: JSON.stringify({ prompt }),
       })
       if (!resp.ok) {
         const err = await resp.json()
@@ -108,7 +108,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
       }
       const data = await resp.json()
       setResult(data)
-      setActiveTab('jd')
+      setActiveTab('output')
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     } finally {
@@ -116,19 +116,9 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
     }
   }
 
-  // Usage totals
-  const usage = result?.usage_stats ?? []
-  const totalInput = usage.reduce((s, u) => s + u.input_tokens, 0)
-  const totalOutput = usage.reduce((s, u) => s + u.output_tokens, 0)
-  const totalCacheRead = usage.reduce((s, u) => s + u.cache_read_tokens, 0)
-  const totalCacheWrite = usage.reduce((s, u) => s + u.cache_write_tokens, 0)
-  const totalCost = usage.reduce((s, u) => s + u.cost_usd, 0)
-  const totalTokens = totalInput + totalOutput
-  const jdWords = result?.jd_text ? result.jd_text.split(/\s+/).filter(Boolean).length : 0
-  const compressionRatio = totalInput > 0 ? (totalOutput / totalInput).toFixed(2) : null
-  const cacheHitPct = (totalInput + totalCacheRead) > 0
-    ? Math.round((totalCacheRead / (totalInput + totalCacheRead)) * 100)
-    : 0
+  const u = result?.usage
+  const totalTokens = u ? u.input_tokens + u.output_tokens : 0
+  const outputWords = result?.output ? result.output.split(/\s+/).filter(Boolean).length : 0
 
   return (
     <div
@@ -151,7 +141,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
             <div className="flex items-center gap-2">
               <PlayIcon size={14} style={{ color: 'var(--accent)' }} />
               <span className="font-display font-semibold text-sm" style={{ color: 'var(--text)' }}>
-                JD Preview
+                Preview
               </span>
             </div>
             <p className="text-xs mt-0.5" style={{ color: 'var(--text-dim)' }}>{ontologyName}</p>
@@ -168,32 +158,26 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
         </div>
 
         <div className="flex flex-1 overflow-hidden">
-          {/* Left: input + scores */}
+          {/* Left: input + quick stats */}
           <div
             className="flex flex-col overflow-y-auto shrink-0"
             style={{ width: 296, borderRight: '1px solid var(--border)', padding: '16px' }}
           >
-            <label className="text-xs font-medium mb-1.5" style={{ color: 'var(--text-dim)' }}>ROLE PROMPT</label>
+            <label className="text-xs font-medium mb-1.5" style={{ color: 'var(--text-dim)' }}>PROMPT</label>
             <textarea
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
-              rows={5}
-              className="w-full text-xs rounded px-3 py-2 resize-none mb-3 outline-none"
+              rows={8}
+              className="w-full text-xs rounded px-3 py-2 resize-none mb-4 outline-none"
+              placeholder="Enter any prompt to run through this ontology…"
               style={{
                 background: 'var(--surface)',
                 border: '1px solid var(--border)',
                 color: 'var(--text)',
                 fontFamily: 'inherit',
               }}
-            />
-
-            <label className="text-xs font-medium mb-1.5" style={{ color: 'var(--text-dim)' }}>COMPANY NAME (optional)</label>
-            <input
-              value={companyName}
-              onChange={e => setCompanyName(e.target.value)}
-              className="w-full text-xs rounded px-3 py-2 mb-4 outline-none"
-              style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}
-              placeholder="e.g. Acme Corp"
+              onFocus={e => (e.target.style.borderColor = 'var(--accent)')}
+              onBlur={e => (e.target.style.borderColor = 'var(--border)')}
             />
 
             <button
@@ -216,7 +200,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                   <ElapsedTimer running={loading} />
                 </>
               ) : (
-                <><PlayIcon size={11} /> Generate JD</>
+                <><PlayIcon size={11} /> Generate</>
               )}
             </button>
 
@@ -234,20 +218,39 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
             {result && (
               <div className="mt-2 space-y-1.5">
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: 'var(--text-muted)' }}>JD words</span>
-                  <span className="font-mono" style={{ color: 'var(--text)' }}>{fmt(jdWords)}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>Words</span>
+                  <span className="font-mono" style={{ color: 'var(--text)' }}>{fmt(outputWords)}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: 'var(--text-muted)' }}>Total time</span>
-                  <span className="font-mono" style={{ color: 'var(--text)' }}>{fmtMs(result.pipeline_duration_ms)}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>Time</span>
+                  <span className="font-mono" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: 'var(--text-muted)' }}>Total cost</span>
-                  <span className="font-mono" style={{ color: 'var(--accent)' }}>{fmtCost(totalCost)}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>Cost</span>
+                  <span className="font-mono" style={{ color: 'var(--accent)' }}>{fmtCost(result.usage.cost_usd)}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: 'var(--text-muted)' }}>Total tokens</span>
+                  <span style={{ color: 'var(--text-muted)' }}>Tokens</span>
                   <span className="font-mono" style={{ color: 'var(--text)' }}>{fmt(totalTokens)}</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span style={{ color: 'var(--text-muted)' }}>Node coverage</span>
+                  <span className="font-mono" style={{ color: result.node_coverage.pct >= 60 ? '#10b981' : result.node_coverage.pct >= 30 ? '#f59e0b' : 'var(--text-muted)' }}>
+                    {result.node_coverage.pct}%
+                  </span>
+                </div>
+                {/* Coverage bar */}
+                <div className="h-1.5 rounded-full overflow-hidden mt-1" style={{ background: 'var(--surface2)' }}>
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{
+                      width: `${result.node_coverage.pct}%`,
+                      background: result.node_coverage.pct >= 60 ? '#10b981' : result.node_coverage.pct >= 30 ? '#f59e0b' : '#ef4444',
+                    }}
+                  />
+                </div>
+                <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
+                  {result.node_coverage.mentioned}/{result.node_coverage.total} nodes mentioned
                 </div>
               </div>
             )}
@@ -257,7 +260,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
           <div className="flex-1 flex flex-col overflow-hidden">
             {result && (
               <div className="flex items-center gap-1 px-5 pt-3 pb-0 shrink-0" style={{ borderBottom: '1px solid var(--border)' }}>
-                {(['jd', 'usage', 'dimensions'] as const).map(tab => (
+                {(['output', 'coverage', 'usage'] as const).map(tab => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -268,7 +271,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                       marginBottom: -1,
                     }}
                   >
-                    {tab === 'jd' ? 'Job Description' : tab === 'usage' ? '⚡ Usage & Timing' : 'Dimension Map'}
+                    {tab === 'output' ? 'Output' : tab === 'coverage' ? '🗂 Node Coverage' : '⚡ Usage'}
                   </button>
                 ))}
               </div>
@@ -278,8 +281,8 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
               {!result && !loading && (
                 <div className="h-full flex flex-col items-center justify-center" style={{ color: 'var(--text-dim)' }}>
                   <PlayIcon size={32} className="mb-3 opacity-30" />
-                  <p className="text-sm">Enter a role prompt and click Generate</p>
-                  <p className="text-xs mt-1 opacity-60">Pipeline: Strategy → Router → 5 clusters (parallel) → Combiner → Scorer</p>
+                  <p className="text-sm">Enter a prompt and click Generate</p>
+                  <p className="text-xs mt-1 opacity-60">Claude will use the ontology as structured context</p>
                 </div>
               )}
 
@@ -289,26 +292,80 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                     className="w-8 h-8 rounded-full border-2 animate-spin mb-4"
                     style={{ borderColor: 'var(--accent)', borderTopColor: 'transparent' }}
                   />
-                  <p className="text-sm mb-1">Running pipeline…</p>
-                  <p className="text-xs opacity-60">Strategy → Routing → 5 cluster agents in parallel → Combiner → Scorer</p>
+                  <p className="text-sm mb-1">Generating…</p>
+                  <p className="text-xs opacity-60">Claude is using the ontology as context</p>
                 </div>
               )}
 
-              {result && activeTab === 'jd' && (
+              {result && activeTab === 'output' && (
                 <pre className="text-xs leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text)', fontFamily: 'inherit' }}>
-                  {result.jd_text}
+                  {result.output}
                 </pre>
+              )}
+
+              {result && activeTab === 'coverage' && (
+                <div>
+                  <div className="mb-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>ONTOLOGY COVERAGE</span>
+                      <span
+                        className="text-lg font-mono font-bold"
+                        style={{ color: result.node_coverage.pct >= 60 ? '#10b981' : result.node_coverage.pct >= 30 ? '#f59e0b' : '#ef4444' }}
+                      >
+                        {result.node_coverage.pct}%
+                      </span>
+                    </div>
+                    <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--surface2)' }}>
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${result.node_coverage.pct}%`,
+                          background: result.node_coverage.pct >= 60 ? '#10b981' : result.node_coverage.pct >= 30 ? '#f59e0b' : '#ef4444',
+                        }}
+                      />
+                    </div>
+                    <p className="text-xs mt-1.5" style={{ color: 'var(--text-dim)' }}>
+                      {result.node_coverage.mentioned} of {result.node_coverage.total} ontology nodes referenced in output
+                    </p>
+                  </div>
+
+                  {result.node_coverage.nodes.length > 0 && (
+                    <div>
+                      <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>MATCHED NODES</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {result.node_coverage.nodes.map(n => (
+                          <span
+                            key={n.label}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
+                            style={{
+                              background: `${nodeColor(n.type)}18`,
+                              color: nodeColor(n.type),
+                              border: `1px solid ${nodeColor(n.type)}40`,
+                            }}
+                          >
+                            {n.label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {result.node_coverage.mentioned === 0 && (
+                    <p className="text-xs" style={{ color: 'var(--text-dim)' }}>
+                      No ontology nodes were directly referenced in the output. Try a more specific prompt.
+                    </p>
+                  )}
+                </div>
               )}
 
               {result && activeTab === 'usage' && (
                 <div>
-                  {/* Summary cards */}
-                  <div className="grid grid-cols-4 gap-3 mb-6">
+                  <div className="grid grid-cols-2 gap-3 mb-6">
                     {[
-                      { label: 'Total time', value: fmtMs(result.pipeline_duration_ms), sub: 'wall clock' },
-                      { label: 'Total cost', value: fmtCost(totalCost), sub: 'API spend', accent: true },
-                      { label: 'Total tokens', value: fmt(totalTokens), sub: `${fmt(totalInput)} in + ${fmt(totalOutput)} out` },
-                      { label: 'Cache hit', value: `${cacheHitPct}%`, sub: `${fmt(totalCacheRead)} saved tokens` },
+                      { label: 'Time', value: fmtMs(result.duration_ms), sub: 'wall clock' },
+                      { label: 'Cost', value: fmtCost(result.usage.cost_usd), sub: 'API spend', accent: true },
+                      { label: 'Input tokens', value: fmt(result.usage.input_tokens), sub: 'prompt + ontology context' },
+                      { label: 'Output tokens', value: fmt(result.usage.output_tokens), sub: 'generated response' },
                     ].map(c => (
                       <div key={c.label} className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                         <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{c.label}</div>
@@ -318,100 +375,29 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                     ))}
                   </div>
 
-                  {/* Extra metrics */}
-                  <div className="grid grid-cols-3 gap-3 mb-6">
-                    {[
-                      { label: 'JD word count', value: fmt(jdWords), sub: 'output document' },
-                      { label: 'Output/Input ratio', value: compressionRatio ?? '—', sub: 'tokens generated per input token' },
-                      { label: 'Cache writes', value: fmt(totalCacheWrite), sub: 'tokens cached for reuse' },
-                    ].map(c => (
-                      <div key={c.label} className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                        <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{c.label}</div>
-                        <div className="text-base font-mono font-bold mb-0.5" style={{ color: 'var(--text)' }}>{c.value}</div>
-                        <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>{c.sub}</div>
+                  {(result.usage.cache_read_tokens > 0 || result.usage.cache_write_tokens > 0) && (
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                      <div className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                        <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Cache read</div>
+                        <div className="text-lg font-mono font-bold mb-0.5" style={{ color: '#10b981' }}>{fmt(result.usage.cache_read_tokens)}</div>
+                        <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>tokens at 10% rate</div>
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Per-stage table */}
-                  <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>PER-STAGE BREAKDOWN</div>
-                  <div className="rounded overflow-hidden" style={{ border: '1px solid var(--border)' }}>
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
-                          {['Stage', 'Model', 'Time', 'Input tok', 'Output tok', 'Cache read', 'Cost'].map(h => (
-                            <th key={h} className="text-left px-3 py-2 font-medium" style={{ color: 'var(--text-muted)' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {usage.map((u, i) => (
-                          <tr
-                            key={i}
-                            style={{ borderBottom: i < usage.length - 1 ? '1px solid var(--border)' : 'none' }}
-                          >
-                            <td className="px-3 py-2 font-medium" style={{ color: 'var(--text)' }}>
-                              {STAGE_LABELS[u.stage] ?? u.stage}
-                            </td>
-                            <td className="px-3 py-2">
-                              <span
-                                className="px-1.5 py-0.5 rounded text-xs"
-                                style={{
-                                  background: isHaiku(u.model) ? 'rgba(139,92,246,0.15)' : 'rgba(234,179,8,0.15)',
-                                  color: isHaiku(u.model) ? '#a78bfa' : '#fbbf24',
-                                }}
-                              >
-                                {isHaiku(u.model) ? 'haiku' : 'sonnet'}
-                              </span>
-                            </td>
-                            <td className="px-3 py-2 font-mono" style={{ color: 'var(--text)' }}>{fmtMs(u.duration_ms)}</td>
-                            <td className="px-3 py-2 font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(u.input_tokens)}</td>
-                            <td className="px-3 py-2 font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(u.output_tokens)}</td>
-                            <td className="px-3 py-2 font-mono" style={{ color: u.cache_read_tokens > 0 ? '#10b981' : 'var(--text-dim)' }}>
-                              {fmt(u.cache_read_tokens)}
-                            </td>
-                            <td className="px-3 py-2 font-mono" style={{ color: 'var(--accent)' }}>{fmtCost(u.cost_usd)}</td>
-                          </tr>
-                        ))}
-                        {/* Totals row */}
-                        <tr style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
-                          <td className="px-3 py-2 font-semibold" style={{ color: 'var(--text)' }} colSpan={2}>Total</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmtMs(result.pipeline_duration_ms)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(totalInput)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(totalOutput)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: '#10b981' }}>{fmt(totalCacheRead)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--accent)' }}>{fmtCost(totalCost)}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Pricing note */}
-                  <p className="text-xs mt-3" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
-                    Pricing: Sonnet $3/$15 per MTok in/out · Haiku $0.80/$4 per MTok in/out · Cache reads at 10% of input rate
-                  </p>
-                </div>
-              )}
-
-              {result && activeTab === 'dimensions' && (
-                <div className="space-y-4">
-                  {Object.entries(result.dimension_assignments).map(([cluster, dims]) => (
-                    <div key={cluster}>
-                      <h3 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--accent)' }}>
-                        {cluster.replace(/_/g, ' ')}
-                      </h3>
-                      <div className="space-y-1">
-                        {Object.entries(dims as Record<string, unknown>).map(([dim, val]) => (
-                          <div key={dim} className="flex items-start gap-3 text-xs">
-                            <span className="shrink-0 w-40 font-mono" style={{ color: 'var(--text-muted)' }}>{dim}</span>
-                            <span style={{ color: 'var(--text)' }}>
-                              {Array.isArray(val) ? val.join(', ') : String(val)}
-                            </span>
-                          </div>
-                        ))}
+                      <div className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                        <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Cache write</div>
+                        <div className="text-lg font-mono font-bold mb-0.5" style={{ color: 'var(--text)' }}>{fmt(result.usage.cache_write_tokens)}</div>
+                        <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>tokens stored</div>
                       </div>
                     </div>
-                  ))}
+                  )}
+
+                  <div className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                    <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Model</div>
+                    <div className="text-sm font-mono" style={{ color: 'var(--text)' }}>{result.model}</div>
+                  </div>
+
+                  <p className="text-xs mt-3" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
+                    Sonnet $3/$15 per MTok in/out · Cache reads at $0.30/MTok · Cache writes at $3.75/MTok
+                  </p>
                 </div>
               )}
             </div>
