@@ -351,8 +351,8 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                           {/* Node coverage */}
                           <span className="flex items-center gap-1 font-mono" style={{
                             fontSize: 13,
-                            color: cov >= 60 ? '#10b981' : cov >= 30 ? '#f59e0b' : 'var(--text-muted)',
-                            fontWeight: 600,
+                            color: '#e2e8f0',
+                            fontWeight: 700,
                           }}>
                             {cov}%
                             {covDelta !== null && covDelta !== 0 && (
@@ -362,7 +362,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                             )}
                           </span>
                           {/* Word count */}
-                          <span className="flex items-center gap-1 font-mono" style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500 }}>
+                          <span className="flex items-center gap-1 font-mono" style={{ fontSize: 13, color: '#e2e8f0', fontWeight: 700 }}>
                             {fmt(words)}w
                             {wordsDelta !== null && wordsDelta !== 0 && (
                               <span style={{ color: wordsDelta > 0 ? '#10b981' : '#ef4444', fontSize: 11 }}>
@@ -371,7 +371,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                             )}
                           </span>
                           {/* Cost */}
-                          <span className="font-mono" style={{ color: 'var(--text-muted)', fontSize: 12 }}>
+                          <span className="font-mono" style={{ color: '#e2e8f0', fontSize: 13, fontWeight: 700 }}>
                             {fmtCost(entry.result.usage.cost_usd)}
                           </span>
                           <span style={{ color: 'var(--text-dim)', fontSize: 11, marginLeft: 'auto' }}>
