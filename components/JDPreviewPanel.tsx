@@ -360,43 +360,78 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
 
               {result && activeTab === 'usage' && (
                 <div>
-                  <div className="grid grid-cols-2 gap-3 mb-6">
+                  {/* Summary cards */}
+                  <div className="grid grid-cols-4 gap-3 mb-5">
                     {[
-                      { label: 'Time', value: fmtMs(result.duration_ms), sub: 'wall clock' },
-                      { label: 'Cost', value: fmtCost(result.usage.cost_usd), sub: 'API spend', accent: true },
-                      { label: 'Input tokens', value: fmt(result.usage.input_tokens), sub: 'prompt + ontology context' },
-                      { label: 'Output tokens', value: fmt(result.usage.output_tokens), sub: 'generated response' },
+                      { label: 'Total time', value: fmtMs(result.duration_ms), sub: 'wall clock' },
+                      { label: 'Total cost', value: fmtCost(result.usage.cost_usd), sub: 'API spend', accent: true },
+                      { label: 'Total tokens', value: fmt(totalTokens), sub: `${fmt(result.usage.input_tokens)} in + ${fmt(result.usage.output_tokens)} out` },
+                      { label: 'Cache hit', value: result.usage.cache_read_tokens > 0 ? `${Math.round((result.usage.cache_read_tokens / (result.usage.input_tokens + result.usage.cache_read_tokens)) * 100)}%` : '—', sub: `${fmt(result.usage.cache_read_tokens)} saved tokens` },
                     ].map(c => (
                       <div key={c.label} className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                         <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{c.label}</div>
                         <div className="text-lg font-mono font-bold mb-0.5" style={{ color: c.accent ? 'var(--accent)' : 'var(--text)' }}>{c.value}</div>
-                        <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>{c.sub}</div>
+                        <div style={{ color: 'var(--text-dim)', fontSize: 10 }}>{c.sub}</div>
                       </div>
                     ))}
                   </div>
 
-                  {(result.usage.cache_read_tokens > 0 || result.usage.cache_write_tokens > 0) && (
-                    <div className="grid grid-cols-2 gap-3 mb-6">
-                      <div className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                        <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Cache read</div>
-                        <div className="text-lg font-mono font-bold mb-0.5" style={{ color: '#10b981' }}>{fmt(result.usage.cache_read_tokens)}</div>
-                        <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>tokens at 10% rate</div>
+                  {/* Extra metrics */}
+                  <div className="grid grid-cols-3 gap-3 mb-5">
+                    {[
+                      { label: 'Output word count', value: fmt(outputWords), sub: 'generated text' },
+                      { label: 'Output/Input ratio', value: result.usage.input_tokens > 0 ? (result.usage.output_tokens / result.usage.input_tokens).toFixed(2) : '—', sub: 'tokens generated per input token' },
+                      { label: 'Cache writes', value: fmt(result.usage.cache_write_tokens), sub: 'tokens stored for reuse' },
+                    ].map(c => (
+                      <div key={c.label} className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                        <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{c.label}</div>
+                        <div className="text-base font-mono font-bold mb-0.5" style={{ color: 'var(--text)' }}>{c.value}</div>
+                        <div style={{ color: 'var(--text-dim)', fontSize: 10 }}>{c.sub}</div>
                       </div>
-                      <div className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                        <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Cache write</div>
-                        <div className="text-lg font-mono font-bold mb-0.5" style={{ color: 'var(--text)' }}>{fmt(result.usage.cache_write_tokens)}</div>
-                        <div className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10 }}>tokens stored</div>
-                      </div>
-                    </div>
-                  )}
+                    ))}
+                  </div>
 
-                  <div className="p-3 rounded" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                    <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Model</div>
-                    <div className="text-sm font-mono" style={{ color: 'var(--text)' }}>{result.model}</div>
+                  {/* Breakdown table */}
+                  <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>CALL BREAKDOWN</div>
+                  <div className="rounded overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
+                          {['Stage', 'Model', 'Time', 'Input tok', 'Output tok', 'Cache read', 'Cost'].map(h => (
+                            <th key={h} className="text-left px-3 py-2 font-medium" style={{ color: 'var(--text-muted)' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="px-3 py-2 font-medium" style={{ color: 'var(--text)' }}>Generation</td>
+                          <td className="px-3 py-2">
+                            <span className="px-1.5 py-0.5 rounded text-xs" style={{ background: 'rgba(234,179,8,0.15)', color: '#fbbf24' }}>
+                              sonnet
+                            </span>
+                          </td>
+                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</td>
+                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(result.usage.input_tokens)}</td>
+                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(result.usage.output_tokens)}</td>
+                          <td className="px-3 py-2 font-mono" style={{ color: result.usage.cache_read_tokens > 0 ? '#10b981' : 'var(--text-dim)' }}>
+                            {fmt(result.usage.cache_read_tokens)}
+                          </td>
+                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--accent)' }}>{fmtCost(result.usage.cost_usd)}</td>
+                        </tr>
+                        <tr style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
+                          <td className="px-3 py-2 font-semibold" style={{ color: 'var(--text)' }} colSpan={2}>Total</td>
+                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</td>
+                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(result.usage.input_tokens)}</td>
+                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(result.usage.output_tokens)}</td>
+                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: '#10b981' }}>{fmt(result.usage.cache_read_tokens)}</td>
+                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--accent)' }}>{fmtCost(result.usage.cost_usd)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
 
                   <p className="text-xs mt-3" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
-                    Sonnet $3/$15 per MTok in/out · Cache reads at $0.30/MTok · Cache writes at $3.75/MTok
+                    Pricing: Sonnet $3/$15 per MTok in/out · Cache reads at $0.30/MTok · Cache writes at $3.75/MTok
                   </p>
                 </div>
               )}
