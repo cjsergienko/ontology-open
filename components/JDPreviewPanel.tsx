@@ -88,7 +88,7 @@ function nodeColor(type: string): string {
 }
 
 export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
-  const [prompt, setPrompt] = useState('')
+  const [prompt, setPrompt] = useState('Generate a job description for a senior software engineer at a B2B SaaS startup. Remote, full-time.')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<PreviewResult | null>(null)
   const [error, setError] = useState<string | null>(null)
