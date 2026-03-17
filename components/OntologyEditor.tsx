@@ -30,7 +30,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { JDPreviewPanel } from './JDPreviewPanel'
-import { applyForceLayout } from '@/lib/layout'
+import { applyLayout, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
 
 const nodeTypes: NodeTypes = {
   ontology: OntologyNodeComponent,
@@ -93,11 +93,13 @@ function OntologyEditorInner({ initialOntology }: Props) {
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [addEdgeType, setAddEdgeType] = useState<EdgeType>('relates_to')
+  const [layoutMenuOpen, setLayoutMenuOpen] = useState(false)
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
-  const autoLayout = useCallback(() => {
+  const autoLayout = useCallback((kind: LayoutKind = 'force') => {
+    setLayoutMenuOpen(false)
     setNodes(ns => {
-      const laid = applyForceLayout(ns, edges)
+      const laid = applyLayout(ns, edges, kind)
       setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 50)
       return laid
     })
@@ -106,7 +108,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
   // Auto-layout on first mount
   useEffect(() => {
     if (initialOntology.nodes.length > 0) {
-      setTimeout(autoLayout, 100)
+      setTimeout(() => autoLayout('force'), 100)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -301,16 +303,41 @@ function OntologyEditorInner({ initialOntology }: Props) {
             <PlayIcon size={11} />
             Preview
           </button>
-          <button
-            onClick={autoLayout}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs transition-all"
-            style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-          >
-            <LayoutDashboardIcon size={11} />
-            Layout
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setLayoutMenuOpen(o => !o)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs transition-all"
+              style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              <LayoutDashboardIcon size={11} />
+              Layout
+            </button>
+            {layoutMenuOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setLayoutMenuOpen(false)} />
+                <div
+                  className="absolute right-0 top-full mt-1 rounded-lg overflow-hidden z-50"
+                  style={{ background: 'var(--surface2)', border: '1px solid var(--border2)', minWidth: 220 }}
+                >
+                  {LAYOUT_OPTIONS.map(opt => (
+                    <button
+                      key={opt.kind}
+                      onClick={() => autoLayout(opt.kind)}
+                      className="w-full flex flex-col items-start px-3 py-2.5 text-left transition-colors"
+                      style={{ borderBottom: '1px solid var(--border)' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <span className="text-xs font-medium" style={{ color: 'var(--text)' }}>{opt.label}</span>
+                      <span className="text-xs mt-0.5" style={{ color: 'var(--text-dim)', fontSize: 10 }}>{opt.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
           <button
             onClick={exportJSON}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs transition-all"
