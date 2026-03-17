@@ -36,12 +36,15 @@ function serializeOntology(o: Ontology): string {
 
 function measureNodeCoverage(output: string, o: Ontology) {
   const lower = output.toLowerCase()
-  const mentioned = o.nodes.filter(n => lower.includes(n.label.toLowerCase()))
+  const mentionedSet = new Set(
+    o.nodes.filter(n => lower.includes(n.label.toLowerCase())).map(n => n.id)
+  )
+  const mentionedCount = mentionedSet.size
   return {
     total: o.nodes.length,
-    mentioned: mentioned.length,
-    pct: o.nodes.length ? Math.round((mentioned.length / o.nodes.length) * 100) : 0,
-    nodes: mentioned.map(n => ({ label: n.label, type: n.type })),
+    mentioned: mentionedCount,
+    pct: o.nodes.length ? Math.round((mentionedCount / o.nodes.length) * 100) : 0,
+    nodes: o.nodes.map(n => ({ label: n.label, type: n.type, mentioned: mentionedSet.has(n.id) })),
   }
 }
 

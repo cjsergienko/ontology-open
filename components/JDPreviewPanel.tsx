@@ -6,6 +6,7 @@ import { XIcon, PlayIcon, AlertCircleIcon, ClockIcon } from 'lucide-react'
 interface NodeCoverageItem {
   label: string
   type: string
+  mentioned: boolean
 }
 
 interface NodeCoverage {
@@ -90,7 +91,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<PreviewResult | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'output' | 'coverage' | 'usage'>('output')
+  const [activeTab, setActiveTab] = useState<'output' | 'coverage' | 'dimensions' | 'usage'>('output')
 
   const generate = async () => {
     setLoading(true)
@@ -108,7 +109,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
       }
       const data = await resp.json()
       setResult(data)
-      setActiveTab('output')
+      setActiveTab('dimensions')
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     } finally {
@@ -260,7 +261,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
           <div className="flex-1 flex flex-col overflow-hidden">
             {result && (
               <div className="flex items-center gap-1 px-5 pt-3 pb-0 shrink-0" style={{ borderBottom: '1px solid var(--border)' }}>
-                {(['output', 'coverage', 'usage'] as const).map(tab => (
+                {(['output', 'dimensions', 'coverage', 'usage'] as const).map(tab => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -271,7 +272,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                       marginBottom: -1,
                     }}
                   >
-                    {tab === 'output' ? 'Output' : tab === 'coverage' ? '🗂 Node Coverage' : '⚡ Usage'}
+                    {tab === 'output' ? 'Output' : tab === 'dimensions' ? 'Dimension Map' : tab === 'coverage' ? '🗂 Node Coverage' : '⚡ Usage & Timing'}
                   </button>
                 ))}
               </div>
@@ -329,11 +330,11 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                     </p>
                   </div>
 
-                  {result.node_coverage.nodes.length > 0 && (
+                  {result.node_coverage.mentioned > 0 ? (
                     <div>
                       <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>MATCHED NODES</div>
                       <div className="flex flex-wrap gap-1.5">
-                        {result.node_coverage.nodes.map(n => (
+                        {result.node_coverage.nodes.filter(n => n.mentioned).map(n => (
                           <span
                             key={n.label}
                             className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
@@ -348,15 +349,67 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                         ))}
                       </div>
                     </div>
-                  )}
-
-                  {result.node_coverage.mentioned === 0 && (
+                  ) : (
                     <p className="text-xs" style={{ color: 'var(--text-dim)' }}>
                       No ontology nodes were directly referenced in the output. Try a more specific prompt.
                     </p>
                   )}
                 </div>
               )}
+
+              {result && activeTab === 'dimensions' && (() => {
+                const NODE_TYPE_ORDER = ['class', 'dimension', 'property', 'value', 'relation', 'constraint']
+                const NODE_TYPE_LABELS: Record<string, string> = {
+                  class: 'Classes', dimension: 'Dimensions', property: 'Properties',
+                  value: 'Values', relation: 'Relations', constraint: 'Constraints',
+                }
+                const byType = new Map<string, NodeCoverageItem[]>()
+                for (const n of result.node_coverage.nodes) {
+                  if (!byType.has(n.type)) byType.set(n.type, [])
+                  byType.get(n.type)!.push(n)
+                }
+                const sections = NODE_TYPE_ORDER.filter(t => byType.has(t))
+                return (
+                  <div className="space-y-5">
+                    {sections.map(type => {
+                      const items = byType.get(type)!
+                      const mentionedCount = items.filter(n => n.mentioned).length
+                      return (
+                        <div key={type}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: nodeColor(type) }}>
+                              {NODE_TYPE_LABELS[type] ?? type}
+                            </span>
+                            <span className="text-xs font-mono" style={{ color: 'var(--text-dim)' }}>
+                              {mentionedCount}/{items.length}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {items.map(n => (
+                              <span
+                                key={n.label}
+                                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs transition-opacity"
+                                style={n.mentioned ? {
+                                  background: `${nodeColor(n.type)}18`,
+                                  color: nodeColor(n.type),
+                                  border: `1px solid ${nodeColor(n.type)}40`,
+                                } : {
+                                  background: 'var(--surface)',
+                                  color: 'var(--text-dim)',
+                                  border: '1px solid var(--border)',
+                                  opacity: 0.5,
+                                }}
+                              >
+                                {n.label}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })()}
 
               {result && activeTab === 'usage' && (
                 <div>
