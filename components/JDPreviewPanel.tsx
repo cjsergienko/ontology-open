@@ -8,6 +8,7 @@ interface NodeCoverageItem {
   label: string
   type: string
   mentioned: boolean
+  excluded?: boolean
 }
 
 interface NodeCoverage {
@@ -459,30 +460,52 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                     </p>
                   </div>
 
-                  {result.node_coverage.mentioned > 0 ? (
+                  <div className="flex flex-col gap-4">
+                    {/* Matched */}
                     <div>
-                      <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>MATCHED NODES</div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {result.node_coverage.nodes.filter(n => n.mentioned).map(n => (
-                          <span
-                            key={n.label}
-                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
-                            style={{
-                              background: `${nodeColor(n.type)}18`,
-                              color: nodeColor(n.type),
-                              border: `1px solid ${nodeColor(n.type)}40`,
-                            }}
-                          >
-                            {n.label}
-                          </span>
-                        ))}
-                      </div>
+                      <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>MATCHED</div>
+                      {result.node_coverage.nodes.filter(n => !n.excluded && n.mentioned).length > 0 ? (
+                        <div className="flex flex-wrap gap-1.5">
+                          {result.node_coverage.nodes.filter(n => !n.excluded && n.mentioned).map(n => (
+                            <span key={n.label} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
+                              style={{ background: `${nodeColor(n.type)}18`, color: nodeColor(n.type), border: `1px solid ${nodeColor(n.type)}40` }}>
+                              {n.label}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-xs" style={{ color: 'var(--text-dim)' }}>No nodes matched. Try a more specific prompt.</p>
+                      )}
                     </div>
-                  ) : (
-                    <p className="text-xs" style={{ color: 'var(--text-dim)' }}>
-                      No ontology nodes were directly referenced in the output. Try a more specific prompt.
-                    </p>
-                  )}
+                    {/* Missed */}
+                    {result.node_coverage.nodes.filter(n => !n.excluded && !n.mentioned).length > 0 && (
+                      <div>
+                        <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>MISSED</div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {result.node_coverage.nodes.filter(n => !n.excluded && !n.mentioned).map(n => (
+                            <span key={n.label} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
+                              style={{ background: 'var(--surface)', color: 'var(--text-dim)', border: '1px solid var(--border)' }}>
+                              {n.label}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {/* Excluded */}
+                    {result.node_coverage.nodes.filter(n => n.excluded).length > 0 && (
+                      <div>
+                        <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>EXCLUDED FROM SCORE (context / property)</div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {result.node_coverage.nodes.filter(n => n.excluded).map(n => (
+                            <span key={n.label} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs"
+                              style={{ background: 'transparent', color: '#1e2d45', border: '1px solid #1e2d45', opacity: 0.6 }}>
+                              {n.label}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 

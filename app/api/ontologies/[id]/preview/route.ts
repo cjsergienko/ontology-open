@@ -45,15 +45,24 @@ function normalizeLabel(label: string): string {
 
 function measureNodeCoverage(output: string, o: Ontology) {
   const lower = output.toLowerCase()
-  const mentionedSet = new Set(
-    o.nodes.filter(n => lower.includes(normalizeLabel(n.label))).map(n => n.id)
+  // Only count non-context, non-property nodes (dimension + value + class)
+  const scorable = o.nodes.filter(n =>
+    n.metadata?.generate !== 'context' &&
+    (n.type === 'dimension' || n.type === 'value' || n.type === 'class')
   )
-  const mentionedCount = mentionedSet.size
+  const mentionedSet = new Set(
+    scorable.filter(n => lower.includes(normalizeLabel(n.label))).map(n => n.id)
+  )
   return {
-    total: o.nodes.length,
-    mentioned: mentionedCount,
-    pct: o.nodes.length ? Math.round((mentionedCount / o.nodes.length) * 100) : 0,
-    nodes: o.nodes.map(n => ({ label: n.label, type: n.type, mentioned: mentionedSet.has(n.id) })),
+    total: scorable.length,
+    mentioned: mentionedSet.size,
+    pct: scorable.length ? Math.round((mentionedSet.size / scorable.length) * 100) : 0,
+    nodes: o.nodes.map(n => ({
+      label: n.label,
+      type: n.type,
+      mentioned: mentionedSet.has(n.id),
+      excluded: n.metadata?.generate === 'context' || n.type === 'property' || n.type === 'constraint',
+    })),
   }
 }
 
