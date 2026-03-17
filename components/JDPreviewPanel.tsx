@@ -374,8 +374,8 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                           <span className="font-mono" style={{ color: '#e2e8f0', fontSize: 13, fontWeight: 700 }}>
                             {fmtCost(entry.result.usage.cost_usd)}
                           </span>
-                          <span style={{ color: '#4a5568', fontSize: 11, marginLeft: 'auto' }}>
-                            {fmtDate(entry.timestamp)}
+                          <span className="font-mono" style={{ color: '#4a5568', fontSize: 11, marginLeft: 'auto' }}>
+                            {fmtMs(entry.result.duration_ms)}
                           </span>
                         </div>
                       </button>
