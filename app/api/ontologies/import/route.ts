@@ -102,7 +102,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         model: CLAUDE_MODEL,
-        max_tokens: 8192,
+        max_tokens: 16000,
         system: SYSTEM_PROMPT,
         messages: [{
           role: 'user',
@@ -122,13 +122,17 @@ export async function POST(req: Request) {
   const claudeData = await anthropicResp.json()
   const rawText: string = claudeData.content?.[0]?.text ?? ''
 
+  if (claudeData.stop_reason === 'max_tokens') {
+    return NextResponse.json({ error: 'Ontology file is too large — Claude could not finish generating. Try a smaller or simpler file.' }, { status: 500 })
+  }
+
   let parsed: { name: string; description: string; domain: string; nodes: object[]; edges: object[] }
   try {
     const jsonMatch = rawText.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/) ?? rawText.match(/(\{[\s\S]*\})/)
     const jsonStr = jsonMatch ? jsonMatch[1] : rawText
     parsed = JSON.parse(jsonStr)
   } catch {
-    return NextResponse.json({ error: 'Failed to parse ontology from Claude response', raw: rawText.slice(0, 500) }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to parse Claude response as JSON. The file may be in an unsupported format.' }, { status: 500 })
   }
 
   const now = new Date().toISOString()
