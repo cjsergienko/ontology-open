@@ -39,7 +39,7 @@
         "x": 100,
         "y": 260
       },
-      "semantics": "What is this role?",
+      "semantics": "What is this role? Generate as 2 sentences maximum. Be concise and direct.",
       "metadata": {
         "category_key": "role_identity"
       }
@@ -97,7 +97,7 @@
         "x": 1420,
         "y": 260
       },
-      "semantics": "What hard skills? Write a 1-sentence intro, then a bullet list of must-have technologies/skills. Keep the section concise \u2014 highlight the most important things only. No prose paragraphs after the list.",
+      "semantics": "What hard skills? Write 1 sentence intro, then a plain list using \"- \" prefix (not numbers). Max 6 items. Each item: technology or skill name followed by a brief qualifier. Keep it short.",
       "metadata": {
         "category_key": "tech_reqs",
         "format": "list"
@@ -181,7 +181,7 @@
         "x": 400,
         "y": 520
       },
-      "semantics": "Day-to-day operating mode \u2014 2 sentences max",
+      "semantics": "Day-to-day operating mode \u2014 1 sentence only",
       "metadata": {}
     },
     {
@@ -207,7 +207,7 @@
         "x": 220,
         "y": 680
       },
-      "semantics": "Specific focus area \u2014 one sentence inline",
+      "semantics": "Specific focus area \u2014 integrate inline, do not expand",
       "metadata": {}
     },
     {
