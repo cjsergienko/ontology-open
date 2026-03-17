@@ -508,45 +508,86 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
 
                   {/* Breakdown table */}
                   <div className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>PER-STAGE BREAKDOWN</div>
-                  <div className="rounded overflow-hidden" style={{ border: '1px solid var(--border)' }}>
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
-                          {['Stage', 'Model', 'Time', 'Input tok', 'Output tok', 'Cache read', 'Cost'].map(h => (
-                            <th key={h} className="text-left px-3 py-2 font-medium" style={{ color: 'var(--text-muted)' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="px-3 py-2 font-medium" style={{ color: 'var(--text)' }}>Generation</td>
-                          <td className="px-3 py-2">
-                            <span className="px-1.5 py-0.5 rounded text-xs" style={{ background: 'rgba(234,179,8,0.15)', color: '#fbbf24' }}>
-                              sonnet
-                            </span>
-                          </td>
-                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</td>
-                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(result.usage.input_tokens)}</td>
-                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(result.usage.output_tokens)}</td>
-                          <td className="px-3 py-2 font-mono" style={{ color: result.usage.cache_read_tokens > 0 ? '#10b981' : 'var(--text-dim)' }}>
-                            {fmt(result.usage.cache_read_tokens)}
-                          </td>
-                          <td className="px-3 py-2 font-mono" style={{ color: 'var(--accent)' }}>{fmtCost(result.usage.cost_usd)}</td>
-                        </tr>
-                        <tr style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
-                          <td className="px-3 py-2 font-semibold" style={{ color: 'var(--text)' }} colSpan={2}>Total</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(result.usage.input_tokens)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(result.usage.output_tokens)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: '#10b981' }}>{fmt(result.usage.cache_read_tokens)}</td>
-                          <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--accent)' }}>{fmtCost(result.usage.cost_usd)}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  {(() => {
+                    const { input_tokens, output_tokens, cache_read_tokens, cache_write_tokens } = result.usage
+                    const INPUT_PRICE = 3.0, OUTPUT_PRICE = 15.0, CACHE_READ_PRICE = 0.30, CACHE_WRITE_PRICE = 3.75
+                    const contextTokens = cache_write_tokens > 0 ? cache_write_tokens : cache_read_tokens
+                    const contextCost = cache_write_tokens > 0
+                      ? (cache_write_tokens / 1e6) * CACHE_WRITE_PRICE
+                      : (cache_read_tokens / 1e6) * CACHE_READ_PRICE
+                    const promptCost = (input_tokens / 1e6) * INPUT_PRICE
+                    const outputCost = (output_tokens / 1e6) * OUTPUT_PRICE
+
+                    const sonnetBadge = (
+                      <span className="px-1.5 py-0.5 rounded text-xs" style={{ background: 'rgba(234,179,8,0.15)', color: '#fbbf24' }}>sonnet</span>
+                    )
+                    const dash = <span style={{ color: 'var(--text-dim)' }}>—</span>
+
+                    const rows: { stage: string; time: React.ReactNode; input: React.ReactNode; output: React.ReactNode; cacheWrite: React.ReactNode; cacheRead: React.ReactNode; cost: number }[] = [
+                      {
+                        stage: cache_write_tokens > 0 ? 'Ontology Context (write)' : 'Ontology Context (hit)',
+                        time: dash, input: dash, output: dash,
+                        cacheWrite: cache_write_tokens > 0 ? <span className="font-mono" style={{ color: '#f59e0b' }}>{fmt(cache_write_tokens)}</span> : dash,
+                        cacheRead: cache_read_tokens > 0 ? <span className="font-mono" style={{ color: '#10b981' }}>{fmt(cache_read_tokens)}</span> : dash,
+                        cost: contextCost,
+                      },
+                      {
+                        stage: 'User Prompt',
+                        time: dash,
+                        input: <span className="font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(input_tokens)}</span>,
+                        output: dash, cacheWrite: dash, cacheRead: dash,
+                        cost: promptCost,
+                      },
+                      {
+                        stage: 'Generation',
+                        time: <span className="font-mono" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</span>,
+                        input: dash,
+                        output: <span className="font-mono" style={{ color: 'var(--text-muted)' }}>{fmt(output_tokens)}</span>,
+                        cacheWrite: dash, cacheRead: dash,
+                        cost: outputCost,
+                      },
+                    ]
+
+                    return (
+                      <div className="rounded overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                        <table className="w-full text-xs">
+                          <thead>
+                            <tr style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
+                              {['Stage', 'Model', 'Time', 'Input', 'Output', 'Cache write', 'Cache read', 'Cost'].map(h => (
+                                <th key={h} className="text-left px-3 py-2 font-medium" style={{ color: 'var(--text-muted)' }}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {rows.map((row, i) => (
+                              <tr key={row.stage} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                                <td className="px-3 py-2 font-medium" style={{ color: 'var(--text)' }}>{row.stage}</td>
+                                <td className="px-3 py-2">{sonnetBadge}</td>
+                                <td className="px-3 py-2">{row.time}</td>
+                                <td className="px-3 py-2">{row.input}</td>
+                                <td className="px-3 py-2">{row.output}</td>
+                                <td className="px-3 py-2">{row.cacheWrite}</td>
+                                <td className="px-3 py-2">{row.cacheRead}</td>
+                                <td className="px-3 py-2 font-mono" style={{ color: 'var(--accent)' }}>{fmtCost(row.cost)}</td>
+                              </tr>
+                            ))}
+                            <tr style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
+                              <td className="px-3 py-2 font-semibold" style={{ color: 'var(--text)' }} colSpan={2}>Total</td>
+                              <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmtMs(result.duration_ms)}</td>
+                              <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(input_tokens)}</td>
+                              <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--text)' }}>{fmt(output_tokens)}</td>
+                              <td className="px-3 py-2 font-mono font-semibold" style={{ color: '#f59e0b' }}>{fmt(cache_write_tokens)}</td>
+                              <td className="px-3 py-2 font-mono font-semibold" style={{ color: '#10b981' }}>{fmt(cache_read_tokens)}</td>
+                              <td className="px-3 py-2 font-mono font-semibold" style={{ color: 'var(--accent)' }}>{fmtCost(result.usage.cost_usd)}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    )
+                  })()}
 
                   <p className="text-xs mt-3" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
-                    Pricing: Sonnet $3/$15 per MTok in/out · Cache reads at $0.30/MTok · Cache writes at $3.75/MTok
+                    Pricing: Sonnet $3/$15 per MTok in/out · Cache reads $0.30/MTok · Cache writes $3.75/MTok
                   </p>
                 </div>
               )}
