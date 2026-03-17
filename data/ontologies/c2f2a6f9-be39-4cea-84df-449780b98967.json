@@ -33,7 +33,7 @@
     {
       "id": "cat_role_identity",
       "type": "dimension",
-      "label": "Role Identity",
+      "label": "About the Role",
       "description": "What is this role?",
       "position": {
         "x": 100,
