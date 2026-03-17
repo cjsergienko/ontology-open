@@ -96,23 +96,6 @@ function OntologyEditorInner({ initialOntology }: Props) {
   const [layoutMenuOpen, setLayoutMenuOpen] = useState(false)
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
-  const autoLayout = useCallback((kind: LayoutKind = 'force') => {
-    setLayoutMenuOpen(false)
-    setNodes(ns => {
-      const laid = applyLayout(ns, edges, kind)
-      setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 50)
-      return laid
-    })
-  }, [edges, fitView, setNodes])
-
-  // Auto-layout on first mount
-  useEffect(() => {
-    if (initialOntology.nodes.length > 0) {
-      setTimeout(() => autoLayout('force'), 100)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   // URL-derived UI state
   const previewOpen = searchParams.get('panel') === 'preview'
   const selectedNodeId = searchParams.get('node')
@@ -143,6 +126,26 @@ function OntologyEditorInner({ initialOntology }: Props) {
     const qs = params.toString()
     router.replace(`${pathname}${qs ? `?${qs}` : ''}`)
   }, [searchParams, pathname, router])
+
+  const activeLayout = (searchParams.get('layout') as LayoutKind | null) ?? 'force'
+
+  const autoLayout = useCallback((kind: LayoutKind) => {
+    setLayoutMenuOpen(false)
+    setParams({ layout: kind })
+    setNodes(ns => {
+      const laid = applyLayout(ns, edges, kind)
+      setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 50)
+      return laid
+    })
+  }, [edges, fitView, setNodes, setParams])
+
+  // Auto-layout on first mount using URL-persisted kind
+  useEffect(() => {
+    if (initialOntology.nodes.length > 0) {
+      setTimeout(() => autoLayout(activeLayout), 100)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -326,11 +329,14 @@ function OntologyEditorInner({ initialOntology }: Props) {
                       key={opt.kind}
                       onClick={() => autoLayout(opt.kind)}
                       className="w-full flex flex-col items-start px-3 py-2.5 text-left transition-colors"
-                      style={{ borderBottom: '1px solid var(--border)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface)')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                      style={{
+                        borderBottom: '1px solid var(--border)',
+                        background: opt.kind === activeLayout ? 'var(--accent-dim)' : 'transparent',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.background = opt.kind === activeLayout ? 'var(--accent-dim)' : 'var(--surface)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = opt.kind === activeLayout ? 'var(--accent-dim)' : 'transparent')}
                     >
-                      <span className="text-xs font-medium" style={{ color: 'var(--text)' }}>{opt.label}</span>
+                      <span className="text-xs font-medium" style={{ color: opt.kind === activeLayout ? 'var(--accent)' : 'var(--text)' }}>{opt.label}</span>
                       <span className="text-xs mt-0.5" style={{ color: 'var(--text-dim)', fontSize: 10 }}>{opt.description}</span>
                     </button>
                   ))}
@@ -346,7 +352,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
             onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
           >
             <DownloadIcon size={11} />
-            Export
+            Taxonomy
           </button>
           <button
             onClick={save}
