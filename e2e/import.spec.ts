@@ -1,0 +1,185 @@
+import { test, expect } from '@playwright/test'
+
+const PIN = '7291'
+
+// Minimal valid ontology in our internal JSON format
+const VALID_ONTOLOGY_JSON = JSON.stringify({
+  name: 'E2E Test Ontology',
+  description: 'Created by Playwright import test',
+  domain: 'testing',
+  nodes: [
+    { id: 'concept_a', type: 'class', label: 'Concept A', description: 'A test concept', semantics: '', examples: [] },
+  ],
+  edges: [],
+})
+
+// The home-page button that opens ImportOntologyModal
+const OPEN_IMPORT_MODAL_BUTTON = 'Upload Ontology'
+// The modal title
+const IMPORT_MODAL_TITLE = 'Upload Ontology File'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function login(page: any) {
+  await page.goto('/login')
+  await page.getByPlaceholder('PIN').fill(PIN)
+  await page.getByRole('button', { name: 'Enter' }).click()
+  await expect(page).toHaveURL('/')
+}
+
+// ─── Modal UI ───────────────────────────────────────────────────────────────
+
+test('import modal opens from home page', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+  await expect(page.getByText(IMPORT_MODAL_TITLE)).toBeVisible()
+})
+
+test('import button is disabled with no file selected', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+  const importBtn = page.getByRole('button', { name: /import ontology/i })
+  await expect(importBtn).toBeDisabled()
+})
+
+test('cancel button closes the modal', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+  await expect(page.getByText(IMPORT_MODAL_TITLE)).toBeVisible()
+  await page.getByRole('button', { name: /cancel/i }).click()
+  await expect(page.getByText(IMPORT_MODAL_TITLE)).not.toBeVisible()
+})
+
+
+test('selecting a file shows filename and enables import button', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+
+  const [fileChooser] = await Promise.all([
+    page.waitForEvent('filechooser'),
+    page.locator('input[type="file"]').evaluate((el: HTMLInputElement) => el.click()),
+  ])
+  await fileChooser.setFiles({
+    name: 'test-ontology.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(VALID_ONTOLOGY_JSON),
+  })
+
+  await expect(page.getByText('test-ontology.json')).toBeVisible()
+  await expect(page.getByRole('button', { name: /import ontology/i })).toBeEnabled()
+})
+
+test('clearing selected file disables import button', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+
+  const [fileChooser] = await Promise.all([
+    page.waitForEvent('filechooser'),
+    page.locator('input[type="file"]').evaluate((el: HTMLInputElement) => el.click()),
+  ])
+  await fileChooser.setFiles({
+    name: 'test-ontology.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(VALID_ONTOLOGY_JSON),
+  })
+
+  // Clear button is inside the modal overlay (.fixed.inset-0), scoped to avoid home-page buttons
+  await page.locator('.fixed.inset-0 button:has(svg[width="14"])').click()
+  await expect(page.getByRole('button', { name: /import ontology/i })).toBeDisabled()
+})
+
+// ─── JSON fast path (no Claude) ─────────────────────────────────────────────
+
+test('importing valid JSON ontology redirects to editor', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+
+  const [fileChooser] = await Promise.all([
+    page.waitForEvent('filechooser'),
+    page.locator('input[type="file"]').evaluate((el: HTMLInputElement) => el.click()),
+  ])
+  await fileChooser.setFiles({
+    name: 'e2e-ontology.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(VALID_ONTOLOGY_JSON),
+  })
+
+  await page.getByRole('button', { name: /import ontology/i }).click()
+
+  // Should navigate to the ontology editor page
+  await expect(page).toHaveURL(/\/ontology\/[a-f0-9-]+/, { timeout: 10_000 })
+})
+
+test('importing valid JSON ontology shows its name in the editor', async ({ page }) => {
+  await login(page)
+  await page.getByRole('button', { name: OPEN_IMPORT_MODAL_BUTTON }).click()
+
+  const [fileChooser] = await Promise.all([
+    page.waitForEvent('filechooser'),
+    page.locator('input[type="file"]').evaluate((el: HTMLInputElement) => el.click()),
+  ])
+  await fileChooser.setFiles({
+    name: 'e2e-named.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(VALID_ONTOLOGY_JSON),
+  })
+
+  await page.getByRole('button', { name: /import ontology/i }).click()
+  await expect(page).toHaveURL(/\/ontology\/[a-f0-9-]+/, { timeout: 10_000 })
+
+  // Ontology name should appear somewhere on the editor page
+  await expect(page.getByText('E2E Test Ontology')).toBeVisible()
+})
+
+// ─── API: /api/ontologies/import ─────────────────────────────────────────────
+
+test('POST /api/ontologies/import with no file returns 400', async ({ request }) => {
+  // Authenticate first
+  await request.post('/api/auth', { data: { pin: PIN } })
+
+  const res = await request.post('/api/ontologies/import', {
+    multipart: {},
+  })
+  expect(res.status()).toBe(400)
+  const body = await res.json()
+  expect(body.error).toBeTruthy()
+})
+
+test('POST /api/ontologies/import with valid JSON returns ontology', async ({ request }) => {
+  await request.post('/api/auth', { data: { pin: PIN } })
+
+  const res = await request.post('/api/ontologies/import', {
+    multipart: {
+      file: {
+        name: 'api-test.json',
+        mimeType: 'application/json',
+        buffer: Buffer.from(VALID_ONTOLOGY_JSON),
+      },
+    },
+  })
+
+  expect(res.status()).toBe(200)
+  const body = await res.json()
+  expect(body.id).toBeTruthy()
+  expect(body.name).toBe('E2E Test Ontology')
+  expect(Array.isArray(body.nodes)).toBe(true)
+  expect(Array.isArray(body.edges)).toBe(true)
+})
+
+test('POST /api/ontologies/import with valid JSON assigns positions to nodes', async ({ request }) => {
+  await request.post('/api/auth', { data: { pin: PIN } })
+
+  const res = await request.post('/api/ontologies/import', {
+    multipart: {
+      file: {
+        name: 'positions-test.json',
+        mimeType: 'application/json',
+        buffer: Buffer.from(VALID_ONTOLOGY_JSON),
+      },
+    },
+  })
+
+  const body = await res.json()
+  for (const node of body.nodes) {
+    expect(node.position).toMatchObject({ x: expect.any(Number), y: expect.any(Number) })
+  }
+})

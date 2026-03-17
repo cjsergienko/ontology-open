@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server'
 import { saveOntology } from '@/lib/storage'
 import { sseStream } from '@/lib/sse'
 import type { OntologyNode, OntologyEdge, NodeType } from '@/lib/types'

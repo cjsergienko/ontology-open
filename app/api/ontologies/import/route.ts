@@ -94,28 +94,58 @@ export async function POST(req: Request) {
     } catch { /* not valid JSON or wrong shape — fall through to Claude */ }
   }
 
-  // Claude path: stream SSE so Cloudflare doesn't time out on large files
-  const textForClaude = fullText.slice(0, 150_000)
-
+  // Claude path: upload via Files API (no truncation), then stream SSE
   return sseStream(async () => {
+    // 1. Upload file to Anthropic Files API
+    const fileBlob = new Blob([bytes], { type: 'text/plain' })
+    const uploadForm = new FormData()
+    uploadForm.append('file', fileBlob, file.name)
+
+    const uploadResp = await fetch('https://api.anthropic.com/v1/files', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'files-api-2025-04-14',
+      },
+      body: uploadForm,
+    })
+    if (!uploadResp.ok) throw new Error(`Files API upload failed: ${await uploadResp.text()}`)
+    const { id: fileId } = await uploadResp.json()
+
+    // 2. Send message referencing the uploaded file
     const anthropicResp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'x-api-key': ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'files-api-2025-04-14',
         'content-type': 'application/json',
       },
       body: JSON.stringify({
         model: CLAUDE_MODEL,
         max_tokens: 16000,
         system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: `Convert this ontology file (${file.name}) to our JSON format:\n\n${textForClaude}` }],
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'text', text: `Convert this ontology file (${file.name}) to our JSON format:` },
+            { type: 'document', source: { type: 'file', file_id: fileId } },
+          ],
+        }],
       }),
     })
 
     if (!anthropicResp.ok) throw new Error(await anthropicResp.text())
 
     const claudeData = await anthropicResp.json()
+
+    // 3. Delete the uploaded file (best-effort, don't fail on error)
+    fetch(`https://api.anthropic.com/v1/files/${fileId}`, {
+      method: 'DELETE',
+      headers: { 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-beta': 'files-api-2025-04-14' },
+    }).catch(() => {})
+
     const rawText: string = claudeData.content?.[0]?.text ?? ''
 
     if (claudeData.stop_reason === 'max_tokens') {
