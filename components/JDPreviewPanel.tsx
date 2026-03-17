@@ -142,7 +142,6 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
       setResult(h[0].result)
       setPrompt(h[0].prompt)
       setSelectedHistoryId(h[0].id)
-      setActiveTab('dimensions')
     }
   }, [ontologyId])
 
@@ -179,7 +178,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
     setResult(entry.result)
     setPrompt(entry.prompt)
     setSelectedHistoryId(entry.id)
-    setActiveTab('dimensions')
+    setActiveTab('usage')
   }
 
   const u = result?.usage
@@ -350,30 +349,32 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                         </p>
                         <div className="flex items-center gap-2 flex-wrap">
                           {/* Node coverage */}
-                          <span className="flex items-center gap-1 text-xs font-mono" style={{
-                            color: cov >= 60 ? '#10b981' : cov >= 30 ? '#f59e0b' : 'var(--text-dim)',
+                          <span className="flex items-center gap-1 font-mono" style={{
+                            fontSize: 13,
+                            color: cov >= 60 ? '#10b981' : cov >= 30 ? '#f59e0b' : 'var(--text-muted)',
+                            fontWeight: 600,
                           }}>
-                            {cov}% cov
+                            {cov}%
                             {covDelta !== null && covDelta !== 0 && (
-                              <span style={{ color: covDelta > 0 ? '#10b981' : '#ef4444', fontSize: 10 }}>
+                              <span style={{ color: covDelta > 0 ? '#10b981' : '#ef4444', fontSize: 11 }}>
                                 {covDelta > 0 ? '↑' : '↓'}{Math.abs(covDelta)}
                               </span>
                             )}
                           </span>
                           {/* Word count */}
-                          <span className="flex items-center gap-1 text-xs font-mono" style={{ color: 'var(--text-dim)' }}>
+                          <span className="flex items-center gap-1 font-mono" style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500 }}>
                             {fmt(words)}w
                             {wordsDelta !== null && wordsDelta !== 0 && (
-                              <span style={{ color: wordsDelta > 0 ? '#10b981' : '#ef4444', fontSize: 10 }}>
+                              <span style={{ color: wordsDelta > 0 ? '#10b981' : '#ef4444', fontSize: 11 }}>
                                 {wordsDelta > 0 ? '↑' : '↓'}{Math.abs(wordsDelta)}
                               </span>
                             )}
                           </span>
                           {/* Cost */}
-                          <span className="text-xs font-mono" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
+                          <span className="font-mono" style={{ color: 'var(--text-muted)', fontSize: 12 }}>
                             {fmtCost(entry.result.usage.cost_usd)}
                           </span>
-                          <span className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10, marginLeft: 'auto' }}>
+                          <span style={{ color: 'var(--text-dim)', fontSize: 11, marginLeft: 'auto' }}>
                             {fmtDate(entry.timestamp)}
                           </span>
                         </div>
