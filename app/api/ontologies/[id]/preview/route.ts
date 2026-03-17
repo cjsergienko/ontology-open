@@ -17,7 +17,8 @@ function serializeOntology(o: Ontology): string {
     'NODES:',
   ]
   for (const n of o.nodes) {
-    let line = `  [${n.type}] ${n.label}`
+    const displayLabel = n.label.replace(/_/g, ' ')
+    let line = `  [${n.type}] ${displayLabel}`
     if (n.description) line += `: ${n.description}`
     if (n.semantics) line += ` — ${n.semantics}`
     if (n.examples?.length) line += ` (e.g. ${n.examples.slice(0, 2).join(', ')})`
@@ -34,10 +35,14 @@ function serializeOntology(o: Ontology): string {
   return lines.filter(l => l !== null).join('\n')
 }
 
+function normalizeLabel(label: string): string {
+  return label.toLowerCase().replace(/_/g, ' ')
+}
+
 function measureNodeCoverage(output: string, o: Ontology) {
   const lower = output.toLowerCase()
   const mentionedSet = new Set(
-    o.nodes.filter(n => lower.includes(n.label.toLowerCase())).map(n => n.id)
+    o.nodes.filter(n => lower.includes(normalizeLabel(n.label))).map(n => n.id)
   )
   const mentionedCount = mentionedSet.size
   return {
@@ -58,21 +63,22 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
   const ontologyContext = serializeOntology(ontology)
 
-  const systemPrompt = `You are an expert assistant that uses ontologies as structured knowledge frameworks to generate precise, well-organized responses.
+  const systemPrompt = `You are an expert document generator that uses ontologies as structured knowledge frameworks to produce precise, comprehensive outputs.
 
-You have been given the following ontology as your knowledge structure. Use it to guide the concepts, terminology, relationships, and organization of your response — but write naturally for the reader, not as a list of node names.
+You have been given the following ontology as your knowledge structure. It defines every concept, dimension, property, and value that should be reflected in your response.
 
 <ontology>
 ${ontologyContext}
 </ontology>
 
-Generate a comprehensive, well-structured response that:
-- Reflects the concepts and relationships defined in the ontology
-- Uses accurate terminology from the ontology where appropriate
-- Is organized in a way that maps to the ontology's structure
-- Is practical and readable for a human audience
+CRITICAL INSTRUCTIONS:
+1. Your response MUST address every node in the ontology. For each [dimension], [property], and [class] node, incorporate its concept naturally into the text using the node's label as the term (e.g. a node labeled "role family" must result in content about role family, a node labeled "tech stack era" must appear as that phrase or close equivalent).
+2. For [value] nodes, use them as concrete choices where relevant (e.g. "senior", "remote", "equity structure").
+3. Organize your response to mirror the ontology's structure — group content by the dimension clusters.
+4. Write for a human reader: natural prose, not a list of node names.
+5. Coverage goal: reference at least 70% of all nodes by their label in the output.
 
-After your main response, append a dimension map in this exact format — a JSON block wrapped in <dimension_map> tags that maps the key ontology sections/clusters to the specific values used in your response:
+After your main response, append a dimension map in this exact format — a JSON block wrapped in <dimension_map> tags:
 
 <dimension_map>
 {
@@ -82,7 +88,7 @@ After your main response, append a dimension map in this exact format — a JSON
 }
 </dimension_map>
 
-Group properties by logical clusters from the ontology (e.g. ROLE IDENTITY, CULTURE FIT, TECHNICAL REQS). Use snake_case keys. Values should be concise — single words or short comma-separated lists extracted directly from what you generated.`
+Group by the ontology's dimension clusters (e.g. ROLE IDENTITY, ORGANIZATION CONTEXT, TECHNICAL REQUIREMENTS). Use snake_case keys matching node labels. Values should be concise — single words or short comma-separated lists extracted directly from what you generated.`
 
   const t0 = Date.now()
   let resp: Response
