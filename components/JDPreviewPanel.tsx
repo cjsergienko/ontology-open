@@ -368,46 +368,18 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                   if (!byType.has(n.type)) byType.set(n.type, [])
                   byType.get(n.type)!.push(n)
                 }
-                const sections = NODE_TYPE_ORDER.filter(t => byType.has(t))
+                const json: Record<string, Record<string, boolean>> = {}
+                for (const type of NODE_TYPE_ORDER) {
+                  const items = byType.get(type)
+                  if (items) json[NODE_TYPE_LABELS[type] ?? type] = Object.fromEntries(items.map(n => [n.label, n.mentioned]))
+                }
                 return (
-                  <div className="space-y-5">
-                    {sections.map(type => {
-                      const items = byType.get(type)!
-                      const mentionedCount = items.filter(n => n.mentioned).length
-                      return (
-                        <div key={type}>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: nodeColor(type) }}>
-                              {NODE_TYPE_LABELS[type] ?? type}
-                            </span>
-                            <span className="text-xs font-mono" style={{ color: 'var(--text-dim)' }}>
-                              {mentionedCount}/{items.length}
-                            </span>
-                          </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {items.map(n => (
-                              <span
-                                key={n.label}
-                                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs transition-opacity"
-                                style={n.mentioned ? {
-                                  background: `${nodeColor(n.type)}18`,
-                                  color: nodeColor(n.type),
-                                  border: `1px solid ${nodeColor(n.type)}40`,
-                                } : {
-                                  background: 'var(--surface)',
-                                  color: 'var(--text-dim)',
-                                  border: '1px solid var(--border)',
-                                  opacity: 0.5,
-                                }}
-                              >
-                                {n.label}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
+                  <pre
+                    className="text-xs leading-relaxed"
+                    style={{ color: 'var(--text-muted)', fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}
+                  >
+                    {JSON.stringify(json, null, 2)}
+                  </pre>
                 )
               })()}
 
