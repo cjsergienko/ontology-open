@@ -167,7 +167,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
       saveHistory(ontologyId, updated)
       setResult(data)
       setSelectedHistoryId(entry.id)
-      setActiveTab('dimensions')
+      setActiveTab('output')
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
     } finally {
@@ -326,24 +326,60 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
               <div className="mt-5">
                 <p className="text-xs font-medium mb-2" style={{ color: 'var(--text-dim)' }}>HISTORY</p>
                 <div className="flex flex-col gap-1">
-                  {history.map(entry => (
-                    <button
-                      key={entry.id}
-                      onClick={() => selectHistory(entry)}
-                      className="w-full text-left px-2.5 py-2 rounded transition-all"
-                      style={{
-                        background: entry.id === selectedHistoryId ? 'var(--accent-dim)' : 'var(--surface)',
-                        border: `1px solid ${entry.id === selectedHistoryId ? 'var(--accent)' : 'var(--border)'}`,
-                      }}
-                    >
-                      <p className="text-xs truncate" style={{ color: entry.id === selectedHistoryId ? 'var(--accent)' : 'var(--text-muted)' }}>
-                        {entry.prompt}
-                      </p>
-                      <p className="text-xs mt-0.5" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
-                        {fmtDate(entry.timestamp)} · {fmtCost(entry.result.usage.cost_usd)}
-                      </p>
-                    </button>
-                  ))}
+                  {history.map((entry, i) => {
+                    const prev = history[i + 1]
+                    const cov = entry.result.node_coverage.pct
+                    const prevCov = prev?.result.node_coverage.pct
+                    const covDelta = prevCov !== undefined ? cov - prevCov : null
+                    const words = entry.result.output.split(/\s+/).filter(Boolean).length
+                    const prevWords = prev ? prev.result.output.split(/\s+/).filter(Boolean).length : null
+                    const wordsDelta = prevWords !== null ? words - prevWords : null
+                    const isActive = entry.id === selectedHistoryId
+                    return (
+                      <button
+                        key={entry.id}
+                        onClick={() => selectHistory(entry)}
+                        className="w-full text-left px-2.5 py-2 rounded transition-all"
+                        style={{
+                          background: isActive ? 'var(--accent-dim)' : 'var(--surface)',
+                          border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
+                        }}
+                      >
+                        <p className="text-xs truncate mb-1" style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
+                          {entry.prompt}
+                        </p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {/* Node coverage */}
+                          <span className="flex items-center gap-1 text-xs font-mono" style={{
+                            color: cov >= 60 ? '#10b981' : cov >= 30 ? '#f59e0b' : 'var(--text-dim)',
+                          }}>
+                            {cov}% cov
+                            {covDelta !== null && covDelta !== 0 && (
+                              <span style={{ color: covDelta > 0 ? '#10b981' : '#ef4444', fontSize: 10 }}>
+                                {covDelta > 0 ? '↑' : '↓'}{Math.abs(covDelta)}
+                              </span>
+                            )}
+                          </span>
+                          {/* Word count */}
+                          <span className="flex items-center gap-1 text-xs font-mono" style={{ color: 'var(--text-dim)' }}>
+                            {fmt(words)}w
+                            {wordsDelta !== null && wordsDelta !== 0 && (
+                              <span style={{ color: wordsDelta > 0 ? '#10b981' : '#ef4444', fontSize: 10 }}>
+                                {wordsDelta > 0 ? '↑' : '↓'}{Math.abs(wordsDelta)}
+                              </span>
+                            )}
+                          </span>
+                          {/* Cost */}
+                          <span className="text-xs font-mono" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
+                            {fmtCost(entry.result.usage.cost_usd)}
+                          </span>
+                          <span className="text-xs" style={{ color: 'var(--text-dim)', fontSize: 10, marginLeft: 'auto' }}>
+                            {fmtDate(entry.timestamp)}
+                          </span>
+                        </div>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -353,7 +389,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
           <div className="flex-1 flex flex-col overflow-hidden">
             {result && (
               <div className="flex items-center gap-1 px-5 pt-3 pb-0 shrink-0" style={{ borderBottom: '1px solid var(--border)' }}>
-                {(['output', 'dimensions', 'coverage', 'usage'] as const).map(tab => (
+                {(['output', 'usage', 'dimensions', 'coverage'] as const).map(tab => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -364,7 +400,7 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
                       marginBottom: -1,
                     }}
                   >
-                    {tab === 'output' ? 'Output' : tab === 'dimensions' ? 'Dimension Map' : tab === 'coverage' ? '🗂 Node Coverage' : '⚡ Usage & Timing'}
+                    {tab === 'output' ? 'Output' : tab === 'usage' ? '⚡ Usage & Timing' : tab === 'dimensions' ? 'Dimension Map' : '🗂 Node Coverage'}
                   </button>
                 ))}
               </div>
