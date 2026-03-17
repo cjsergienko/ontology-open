@@ -9,6 +9,8 @@ interface SimNode {
   id: string
   x: number
   y: number
+  fx?: number | null
+  fy?: number | null
 }
 
 interface SimLink {
@@ -16,10 +18,33 @@ interface SimLink {
   target: string
 }
 
+function findMainNode(nodes: Node[], edges: Edge[]): string | null {
+  const degree = new Map<string, number>()
+  for (const n of nodes) degree.set(n.id, 0)
+  for (const e of edges) {
+    degree.set(e.source, (degree.get(e.source) ?? 0) + 1)
+    degree.set(e.target, (degree.get(e.target) ?? 0) + 1)
+  }
+  let best: string | null = null
+  let bestDeg = -1
+  for (const [id, deg] of degree) {
+    if (deg > bestDeg) { bestDeg = deg; best = id }
+  }
+  return best
+}
+
 export function applyForceLayout(nodes: Node[], edges: Edge[]): Node[] {
   if (nodes.length === 0) return nodes
 
-  const simNodes: SimNode[] = nodes.map(n => ({ id: n.id, x: 0, y: 0 }))
+  const mainId = findMainNode(nodes, edges)
+
+  const simNodes: SimNode[] = nodes.map(n => ({
+    id: n.id,
+    x: 0,
+    y: 0,
+    fx: n.id === mainId ? 0 : null,
+    fy: n.id === mainId ? 0 : null,
+  }))
   const simLinks: SimLink[] = edges
     .filter(e => nodes.some(n => n.id === e.source) && nodes.some(n => n.id === e.target))
     .map(e => ({ source: e.source, target: e.target }))
