@@ -71,10 +71,10 @@ export function SiteFooter() {
               </div>
               <div>
                 <div style={{ fontSize: 11, color: '#6366f1', letterSpacing: '0.1em', marginBottom: 12 }}>CONTACT</div>
-                <a href="mailto:hello@ontology.live" style={{
+                <a href="mailto:contact@pivotsglobal.com" style={{
                   display: 'block', fontSize: 13, color: '#475569', textDecoration: 'none',
                   marginBottom: 8,
-                }}>hello@ontology.live</a>
+                }}>contact@pivotsglobal.com</a>
               </div>
             </div>
           </div>

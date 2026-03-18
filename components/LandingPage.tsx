@@ -123,7 +123,7 @@ const PRICING = [
     tagline: 'On-premise & deep integration',
     highlighted: false,
     cta: 'Contact us',
-    ctaHref: 'mailto:hello@ontology.live',
+    ctaHref: 'mailto:contact@pivotsglobal.com',
     features: [
       'Unlimited ontologies',
       'On-premise deployment',
@@ -223,7 +223,7 @@ function CustomCard() {
 
       {/* CTA */}
       <a
-        href="mailto:hello@ontology.live"
+        href="mailto:contact@pivotsglobal.com"
         style={{
           display: 'block',
           textAlign: 'center',
