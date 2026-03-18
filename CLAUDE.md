@@ -4,7 +4,7 @@
 
 This is the **ontology-as-foundation hub** — a visual web tool for designing ontologies, taxonomies, and knowledge graphs that drive AI agent pipelines. The ontology builder itself is at `/Users/sserg/ontology/`. The broader vision: ontologies defined here become the structural backbone for specialized LLM agent clusters across multiple domains.
 
-**Live URL:** https://ontology.live (also accessible at https://hiringaihelp.com)
+**Live URL:** https://ontology.live
 **Port:** 3900
 **PM2 name:** `ontology-builder`
 **Tunnel:** `tunnel-ontology-live` → `~/.cloudflared/config-ontology-live.yml`
@@ -29,9 +29,8 @@ pm2 logs ontology-builder --lines 50
 cd /Users/sserg/ontology && npm run dev -- --port 3900
 ```
 
-Cloudflare tunnels:
+Cloudflare tunnel:
 - `tunnel-ontology-live` → `~/.cloudflared/config-ontology-live.yml` (ontology.live)
-- `tunnel-hiringaihelp` → `~/.cloudflared/config-hiringaihelp.yml` (hiringaihelp.com, legacy)
 
 ---
 
