@@ -65,10 +65,11 @@ test('correct PIN via API sets cookie', async ({ request }) => {
   expect(res.status()).toBe(200)
   const body = await res.json()
   expect(body.ok).toBe(true)
-  // Cookie should be set
-  const headers = res.headersArray()
-  const setCookie = headers.find(h => h.name.toLowerCase() === 'set-cookie')
-  expect(setCookie?.value).toContain('ontology_auth=1')
+  // Cookie should be set (response may have multiple set-cookie headers; find ours)
+  const authCookie = res.headersArray()
+    .filter(h => h.name.toLowerCase() === 'set-cookie')
+    .find(h => h.value.includes('ontology_auth=1'))
+  expect(authCookie?.value).toContain('ontology_auth=1')
 })
 
 test('wrong PIN via API returns 401', async ({ request }) => {
