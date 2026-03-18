@@ -23,7 +23,7 @@ async function login(page: any) {
   await page.goto('/login')
   await page.getByPlaceholder('PIN').fill(PIN)
   await page.getByRole('button', { name: 'Enter' }).click()
-  await expect(page).toHaveURL('/')
+  await expect(page).toHaveURL('/dashboard')
 }
 
 // ─── Modal UI ───────────────────────────────────────────────────────────────

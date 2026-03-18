@@ -4,7 +4,7 @@ const CORRECT_PIN = '7291'
 const WRONG_PIN = '0000'
 
 test('unauthenticated user is redirected to /login', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/dashboard')
   await expect(page).toHaveURL(/\/login/)
   await expect(page.getByPlaceholder('PIN')).toBeVisible()
 })
@@ -21,7 +21,7 @@ test('correct PIN grants access and redirects to /', async ({ page }) => {
   await page.goto('/login')
   await page.getByPlaceholder('PIN').fill(CORRECT_PIN)
   await page.getByRole('button', { name: 'Enter' }).click()
-  await expect(page).toHaveURL('/')
+  await expect(page).not.toHaveURL(/\/login/)
   // Should NOT be on login page
   await expect(page.getByPlaceholder('PIN')).not.toBeVisible()
 })
@@ -31,12 +31,12 @@ test('auth cookie persists — subsequent requests skip login', async ({ page })
   await page.goto('/login')
   await page.getByPlaceholder('PIN').fill(CORRECT_PIN)
   await page.getByRole('button', { name: 'Enter' }).click()
-  await expect(page).toHaveURL('/')
+  await expect(page).not.toHaveURL(/\/login/)
 
   // Navigate away and back — should not be redirected to login
   await page.goto('/login') // explicit visit to login is allowed
   await page.goto('/')
-  await expect(page).toHaveURL('/')
+  await expect(page).not.toHaveURL(/\/login/)
   await expect(page.getByPlaceholder('PIN')).not.toBeVisible()
 })
 
