@@ -62,7 +62,6 @@ body > main {
   overflow: auto;
   display: flex;
   flex-direction: column;
-  padding: 16px;
 }
 
 /* Landing page — full bleed, no padding */
