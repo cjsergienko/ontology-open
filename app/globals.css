@@ -10,7 +10,7 @@
   --border2: #243550;
   --text: #e2e8f0;
   --text-muted: #64748b;
-  --text-dim: #334155;
+  --text-dim: #4b6070;
   --accent: #f59e0b;
   --accent-dim: rgba(245, 158, 11, 0.12);
   --blue: #3b82f6;
@@ -36,9 +36,8 @@ body {
   line-height: 1.6;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: 100%;
+  overflow: hidden;
 }
 
 body::before {
@@ -59,15 +58,18 @@ body::before {
 
 body > main {
   flex: 1;
+  min-height: 0;
   overflow: auto;
   display: flex;
   flex-direction: column;
+  background: var(--bg);
+  border-radius: 0;
 }
 
-/* Landing page — full bleed, no padding */
+/* Landing page — full bleed, allow scroll */
 body > main:has(> .landing-page) {
   padding: 0;
-  overflow: visible;
+  overflow: auto;
 }
 
 /* React Flow overrides */

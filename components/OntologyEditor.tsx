@@ -275,12 +275,12 @@ function OntologyEditorInner({ initialOntology }: Props) {
     <div className="h-full flex flex-col" style={{ background: 'var(--bg)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 24px rgba(0,0,0,0.08)' }}>
       {/* Header */}
       <header
-        className="flex items-center justify-between px-5 py-3 shrink-0"
-        style={{ borderBottom: '1px solid var(--border)' }}
+        className="flex items-center justify-between shrink-0"
+        style={{ borderBottom: '1px solid var(--border)', padding: '0 40px', height: 56 }}
       >
         <div className="flex items-center gap-4">
           <Link
-            href="/"
+            href="/dashboard"
             className="flex items-center gap-1.5 text-xs transition-colors"
             style={{ color: 'var(--text-muted)' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
@@ -304,7 +304,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: 'var(--text-dim)' }}>
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
             {nodes.length} nodes · {edges.length} edges
           </span>
           <button
@@ -346,7 +346,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
                       onMouseLeave={e => (e.currentTarget.style.background = opt.kind === activeLayout ? 'var(--accent-dim)' : 'transparent')}
                     >
                       <span className="text-xs font-medium" style={{ color: opt.kind === activeLayout ? 'var(--accent)' : 'var(--text)' }}>{opt.label}</span>
-                      <span className="text-xs mt-0.5" style={{ color: 'var(--text-dim)', fontSize: 10 }}>{opt.description}</span>
+                      <span className="text-xs mt-0.5" style={{ color: 'var(--text-muted)', fontSize: 10 }}>{opt.description}</span>
                     </button>
                   ))}
                 </div>
@@ -389,7 +389,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
             background: 'var(--surface)',
           }}
         >
-          <p className="text-xs px-1 mb-2 font-medium" style={{ color: 'var(--text-dim)' }}>
+          <p className="text-xs px-1 mb-2 font-medium" style={{ color: 'var(--text-muted)' }}>
             ADD NODE
           </p>
           {NODE_TYPE_OPTIONS.map(({ type, icon, desc }) => (
@@ -417,7 +417,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
                 <div className="text-xs font-medium" style={{ color: 'var(--text)' }}>
                   {NODE_LABELS[type]}
                 </div>
-                <div className="text-xs leading-tight" style={{ color: 'var(--text-dim)', fontSize: 10 }}>
+                <div className="text-xs leading-tight" style={{ color: 'var(--text-muted)', fontSize: 10 }}>
                   {desc}
                 </div>
               </div>
@@ -426,7 +426,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
 
           <div style={{ height: 1, background: 'var(--border)', margin: '8px 0' }} />
 
-          <p className="text-xs px-1 mb-1 font-medium" style={{ color: 'var(--text-dim)' }}>
+          <p className="text-xs px-1 mb-1 font-medium" style={{ color: 'var(--text-muted)' }}>
             CONNECT AS
           </p>
           {EDGE_TYPE_OPTIONS.map(type => (
@@ -467,6 +467,7 @@ function OntologyEditorInner({ initialOntology }: Props) {
             minZoom={0.1}
             maxZoom={2}
             deleteKeyCode="Delete"
+            proOptions={{ hideAttribution: true }}
           >
             <Background
               variant={BackgroundVariant.Dots}

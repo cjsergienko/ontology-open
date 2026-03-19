@@ -15,8 +15,8 @@ export function SiteFooter() {
       fontFamily: "'JetBrains Mono', monospace",
     }}>
       <div style={{
-        maxWidth: 1200,
-        margin: '0 auto',
+        maxWidth: isLanding ? 1200 : 'none',
+        margin: isLanding ? '0 auto' : 0,
       }}>
         {isLanding ? (
           <div style={{
@@ -89,7 +89,7 @@ export function SiteFooter() {
           borderTop: isLanding ? '1px solid rgba(99,102,241,0.06)' : 'none',
         }}>
           {isLanding ? (
-            <p style={{ fontSize: 12, color: '#1e293b', margin: 0 }}>
+            <p style={{ fontSize: 12, color: '#64748b', margin: 0 }}>
               © 2026 ontology.live
             </p>
           ) : (
@@ -110,7 +110,7 @@ export function SiteFooter() {
               </span>
             </a>
           )}
-          <p style={{ fontSize: 12, color: '#1e293b', margin: 0 }}>
+          <p style={{ fontSize: 12, color: '#64748b', margin: 0 }}>
             {!isLanding && '© 2026 ontology.live — Visual ontology & knowledge graph designer'}
           </p>
         </div>
