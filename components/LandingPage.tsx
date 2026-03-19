@@ -264,8 +264,10 @@ export function LandingPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: planKey }),
+        redirect: 'manual',
       })
-      if (res.status === 401) {
+      // Not authenticated (NextAuth 307 or explicit 401)
+      if (res.type === 'opaqueredirect' || res.status === 401 || !res.ok) {
         window.location.href = '/login'
         return
       }
