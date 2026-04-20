@@ -69,25 +69,13 @@ EOF
 git fetch origin && git checkout main && git reset --hard origin/main
 ```
 
-## Two-remote git structure
-This repo has two remotes:
+## Git remotes
 | Remote | Repo | Purpose |
 |--------|------|---------|
-| `origin` | `cjsergienko/ontology` | Private — primary, used for deployment |
-| `public` | `cjsergienko/ontology-open` | Public — open research edition, mirror of main |
+| `origin` | `cjsergienko/ontology-open` | **Primary** — all work, all pushes go here |
+| `backup` | `cjsergienko/ontology` | History only — never push here |
 
-After merging to main, mirror to the public repo:
-
-```bash
-# Check remotes
-git remote -v
-
-# Normal flow (private)
-git push origin feature/your-branch
-
-# Mirror main to public after merge
-git push public main
-```
+**All work goes to `origin` (ontology-open). Never touch `backup`.**
 
 ## Deploy
 `ontology-builder` runs in **dev mode** via PM2 — hot-reload is automatic.
