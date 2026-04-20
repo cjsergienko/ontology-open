@@ -26,6 +26,7 @@ Visual web tool for designing ontologies, taxonomies, and knowledge graphs that 
 | **ui-components** | `.claude/agents/ui-components.md` | editing components/, CSS, design tokens, React Flow |
 | **api-data** | `.claude/agents/api-data.md` | API routes, storage, types, SSE, import/upload |
 | **e2e-testing** | `.claude/agents/e2e-testing.md` | writing or fixing Playwright tests |
+| **research** | `.claude/agents/research.md` | GOI paper · LaTeX · sections · citations · literature · ISWC |
 
 ---
 
