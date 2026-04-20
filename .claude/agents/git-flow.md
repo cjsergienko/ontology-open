@@ -69,6 +69,14 @@ EOF
 git fetch origin && git checkout main && git reset --hard origin/main
 ```
 
+## Git remotes
+| Remote | Repo | Purpose |
+|--------|------|---------|
+| `origin` | `cjsergienko/ontology-open` | **Primary** — all work, all pushes go here |
+| `backup` | `cjsergienko/ontology` | History only — never push here |
+
+**All work goes to `origin` (ontology-open). Never touch `backup`.**
+
 ## Deploy
 `ontology-builder` runs in **dev mode** via PM2 — hot-reload is automatic.
 No build step needed. Changes are live as soon as code is on disk.

@@ -38,7 +38,6 @@ import {
   DownloadIcon, PlayIcon,
 } from 'lucide-react'
 import Link from 'next/link'
-import { stringify as yamlStringify } from 'yaml'
 import { JDPreviewPanel } from './JDPreviewPanel'
 import { applyLayout, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
 
@@ -365,14 +364,26 @@ function OntologyEditorInner({ initialOntology, readOnly = false }: Props) {
     downloadFile(JSON.stringify(data, null, 2), `${slug}.json`, 'application/json')
   }, [buildExportData, downloadFile, ontology.name])
 
-  const exportYAML = useCallback(() => {
-    const data = buildExportData()
+  const exportYAML = useCallback(async () => {
+    setDownloadOpen(false)
+    const res = await fetch(`/api/ontologies/${ontology.id}/export`)
+    if (res.status === 403) {
+      alert('YAML export is not available on the free plan. Please upgrade.')
+      return
+    }
+    if (!res.ok) return
+    const blob = await res.blob()
     const slug = ontology.name.replace(/\s+/g, '_').toLowerCase()
-    downloadFile(yamlStringify(data), `${slug}.yaml`, 'text/yaml')
-  }, [buildExportData, downloadFile, ontology.name])
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${slug}.yaml`
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [ontology.id, ontology.name])
 
   return (
-    <div className="h-full flex flex-col" style={{ background: 'var(--bg)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 24px rgba(0,0,0,0.08)' }}>
+    <div className="flex-1 flex flex-col min-h-0" style={{ background: 'var(--bg)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 2px 24px rgba(0,0,0,0.08)' }}>
       {/* Header */}
       <header
         className="flex items-center justify-between shrink-0"

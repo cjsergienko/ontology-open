@@ -11,7 +11,8 @@ function uuid(): string {
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { XIcon, PlayIcon, AlertCircleIcon, ClockIcon } from 'lucide-react'
+import { XIcon, PlayIcon, AlertCircleIcon, ClockIcon, DatabaseIcon, UploadIcon } from 'lucide-react'
+import { TokenLimitModal } from './TokenLimitModal'
 
 interface NodeCoverageItem {
   label: string
@@ -126,9 +127,13 @@ function fmtDate(ts: number): string {
 
 export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
   const [prompt, setPrompt] = useState('Generate a job description for a senior software engineer at a B2B SaaS startup. Remote, full-time.')
+  const [dataset, setDataset] = useState('')
+  const [datasetName, setDatasetName] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<PreviewResult | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showTokenLimit, setShowTokenLimit] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -155,6 +160,18 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
     }
   }, [ontologyId])
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = ev => {
+      setDataset(ev.target?.result as string)
+      setDatasetName(file.name)
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
   const generate = async () => {
     setLoading(true)
     setError(null)
@@ -163,10 +180,11 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
       const resp = await fetch(`/api/ontologies/${ontologyId}/preview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt, ...(dataset.trim() ? { dataset: dataset.trim() } : {}) }),
       })
       if (!resp.ok) {
         const err = await resp.json()
+        if (resp.status === 402) { setShowTokenLimit(true); setLoading(false); return }
         throw new Error(err.error || 'Generation failed')
       }
       const data: PreviewResult = await resp.json()
@@ -196,8 +214,10 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
   const outputWords = result?.output ? result.output.split(/\s+/).filter(Boolean).length : 0
 
   return (
+    <>
+    {showTokenLimit && <TokenLimitModal onClose={() => setShowTokenLimit(false)} />}
     <div
-      className="fixed inset-0 z-50 flex"
+      className="fixed inset-0 z-[110] flex"
       style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
@@ -238,6 +258,8 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
             className="flex flex-col overflow-y-auto shrink-0"
             style={{ width: 296, borderRight: '1px solid var(--border)', padding: '16px' }}
           >
+
+            {/* PROMPT */}
             <label className="text-xs font-medium mb-1.5" style={{ color: 'var(--text-dim)' }}>PROMPT</label>
             <textarea
               value={prompt}
@@ -717,5 +739,6 @@ export function JDPreviewPanel({ ontologyId, ontologyName, onClose }: Props) {
         </div>
       </div>
     </div>
+    </>
   )
 }

@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { auth } from '@/auth'
-import { getOrCreateUser } from '@/lib/users'
+import { getSessionUser } from '@/lib/authHelper'
+import { getUserByEmail } from '@/lib/users'
 import { PLAN_LIMITS, type Plan } from '@/lib/plans'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: Request) {
-  const session = await auth()
-  if (!session?.user?.email) {
+  const sessionUser = await getSessionUser()
+  if (!sessionUser) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -18,14 +18,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
   }
 
-  const { user } = getOrCreateUser(session.user.email, session.user.name ?? '')
+  const user = getUserByEmail(sessionUser.email)!
 
   // Create or reuse Stripe customer
   let customerId = user.stripe_customer_id
   if (!customerId) {
     const customer = await stripe.customers.create({
-      email: session.user.email,
-      name: session.user.name ?? undefined,
+      email: sessionUser.email,
+      name: sessionUser.name ?? undefined,
       metadata: { userId: user.id },
     })
     customerId = customer.id

@@ -10,6 +10,9 @@ import { getOrCreateUser } from '@/lib/users'
 const TEST_EMAIL = 'e2e@ontology.live'
 const TEST_NAME = 'E2E Test User'
 
+export const PLAN_TEST_EMAIL = 'e2e-plan@ontology.live'
+export const PLAN_TEST_NAME = 'E2E Plan Test User'
+
 export async function getSessionUser(): Promise<{ email: string; name: string; userId: string } | null> {
   // 1. Real NextAuth session
   const session = await auth()
@@ -22,12 +25,15 @@ export async function getSessionUser(): Promise<{ email: string; name: string; u
   if (process.env.NODE_ENV !== 'production') {
     const jar = await cookies()
     if (jar.get('ontology_test_session')?.value === '1') {
-      const { user } = getOrCreateUser(TEST_EMAIL, TEST_NAME)
-      // Ensure test user has pro plan so import/analyze limits don't block tests
-      if (user.plan === 'free') {
-        const { getDb } = await import('@/lib/db')
-        getDb().prepare(`UPDATE users SET plan = 'pro' WHERE email = ?`).run(TEST_EMAIL)
+      // ontology_plan_user=1 → plan/limit test user (keeps whatever plan is in DB)
+      if (jar.get('ontology_plan_user')?.value === '1') {
+        const { user } = getOrCreateUser(PLAN_TEST_EMAIL, PLAN_TEST_NAME)
+        return { email: user.email, name: user.name, userId: user.id }
       }
+      // Default main test user → always on pro with reset counters so import/analyze don't block tests
+      const { user } = getOrCreateUser(TEST_EMAIL, TEST_NAME)
+      const { getDb } = await import('@/lib/db')
+      getDb().prepare(`UPDATE users SET plan = 'pro', import_count = 0, analyze_count = 0 WHERE email = ?`).run(TEST_EMAIL)
       return { email: user.email, name: user.name, userId: user.id }
     }
   }
