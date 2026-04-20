@@ -1,0 +1,38 @@
+"Paper Title","Paper Link","Publication Year","Publication Type","Publication Title","Author Names","DOI","PDF Link","Snippet","Abstract"
+"Ontology Development Kit: a toolkit for building, maintaining and standardizing biomedical ontologies","https://scispace.com/paper/ontology-development-kit-a-toolkit-for-building-maintaining-24ulc6kz","2022","Journal Article","Database","Nicolas Matentzoglu
+Damien Goutte-Gattat
+Shawn Zheng Kai Tan
+James P. Balhoff
+Seth Carbon
+Anita Caron
+William D. Duncan
+Joe E. Flack
+Melissa A. Haendel
+Nomi L. Harris
+William R. Hogan
+C. Hoyt
+Rebecca C. Jackson
+HyeongSik Kim
+Huseyin Kir
+Martin Larralde
+Julie A. McMurry
+James A. Overton
+Bjoern Peters
+Ch. Pilgrim
+Raymund Stefancsik
+Sofia M. C. Robb
+Sabrina Toro
+Nicole Vasilevsky
+Ramona Walls
+Christopher J. Mungall
+David Osumi-Sutherland","10.1093/database/baac087","https://academic.oup.com/database/article-pdf/doi/10.1093/database/baac087/46394231/baac087.pdf","… Protégé (28) is a visual ontology editor that is free and open source. Protégé has a few key … to use and navigate, making it highly accessible to non-technical users. It also has a library of …","Abstract Similar to managing software packages, managing the ontology life cycle involves multiple complex workflows such as preparing releases, continuous quality control checking and dependency management. To manage these processes, a diverse set of tools is required, from command-line utilities to powerful ontology-engineering environmentsr. Particularly in the biomedical domain, which has developed a set of highly diverse yet inter-dependent ontologies, standardizing release practices and metadata and establishing shared quality standards are crucial to enable interoperability. The Ontology Development Kit (ODK) provides a set of standardized, customizable and automatically executable workflows, and packages all required tooling in a single Docker image. In this paper, we provide an overview of how the ODK works, show how it is used in practice and describe how we envision it driving standardization efforts in our community. Database URL: https://github.com/INCATools/ontology-development-kit"
+"Semantic Web: An overview and a. net-based tool for knowledge extraction and ontology development","https://scispace.com/paper/semantic-web-an-overview-and-a-net-based-tool-for-knowledge-59d0nix5of","2023","Book Chapter","","Noman Islam
+Darakhshan Syed
+Zubair A. Shaikh","10.1201/9781003441137-7","","… The overall interface is loaded once, or the appropriate resources can be loaded dynamically in response to THE end-user’s actions. The web-interface, however, does not change after …",""
+"Using data fabric architecture to create personalized visual analytics systems in the field of digital medicine","https://scispace.com/paper/using-data-fabric-architecture-to-create-personalized-visual-3ubuuodpms","2023","Journal Article","Научная визуализация","Svetlana Chuprina","10.26583/sv.15.5.05","http://sv-journal.org/2023-5/05/en.pdf","… analysis, significantly simplify access to end–user data, providing the user the opportunity to … To design the ontology, we utilize our own visual ontology editor named ONTOLIS [4, 1112] …","The paper describes an innovative approach of applying data factory technologies, which have found their successful practical application to create new generations of corporate data warehouses, are proposed to be used to develop personalized visual analytics environments. The approach provides access to digital data of a particular person from both heterogeneous distributed external and local sources not on the principles of their consolidation, but on the principles of virtual integration. The application of the described approach is demonstrated by the example of the development of visual analytics tools in the field of digital medicine. The emphasis is on the technological aspects of applying the concept of data factories for the development of personalized visual analytics services, means of semantic integration of heterogeneous data sources and their adaptation not only to heterogeneous structured and unstructured data sources, but also to the semantic content of various subject areas."
+"Knowledge Graph Creation and Management Made Easy with KGraphX","https://scispace.com/paper/knowledge-graph-creation-and-management-made-easy-with-3t4h5c1rp7yi","","","","Ahmad Hemid
+Abderrahmane Khiat
+Megha Jayakumar
+Christoph Lange
+Christoph Quix
+Stefan Decker","10.1007/978-3-031-68312-1_4","https://www.researchgate.net/profile/Ahmad-Hemid/publication/376305245_Knowledge_Graph_Creation_and_Management_Made_Easy_with_KGraphX/links/6572ed36ea5f7f02054f0d8c/Knowledge-Graph-Creation-and-Management-Made-Easy-with-KGraphX.pdf","… inspiration from the VOWL Specifications upon which WebVOWL is based, KGraphX tailors intuitive visual elements and employs natural language wording to cater to non-technical …","Tools for creating and managing knowledge graphs are a crucial ingredient of data management in various fields such as healthcare or manufacturing. Knowledge graphs comprise entities, attributes, and relationships, which help machines understand the meaning of data and facilitate data sharing. Although knowledge graphs are a key concept for many applications, their creation remains complex and challenging, especially for novice users. To address this limitation, we have developed KGraphX, an easy-to-use visual editor to make knowledge graph creation for users with limited knowledge of Semantic Web technology more engaging. KGraphX uses visual elements, predictive typing, and augmented information from existing knowledge repositories to create knowledge graphs easily. In a task-based evaluation, we have proven the usability and quality of the created knowledge graphs using KGraphX. Compared to other tools, our tool significantly enhanced knowledge graph creation by 80%, while also improving its clarity by 91%."

@@ -1,0 +1,108 @@
+"Paper Title","Paper Link","Publication Year","Publication Type","Publication Title","Author Names","DOI","PDF Link","Snippet","Abstract"
+"Autoschemakg: Autonomous knowledge graph construction through dynamic schema induction from web-scale corpora","https://scispace.com/paper/autoschemakg-autonomous-knowledge-graph-construction-through-k561asv6hgsd","2025","Journal Article","arXiv.org","Jianwei Bai
+Wei Fan
+Qi Hu
+Qing Zong
+Chunyang Li
+Hong Ting Tsang
+Hongyu Luo
+Yauwai Yim
+Haoyu Huang
+Xiao Zhou
+Feng Qin
+Tianshi Zheng
+Xi Peng
+Xin Yao
+Huiwen Yang
+Leijie Wu
+Yi Ji
+Gong Zhang
+Renhai Chen
+Yangqiu Song","10.48550/arxiv.2505.23628","https://arxiv.org/pdf/2505.23628","… Our system leverages large language models to simultaneously extract knowledge triples … 50 million documents, we construct ATLAS (Automated Triple Linking And Schema induction), …",""
+"Automated mining of structured knowledge from text in the era of large language models","https://scispace.com/paper/automated-mining-of-structured-knowledge-from-text-in-the-2nvv28p8aptt","2024","Journal Article","","Yunyi Zhang
+Ming Zhong
+Siru Ouyang
+Yizhu Jiao
+Sizhe Zhou
+Linyi Ding
+Jiawei Han","10.1145/3637528.3671469","https://dl.acm.org/doi/pdf/10.1145/3637528.3671469","… to generate pseudo documents for each class. Then pseudo documents are used as … text to structured knowledge schema based on pre-trained language models. TAGREAL [36…",""
+"Decompose, Enrich, and Extract! Schema-aware Event Extraction using LLMs.","https://scispace.com/paper/decompose-enrich-and-extract-schema-aware-event-extraction-5dz1dzsl90","2024","Preprint","","Fatemeh Shiri
+Văn Hùng Nguyễn
+Farhad Moghimifar
+Jaehyeok Yoo
+Gholamreza Haffari
+Yuanfang Li","10.48550/arxiv.2406.01045","https://arxiv.org/pdf/2406.01045","… This work focuses on harnessing LLMs for automated Event … with the emergence of Large Language Models (LLMs), have … OntoGPT applies a knowledge schema on the input text and …","Large Language Models (LLMs) demonstrate significant capabilities in processing natural language data, promising efficient knowledge extraction from diverse textual sources to enhance situational awareness and support decision-making. However, concerns arise due to their susceptibility to hallucination, resulting in contextually inaccurate content. This work focuses on harnessing LLMs for automated Event Extraction, introducing a new method to address hallucination by decomposing the task into Event Detection and Event Argument Extraction. Moreover, the proposed method integrates dynamic schema-aware augmented retrieval examples into prompts tailored for each specific inquiry, thereby extending and adapting advanced prompting techniques such as Retrieval-Augmented Generation. Evaluation findings on prominent event extraction benchmarks and results from a synthesized benchmark illustrate the method's superior performance compared to baseline approaches. "
+"Llms4schemadiscovery: A human-in-the-loop workflow for scientific schema mining with large language models","https://scispace.com/paper/llms4schemadiscovery-a-human-in-the-loop-workflow-for-a7ohd9kmq9vs","2025","Journal Article","arXiv.org","Sameer Sadruddin
+Jennifer D'Souza
+Eleni Poupaki
+Alex Watkins
+Hamed Babaei Giglou
+Anisa Rula
+Bora Karasulu
+Sören Auer
+Adrie Mackus
+Erwin Kessels","10.48550/arxiv.2504.00752","https://arxiv.org/pdf/2504.00752?","… with human feedback to automate and refine schema extraction. … research papers, these documents offer limited structured … It uniquely combines automated extraction with expert …",""
+"Causal schema induction for knowledge discovery","https://scispace.com/paper/causal-schema-induction-for-knowledge-discovery-2jwhozyn","2023","Journal Article","arXiv.org","Michael Regan
+Jena D. Hwang
+Keisuke Sakaguchi
+James Pustejovsky","10.48550/arXiv.2303.15381","https://arxiv.org/pdf/2303.15381","… We report baseline results with large language models and graph neural networks (§6), … We then examine results, measuring similarity using automated metrics we outline next. …","Making sense of familiar yet new situations typically involves making generalizations about causal schemas, stories that help humans reason about event sequences. Reasoning about events includes identifying cause and effect relations shared across event instances, a process we refer to as causal schema induction. Statistical schema induction systems may leverage structural knowledge encoded in discourse or the causal graphs associated with event meaning, however resources to study such causal structure are few in number and limited in size. In this work, we investigate how to apply schema induction models to the task of knowledge discovery for enhanced search of English-language news texts. To tackle the problem of data scarcity, we present Torquestra, a manually curated dataset of text-graph-schema units integrating temporal, event, and causal structures. We benchmark our dataset on three knowledge discovery tasks, building and evaluating models for each. Results show that systems that harness causal structure are effective at identifying texts sharing similar causal meaning components rather than relying on lexical cues alone. We make our dataset and models available for research purposes."
+"Human-in-the-loop schema induction","https://scispace.com/paper/human-in-the-loop-schema-induction-3pqcwtuc","2023","Proceedings Article","Annual Meeting of the Association for Computational Linguistics","Tianyi Zhang
+Isaac Tham
+Zhaoyi Hou
+Jia Chen Ren
+Liyang Zhou
+Hai Xu
+Li Zhang
+Lara J. Martin
+Rotem Dror
+Sha Li
+Heng Ji
+Martha Palmer
+Susan Brown
+Reece Suchocki
+Chris Callison-Burch","10.48550/arXiv.2302.13048","https://aclanthology.org/2023.acl-demo.1.pdf","… and inefficient, while wholly automated generations can be unreliable, we propose a human-in-the-loop schema curation interface with pre-trained large language models (LLMs) as the …","Schema induction builds a graph representation explaining how events unfold in a scenario. Existing approaches have been based on information retrieval (IR) and information extraction (IE), often with limited human curation. We demonstrate a human-in-the-loop schema induction system powered by GPT-3. We first describe the different modules of our system, including prompting to generate schematic elements, manual edit of those elements, and conversion of those into a schema graph. By qualitatively comparing our system to previous ones, we show that our system not only transfers to new domains more easily than previous approaches, but also reduces efforts of human curation thanks to our interactive interface."
+"Zero-shot on-the-fly event schema induction","https://scispace.com/paper/zero-shot-on-the-fly-event-schema-induction-9v9r29me","2022","Journal Article","Findings","Rotem Dror
+Haoyu Wang
+Dan Roth","10.48550/arXiv.2210.06254","https://aclanthology.org/2023.findings-eacl.53.pdf","… found by collecting many documents on the complex event of … language models are utilized to generate source documents … with previous supervised schema induction methods that rely …","What are the events involved in a pandemic outbreak? What steps should be taken when planning a wedding? The answers to these questions can be found by collecting many documents on the complex event of interest, extracting relevant information, and analyzing it. We present a new approach in which large language models are utilized to generate source documents that allow predicting, given a high-level event definition, the specific events, arguments, and relations between them to construct a schema that describes the complex event in its entirety.Using our model, complete schemas on any topic can be generated on-the-fly without any manual data collection, i.e., in a zero-shot manner. Moreover, we develop efficient methods to extract pertinent information from texts and demonstrate in a series of experiments that these schemas are considered to be more complete than human-curated ones in the majority of examined scenarios. Finally, we show that this framework is comparable in performance with previous supervised schema induction methods that rely on collecting real texts and even reaching the best score in the prediction task."
+"Graph-based event schema induction in open-domain corpus","https://scispace.com/paper/graph-based-event-schema-induction-in-open-domain-corpus-4r5z04i6jz","2024","Journal Article","PeerJ","Kai Yan
+Wei Liu
+Shaorong Xie
+Peng Yan","10.7717/peerj-cs.2155","https://peerj.com/articles/cs-2155.pdf","… a corpus of unknown events and unclustered documents without seed examples. People began to … This section will explain how to use an unsupervised graph neural network model to …","An event schema provides a formal language for representing events and modeling knowledge about the world. Existing event schema induction methods often only applies text features to the cluster, restricting its cluster capabilities. This article presents a Graph-Based Event Schema Induction model to extract structural features from our constructed graph. Inspired by in-context learning, we propose a way to conceptualize clusters to generate event schemas. We evaluated the clustering experiment using the Adjusted Rand Index (ARI), normalized mutual information (NMI), accuracy (ACC), and BCubed-F1 metrics and generated event schemas based on overlap ratio and acceptable ratio. The experimental results show that our method has shown improvement in terms of clustering effectiveness, and the generated event schemas achieved highly acceptable ratio. "
+"RexUniNLU: Recursive Method with Explicit Schema Instructor for Universal NLU","https://scispace.com/paper/rexuninlu-recursive-method-with-explicit-schema-instructor-j8gbyekldwev","2024","Journal Article","","Chengyuan Liu
+Shihang Wang
+Fubang Zhao
+Kun Kuang
+Yangyang Kang
+Weiming Lü
+Changlong Sun
+Fei Wu","10.48550/arxiv.2409.05275","https://arxiv.org/pdf/2409.05275","… the significance of deploying encoder based small language models within the NLU tasks … model [69], where 20 types of documents and 2408 samples are included. We used entity …","Information Extraction (IE) and Text Classification (CLS) serve as the fundamental pillars of NLU, with both disciplines relying on analyzing input sequences to categorize outputs into pre-established schemas. However, there is no existing encoder-based model that can unify IE and CLS tasks from this perspective. To fully explore the foundation shared within NLU tasks, we have proposed a Recursive Method with Explicit Schema Instructor for Universal NLU. Specifically, we firstly redefine the true universal information extraction (UIE) with a formal formulation that covers almost all extraction schemas, including quadruples and quintuples which remain unsolved for previous UIE models. Then, we expands the formulation to all CLS and multi-modal NLU tasks. Based on that, we introduce RexUniNLU, an universal NLU solution that employs explicit schema constraints for IE and CLS, which encompasses all IE and CLS tasks and prevent incorrect connections between schema and input sequence. To avoid interference between different schemas, we reset the position ids and attention mask matrices. Extensive experiments are conducted on IE, CLS in both English and Chinese, and multi-modality, revealing the effectiveness and superiority. Our codes are publicly released. "
+"Generate Event Schemas from Multimodal Corpus","https://scispace.com/paper/generate-event-schemas-from-multimodal-corpus-2wgwrfufsb","2024","Journal Article","","Keyu Yan
+Wei Liu","10.1109/ainit61980.2024.10581558","","… on the automatic generation of … schema induction from multimodal corpus, which aims to induce richer event schemas from texts and images. Although existing large language models …","Event schemas are conceptualized and structured knowledge organizations that generalize schemas in a class of events. The core issue in event schema research is how to generate high-quality and comprehensive event schemas automatically. Existing methods focus on generating event schema from the textual corpus and fail to exploit the complementary advantages of multimodal information effectively. Therefore, this paper proposes a method to generate event schemas from a multimodal corpus of images and text. It utilizes the ability of a multimodal large language model to generate text from images to supplement additional event information and then uses the in-context learning of large language models to generate conceptualized and structured event schemas. Experimental results show that the proposed method can generate more comprehensive event schemas and improve the knowledge of missing event schemas in the visual modality."
+"Schema Theory and Artificial Intelligence: A Systematic Review of Contemporary Research","https://scispace.com/paper/dzbpzc98IpcJ","","","","R Meylani","","https://www.researchgate.net/profile/Rusen-Meylani/publication/400442931_Schema_Theory_and_Artificial_Intelligence_A_Systematic_Review_of_Contemporary_Research/links/69835adcca66ef6ab990326b/Schema-Theory-and-Artificial-Intelligence-A-Systematic-Review-of-Contemporary-Research.pdf","… The rise of neural networks and deep learning marked a paradigmatic shift from explicitly structured knowledge representations to models that learn from distributed patterns in data. In …",""
+"Deep Learning Models for the Extraction of Knowledge from Text","https://scispace.com/paper/4mRL_foUg98J","","","","C Theodoropoulos
+MF Moens
+M Blaschko","","https://lirias.kuleuven.be/retrieve/802125","… We examine how tokenization impacts IE from documents and … are created leveraging graph neural networks (GNNs) and … to the fundamentals of artificial neural networks. Popular …",""
+"Semantic schema extraction in NoSQL databases using Bert Embeddings","https://scispace.com/paper/semantic-schema-extraction-in-nosql-databases-using-bert-6w6qmnzbascy","2024","Journal Article","Data Science Journal","Saad Belefqih
+Ahmed Zellou
+Mouna Berquedich","10.5334/dsj-2024-057","","… (Bidirectional Encoder Representations from Transformers), a … analyze triplets extracted from JSON documents in schema-less … new possibilities for automated schema extraction from …",""
+"Automating Resume Analysis: Knowledge Graphs via Prompt Engineering","https://scispace.com/paper/automating-resume-analysis-knowledge-graphs-via-prompt-5lljroi8e04z","2024","Journal Article","Lecture Notes in Computer Science","Giorgio Lazzarinetti
+Sara Manzoni
+Italo Zoppis","10.1007/978-3-031-80607-0_17","","… This paper introduces a methodology employing Large Language Models (LLMs) facilitated by … This study not only underscores the potential of LLMs in automated information extraction …",""
+"SCHEMA-MINER pro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow","https://scispace.com/paper/w_d04zfEgv0J","","","","S Sadruddin
+J D'Souza
+E Poupaki","","https://www.semantic-web-journal.net/system/files/swj3983.pdf","… combines large language models for schema extraction with … continue to impede fully automated schema discovery or … schema extraction tasks, the inclusion of these documents …",""
+"Completing the knowledge lifecycle for language models","https://scispace.com/paper/uVv1QtoL7-EJ","","","","Z Zhang","","https://www.ideals.illinois.edu/items/132643/bitstreams/439982/data.pdf","… For extracting structured knowledge from textual documents, … instance graphs needed for schema induction. To tackle these … the combination of automatic schema induction and manual …",""
+"Hypothesis-Driven Semantic Retrieval for Discovering Unseen Knowledge Structures","https://scispace.com/paper/uSH_WsGigRIJ","","","","O Bennett
+A Wright
+J Holloway","","https://www.preprints.org/frontend/manuscript/2cd81bbb77de9b464c42db39c3fee012/download_pub","… relation types, yet even neural OpenIE systems primarily capture … Unsupervised schema induction research moves closer to … , while event-schema induction organizes events into graph…",""
+"A Supervised Framework for Document Processing at Scale with Large Language Models in Credit-Risk Research","https://scispace.com/paper/H_5DUYJVmYIJ","","","","C COJOCARU
+S IONESCU","","https://www.icmie.ro/index.php/icmie/article/download/196/70","… mitigate this limitation for partially automated extraction, but … Documents are processed independently and transformed … deterministic preprocessing with schema extraction defined and …",""
+"Open-domain hierarchical event schema induction by incremental prompting and verification","https://scispace.com/paper/open-domain-hierarchical-event-schema-induction-by-2shc95lf","2023","Proceedings Article","Annual Meeting of the Association for Computational Linguistics","Sha Li
+Rui Zhao
+Manling Li
+Heng Ji
+Chris Callison-Burch
+Jiawei Han","10.48550/arXiv.2307.01972","https://aclanthology.org/2023.acl-long.312.pdf","… For automatic evaluation of the schema quality against … pipelines to convert unstructured documents into event graphs, … be implicitly learned with large language models. However, since …","Event schemas are a form of world knowledge about the typical progression of events. Recent methods for event schema induction use information extraction systems to construct a large number of event graph instances from documents, and then learn to generalize the schema from such instances. In contrast, we propose to treat event schemas as a form of commonsense knowledge that can be derived from large language models (LLMs). This new paradigm greatly simplifies the schema induction process and allows us to handle both hierarchical relations and temporal relations between events in a straightforward way. Since event schemas have complex graph structures, we design an incremental prompting and verification method IncPrompt to break down the construction of a complex event graph into three stages: event skeleton construction, event expansion, and event-event relation verification. Compared to directly using LLMs to generate a linearized graph, IncSchema can generate large and complex schemas with 7.2% F1 improvement in temporal relations and 31.0% F1 improvement in hierarchical relations. In addition, compared to the previous state-of-the-art closed-domain schema induction model, human assessors were able to cover ~10% more events when translating the schemas into coherent stories and rated our schemas 1.3 points higher (on a 5-point scale) in terms of readability."
+"Ontology-grounded automatic knowledge graph construction by llm under wikidata schema","https://scispace.com/paper/ontology-grounded-automatic-knowledge-graph-construction-by-7auwgev0uzgq","2024","Journal Article","","Xiaohan Feng
+Xixin Wu
+Helen Meng","10.48550/arxiv.2412.20942","https://arxiv.org/pdf/2412.20942?","… interest in using large language models for KG construction [… achieved on private documents with decent performance. … with no prior assumption on knowledge schema, we report our …","We propose an ontology-grounded approach to Knowledge Graph (KG) construction using Large Language Models (LLMs) on a knowledge base. An ontology is authored by generating Competency Questions (CQ) on knowledge base to discover knowledge scope, extracting relations from CQs, and attempt to replace equivalent relations by their counterpart in Wikidata. To ensure consistency and interpretability in the resulting KG, we ground generation of KG with the authored ontology based on extracted relations. Evaluation on benchmark datasets demonstrates competitive performance in knowledge graph construction task. Our work presents a promising direction for scalable KG construction pipeline with minimal human intervention, that yields high quality and human-interpretable KGs, which are interoperable with Wikidata semantics for potential knowledge base expansion. "

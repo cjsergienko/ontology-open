@@ -1,0 +1,269 @@
+title,url,markdown,author,description,date,image,favicon
+Springer LNCS LaTeX Template | Lecture Notes in Computer Science | Underleaf,https://www.underleaf.ai/templates/springer-lncs,"[![Underleaf Logo](https://www.underleaf.ai/logo.svg)\\
+Underleaf](https://www.underleaf.ai/)
+
+[Pricing](https://www.underleaf.ai/pricing) [About](https://www.underleaf.ai/about) [Blog](https://www.underleaf.ai/blog) [Tools](https://www.underleaf.ai/tools)
+
+Popular Tools
+
+[Image to LaTeX\\
+\\
+Convert images to LaTeX code](https://www.underleaf.ai/tools/image-to-latex) [Excel to LaTeX\\
+\\
+Convert spreadsheets to tables](https://www.underleaf.ai/tools/excel-to-latex) [TikZ Generator\\
+\\
+Create diagrams with AI](https://www.underleaf.ai/tools/tikz-generator) [3D Graphing Calculator\\
+\\
+New\\
+\\
+Plot surfaces & equations](https://www.underleaf.ai/3d)
+
+[Chrome Extension\\
+\\
+Use AI directly in Overleaf](https://chromewebstore.google.com/detail/underleaf-your-copilot-fo/kkapknfgmppfnheehjfbkcbnmginepcc?utm_source=underleaf_website) [View all tools](https://www.underleaf.ai/tools)
+
+[Log In](https://app.underleaf.ai/?mode=login) [Get started](https://app.underleaf.ai/?mode=signup)
+
+[All Templates](https://www.underleaf.ai/templates)
+
+Publishers
+
+Popular
+
+Usually 12-15 pages
+
+Single column
+
+# Springer LNCS LaTeX Template
+
+Lecture Notes in Computer Science
+
+Template for Springer LNCS, LNAI, and LNBI proceedings. Used by many computer science conferences.
+
+- [Official Page](https://www.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines)
+- [Download](https://www.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines)
+- [Open in Overleaf](https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj)
+
+![Springer LNCS LaTeX template preview](https://www.underleaf.ai/templates/og/springer-lncs.png)
+
+## About the Springer LNCS Template
+
+The Springer LNCS (Lecture Notes in Computer Science) template is used by a vast number of computer science conferences that publish their proceedings through Springer. This includes ECCV, MICCAI, and hundreds of other venues in the LNCS, LNAI (Artificial Intelligence), and LNBI (Bioinformatics) series.
+
+The llncs document class produces a single-column layout on A4 paper. Page limits typically range from 12-15 pages depending on the specific conference. The template is maintained by Springer and available from their official conference proceedings guidelines page.
+
+The current version (llncs.cls v2.24) is available on CTAN and pre-loaded in Overleaf. When using Overleaf, it's recommended to switch to TeXLive 2025 or later for the best compatibility. An enhanced community version on GitHub adds modern features like microtype and hyperref while maintaining full compatibility with the official template.
+
+## Formatting Requirements
+
+| Property | Specification |
+| --- | --- |
+| Layout | Single column |
+| Font Size | 10pt |
+| Paper Size | A4 |
+| Document Class | `llncs` |
+| Citation Style | Numbered, Springer style |
+| Page Limit | Usually 12-15 pages |
+
+Springer
+
+LNCS
+
+Proceedings
+
+Usually 12-15 pages
+
+## Frequently Asked Questions
+
+What is the difference between LNCS, LNAI, and LNBI?
+
+They are different series within Springer's Lecture Notes: LNCS (Computer Science), LNAI (Artificial Intelligence), and LNBI (Bioinformatics). All use the same llncs template.
+
+What is the typical LNCS page limit?
+
+Page limits vary by conference but are typically 12-15 pages for full papers. Check your specific conference's call for papers for exact limits.
+
+Does LNCS use A4 or US Letter paper?
+
+LNCS uses A4 paper size, unlike many US-based conferences that use US Letter. The llncs class handles this automatically.
+
+## Related Conference Templates
+
+[Computer Vision\\
+\\
+**ECCV** \\
+\\
+Top European venue for computer vision research. Uses Springer LNCS format.\\
+\\
+14 pages + references](https://www.underleaf.ai/templates/eccv) [Publishers\\
+\\
+**IEEE Conference** \\
+\\
+Standard IEEE conference template using IEEEtran class. Used by ICASSP, ICRA, IROS, and hundreds of IEEE conferences.\\
+\\
+Conference dependent](https://www.underleaf.ai/templates/ieee) [Publishers\\
+\\
+**ACM SIGCONF** \\
+\\
+Standard ACM conference template using acmart class. Used by SIGMOD, KDD, SIGCOMM, and many ACM venues.\\
+\\
+Conference dependent](https://www.underleaf.ai/templates/acm-sigconf)
+
+## Need Help Converting Your Paper?
+
+Our AI tools can convert existing documents to LaTeX, extract equations from images, and format tables automatically.
+
+[PDF to LaTeX](https://app.underleaf.ai/tools/pdf-to-latex) [Image to LaTeX](https://app.underleaf.ai/tools/image-to-latex)
+
+[![Underleaf Logo](https://www.underleaf.ai/logo.svg)\\
+Underleaf](https://www.underleaf.ai/)
+
+Empowering students and researchers with AI-powered tools for academic writing.
+
+[Go to app](https://app.underleaf.ai/) [Contact us](mailto:team@underleaf.ai)
+
+## Company
+
+[Pricing](https://www.underleaf.ai/pricing) [Blog](https://www.underleaf.ai/blog) [Tutorials](https://www.underleaf.ai/learn) [Affiliate Program](https://www.underleaf.ai/affiliates)
+
+## Use Cases
+
+[Enterprises](https://www.underleaf.ai/enterprise) [Universities](https://www.underleaf.ai/universities) [Research Teams](https://www.underleaf.ai/teams)
+
+## Free Tools
+
+[Image to LaTeX](https://www.underleaf.ai/tools/image-to-latex) [Excel to LaTeX](https://www.underleaf.ai/tools/excel-to-latex) [ArXiv to LaTeX](https://www.underleaf.ai/tools/arxiv-to-latex) [TikZ Generator](https://www.underleaf.ai/tools/tikz-generator) [Thesis Generator](https://www.underleaf.ai/tools/thesis-statement-generator) [Chrome Extension](https://chromewebstore.google.com/detail/underleaf-your-copilot-fo/kkapknfgmppfnheehjfbkcbnmginepcc?utm_source=underleaf_website) [All Tools](https://www.underleaf.ai/tools)
+
+## Support
+
+[Support Center](https://www.underleaf.ai/support) [FAQ](https://www.underleaf.ai/frequently-asked-questions) [Browser Extension](https://www.underleaf.ai/extension) [Privacy Policy](https://www.underleaf.ai/privacy)
+
+© 2026 Underleaf. All rights reserved.",,"Official Springer LNCS LaTeX template (llncs class) for Lecture Notes in Computer Science, LNAI, and LNBI. Download or use on Overleaf.",,https://www.underleaf.ai/og-image.png,https://www.underleaf.ai/favicon.ico
+"Springer Lecture Notes in Computer Science - Overleaf, Online LaTeX Editor",https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj,"[Skip to content](https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj#main-content)
+
+[arrow\_left\_altBack to all templates](https://www.overleaf.com/latex/templates)
+
+# Springer Lecture Notes in Computer Science
+
+[Open as Template](https://www.overleaf.com/project/new/template/34930?id=302536&latexEngine=pdflatex&mainFile=samplepaper.tex&templateName=Springer+Lecture+Notes+in+Computer+Science&texImage=texlive-full%3A2025.1) View Source [View PDF](https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj.pdf)
+
+**Author:**
+
+From [the LNCS guidelines](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0).
+
+**Last Updated:**
+
+2 years ago
+
+**License:**
+
+Other (as stated in the work)
+
+**Abstract:**
+
+Springer has provided LaTeX style files and example articles to help you prepare your paper for submission to their journals.
+
+This template is for contributions to the Springer Lecture Notes in Computer Science (LNCS) , based on the LaTeX2e+Proceedings+Templates+download.zip file from their [author guidance](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0) page, with `llncs.cls` v2.24 (29-Jan-2024).
+
+The style files and example paper are pre-loaded into Overleaf as a template - you can now create an LNCS-formatted document for editing online simply by clicking the image above.
+
+For further information, please see their [Information for LNCS Authors](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0) page, where you will find guidelines and technical instructions for the preparation of contributions.
+
+**Tags:**
+
+[Springer](https://www.overleaf.com/gallery/tagged/springer) [Journal articles](https://www.overleaf.com/gallery/tagged/academic-journal)
+
+![Springer Lecture Notes in Computer Science](https://writelatex.s3.amazonaws.com/published_ver/34930.jpeg?X-Amz-Expires=14400&X-Amz-Date=20260419T202341Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAWJBOALPNFPV7PVH5/20260419/us-east-1/s3/aws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=163208bba470ed5ddf7a55157d648f86ec7d7a38cd174be398536b5cf5e0383f)
+
+\\begin{now}
+
+Discover why over 25 million people worldwide trust Overleaf with their work.
+
+[Sign up for free](https://www.overleaf.com/register) [Explore all plans](https://www.overleaf.com/user/subscription/plans)
+
+We only use cookies for essential purposes and to improve your experience on our site. You can find out more in our [cookie policy](https://www.overleaf.com/legal#Cookies).
+
+Essential cookies onlyAccept all cookies",,"Springer has provided LaTeX style files and example articles to help you prepare your paper for submission to their journals. This template is for contributi..., Springer has provided LaTeX style files and example articles to help you prepare your paper for submission to their journals. This template is for contributi...",,https://cdn.overleaf.com/img/ol-brand/overleaf_og_logo.png,https://cdn.overleaf.com/favicon-32x32.png
+CTAN: Package llncs,https://ctan.org/pkg/llncs,"- [Login](https://ctan.org/login ""Login with your personal account"")
+- [Join](https://ctan.org/join ""Register a new personal account on this site"")
+- [Settings](https://ctan.org/user/settings ""Adjust the appearance to your taste"")
+- [Help](https://ctan.org/help ""Get some information about this Web site"")
+
+# llncs – Document class and bibliography style for Lecture Notes in Computer Science (LNCS)
+
+This is Springer’s official macro package for typesetting
+contributions to be published in Springer’s Lecture Notes
+in Computer Science (LNCS) and its related proceedings
+series CCIS, LNBIP, LNICST, and IFIP AICT.
+
+
+|     |     |
+| --- | --- |
+| Sources | [`/macros/latex/contrib/llncs`](https://ctan.org/tex-archive/macros/latex/contrib/llncs) |
+| Documentation | [README.md](https://mirrors.ctan.org/macros/latex/contrib/llncs/README.md)<br>[Package documentation](https://mirrors.ctan.org/macros/latex/contrib/llncs/llncsdoc.pdf) |
+| Home page | [https://www.springer.com/gp/computer-science/lncs](https://www.springer.com/gp/computer-science/lncs) |
+| Version | 2.26 2025-02-25 |
+| Licenses | [CC BY 4.0](https://ctan.org/license/cc-by-4) |
+| Copyright | 1996–2025 Springer |
+| Maintainer | [Markus Richter](https://ctan.org/author/richter-m) |
+| Contained in | [TeX Live](https://ctan.org/pkg/texlive) as llncs<br>[MiKTeX](https://ctan.org/pkg/miktex) as llncs |
+| Topics | [Class](https://ctan.org/topic/class)<br>[Journal](https://ctan.org/topic/journalpub)<br>[Tagged PDF – incompatible](https://ctan.org/topic/tagged-pdf-incompatible) |
+
+[Download](https://mirrors.ctan.org/macros/latex/contrib/llncs.zip) the contents of this package in one zip archive
+(225.8k).
+
+
+## Community Comments
+
+[lchmiel](https://ctan.org/home/lchmiel)
+2026-01-11
+
+The rating is not excellent because while compilig the example document from Springer ""samplepaper.tex"" a warning is issued:
+
+Package remreset Warning: The remreset package is obsolete:
+(remreset) \\@removefromreset is defined.
+
+## Announcements
+
+Here you can see a respective diagram in newer browsers.
+
+- [2025-02-26 CTAN update: llncs](https://ctan.org/ctan-ann/id/Z776aaRh1BeGiRiT@prptp)
+- [2024-10-22 CTAN update: llncs](https://ctan.org/ctan-ann/id/ZxedUE5y3mPk5b-o@prptp)
+- [2024-01-30 CTAN update: llncs](https://ctan.org/ctan-ann/id/mailman.6090.1706621850.3764.ctan-ann@ctan.org)
+
+[more](https://ctan.org/ctan-ann/pkg/llncs)
+
+## Suggestions
+
+Maybe you are interested in the following packages as well.
+
+- [authblk: Support for footnote style author/affiliation](https://ctan.org/pkg/authblk)
+- [tugboat: LaTeX macros for TUGboat articles](https://ctan.org/pkg/tugboat)
+- [minimal: A trivial class, for use when testing](https://ctan.org/pkg/minimal)
+- [platex: pLaTeX2ε and miscellaneous macros for pTeX](https://ctan.org/pkg/platex)
+
+[more](https://ctan.org/recommendations/llncs)
+
+## Rating Summary
+
+∅ 4 \[1 vote\]
+
+|     |     |     |
+| --- | --- | --- |
+| \\*\\*\\*\*\* |  | 0 |
+| \\*\\*\\*\* |  | 1 |
+| \\*\\*\\* |  | 0 |
+| \*\* |  | 0 |
+| \* |  | 0 |
+
+## My Rating
+
+Only [registered](https://ctan.org/join) and authenticated members
+may vote. Please [Login](https://ctan.org/login) to vote.
+
+
+## Package Links
+
+[Home page](https://www.springer.com/gp/computer-science/lncs)
+
+[Guest Book](https://ctan.org/guestbook ""Leave some words for other visitors"") [Sitemap](https://ctan.org/sitemap ""Show the structure of this site"") [Contact](https://ctan.org/contact ""Get contact information for the Web site"") [Contact Author](https://ctan.org/help/contact-author ""Get help on how to contact an author"") [Feedback](mailto:webmaster@ctan.org?subject=Feedback%20for%20/pkg/llncs?lang=en ""Send feedback on the current web page to the Web masters"")",,,,,https://ctan.org/assets/favicon/favicon-32x32-a101178bc8b3b1faaccae8b3eb747f97.png
