@@ -1,0 +1,1079 @@
+# ============================================================================
+# HIRING SKILLS TAXONOMY v1.0 - COMPETENCY GRAPH
+# ============================================================================
+# Comprehensive taxonomy of skills, tools, and competencies for hiring
+# With relationships, proficiency levels, and substitution rules
+# ============================================================================
+
+metadata:
+  version: "1.0"
+  name: Hiring Skills Taxonomy (Competency Graph)
+  description: |
+    Detailed taxonomy of technical and professional skills used in hiring:
+    - CLASSIFICATION: Identify skills from JD/CV content
+    - MATCHING: Calculate skill overlap and gaps
+    - GENERATION: Suggest related skills and requirements
+    - INTERVIEW: Map skills to assessment questions
+  created: "2026-02-04"
+  status: production_ready
+
+  statistics:
+    total_skill_categories: 12
+    total_skills: 450+
+    relationship_types: 4
+    proficiency_levels: 5
+
+  proficiency_scale:
+    1:
+      label: Novice
+      description: Basic awareness, requires supervision
+      jd_language: ["familiar with", "exposure to", "basic knowledge"]
+      cv_indicators: ["learning", "coursework", "some experience"]
+    2:
+      label: Beginner
+      description: Can perform basic tasks independently
+      jd_language: ["working knowledge", "foundational", "1-2 years"]
+      cv_indicators: ["junior", "assisted", "contributed to"]
+    3:
+      label: Intermediate
+      description: Competent, handles typical scenarios
+      jd_language: ["proficient", "solid experience", "3-4 years"]
+      cv_indicators: ["implemented", "developed", "built"]
+    4:
+      label: Advanced
+      description: Expert in most scenarios, can mentor others
+      jd_language: ["strong", "expert", "deep experience", "5+ years"]
+      cv_indicators: ["led", "architected", "designed", "senior"]
+    5:
+      label: Expert
+      description: Mastery, drives innovation, industry recognition
+      jd_language: ["world-class", "industry leader", "thought leader"]
+      cv_indicators: ["pioneered", "invented", "published", "spoke at"]
+
+  relationship_types:
+    requires:
+      description: Skill A requires Skill B as prerequisite
+      example: "React requires JavaScript"
+    substitutes:
+      description: Skill A can substitute for Skill B in some contexts
+      example: "Vue substitutes for React"
+    complements:
+      description: Skill A is commonly used with Skill B
+      example: "Python complements SQL"
+    specializes:
+      description: Skill A is a specialization of Skill B
+      example: "PyTorch specializes Machine Learning"
+
+# ============================================================================
+# SKILL CATEGORIES
+# ============================================================================
+
+categories:
+
+  # ==========================================================================
+  # PROGRAMMING LANGUAGES
+  # ==========================================================================
+
+  programming_languages:
+    id: 1
+    name: Programming Languages
+    description: General-purpose and domain-specific programming languages
+
+    skills:
+      python:
+        id: "lang_python"
+        name: Python
+        description: General-purpose programming language, popular for data and backend
+        domains: [backend, data_engineering, machine_learning, scripting]
+        requires: []
+        substitutes: []
+        complements: [sql, pandas, numpy, django, flask, fastapi]
+        specializations:
+          data_python:
+            focus: Data analysis and engineering
+            tools: [pandas, numpy, dask]
+          ml_python:
+            focus: Machine learning and AI
+            tools: [pytorch, tensorflow, scikit-learn]
+          backend_python:
+            focus: Web backend development
+            tools: [django, flask, fastapi]
+        proficiency_indicators:
+          1: "Basic syntax, simple scripts"
+          2: "Functions, classes, standard library"
+          3: "Packages, testing, async, type hints"
+          4: "Performance optimization, design patterns, mentoring"
+          5: "Core contributor, framework author, industry speaker"
+
+      javascript:
+        id: "lang_javascript"
+        name: JavaScript
+        description: Primary language for web development
+        domains: [frontend, backend, fullstack]
+        requires: []
+        substitutes: [typescript]
+        complements: [html, css, react, vue, nodejs]
+        specializations:
+          frontend_js:
+            focus: Browser-based applications
+            tools: [react, vue, angular]
+          backend_js:
+            focus: Server-side with Node.js
+            tools: [express, nestjs, nextjs]
+        proficiency_indicators:
+          1: "Basic DOM manipulation, variables"
+          2: "ES6+, promises, modules"
+          3: "Frameworks, testing, bundlers"
+          4: "Performance, architecture, mentoring"
+          5: "Framework contributor, spec contributor"
+
+      typescript:
+        id: "lang_typescript"
+        name: TypeScript
+        description: Typed superset of JavaScript
+        domains: [frontend, backend, fullstack]
+        requires: [javascript]
+        substitutes: [javascript]
+        complements: [react, nodejs, angular]
+        proficiency_indicators:
+          1: "Basic types, interfaces"
+          2: "Generics, utility types"
+          3: "Advanced types, declaration files"
+          4: "Type-driven design, complex type systems"
+          5: "Compiler contributor, type gymnastics"
+
+      java:
+        id: "lang_java"
+        name: Java
+        description: Enterprise-grade, object-oriented language
+        domains: [backend, android, enterprise]
+        requires: []
+        substitutes: [kotlin, scala]
+        complements: [spring, maven, gradle, hibernate]
+        proficiency_indicators:
+          1: "Basic OOP, syntax"
+          2: "Collections, generics, streams"
+          3: "Concurrency, JVM internals, frameworks"
+          4: "Performance tuning, architecture"
+          5: "JVM expert, language expert"
+
+      go:
+        id: "lang_go"
+        name: Go (Golang)
+        description: Systems language for cloud-native development
+        domains: [backend, infrastructure, devops]
+        requires: []
+        substitutes: [rust]
+        complements: [kubernetes, docker, grpc, protobuf]
+        proficiency_indicators:
+          1: "Basic syntax, goroutines"
+          2: "Channels, interfaces, testing"
+          3: "Concurrency patterns, performance"
+          4: "Runtime internals, large systems"
+          5: "Core contributor, runtime expert"
+
+      rust:
+        id: "lang_rust"
+        name: Rust
+        description: Systems language focused on safety and performance
+        domains: [systems, infrastructure, webassembly]
+        requires: []
+        substitutes: [cpp, go]
+        complements: [webassembly, embedded]
+        proficiency_indicators:
+          1: "Ownership basics, syntax"
+          2: "Lifetimes, traits, error handling"
+          3: "Unsafe, async, macros"
+          4: "Performance optimization, embedded"
+          5: "Core contributor, language expert"
+
+      sql:
+        id: "lang_sql"
+        name: SQL
+        description: Query language for relational databases
+        domains: [data_engineering, analytics, backend]
+        requires: []
+        substitutes: []
+        complements: [python, dbt, postgresql, snowflake]
+        dialects: [postgresql, mysql, sqlite, t-sql, snowflake_sql, bigquery_sql]
+        proficiency_indicators:
+          1: "SELECT, JOIN, WHERE"
+          2: "Aggregations, subqueries, CTEs"
+          3: "Window functions, optimization, indexes"
+          4: "Query plans, performance tuning, data modeling"
+          5: "Database internals, query optimizer expert"
+
+      cpp:
+        id: "lang_cpp"
+        name: C++
+        description: High-performance systems programming language
+        domains: [systems, gaming, embedded, performance]
+        requires: []
+        substitutes: [rust, c]
+        complements: [cmake, boost]
+        proficiency_indicators:
+          1: "Basic syntax, pointers"
+          2: "RAII, STL, OOP"
+          3: "Templates, modern C++, concurrency"
+          4: "Optimization, memory model"
+          5: "Standard committee, compiler expert"
+
+      scala:
+        id: "lang_scala"
+        name: Scala
+        description: Functional/OO hybrid on JVM
+        domains: [backend, data_engineering, big_data]
+        requires: []
+        substitutes: [java, kotlin]
+        complements: [spark, akka, cats]
+        proficiency_indicators:
+          1: "Basic syntax, case classes"
+          2: "Pattern matching, collections, implicits"
+          3: "Type system, functional patterns"
+          4: "Macros, compiler plugins"
+          5: "Language contributor, Typelevel expert"
+
+      kotlin:
+        id: "lang_kotlin"
+        name: Kotlin
+        description: Modern JVM language, Android primary language
+        domains: [android, backend]
+        requires: []
+        substitutes: [java]
+        complements: [spring, android, ktor]
+        proficiency_indicators:
+          1: "Basic syntax, null safety"
+          2: "Coroutines, extension functions"
+          3: "DSLs, multiplatform"
+          4: "Compiler plugins, advanced patterns"
+          5: "Language contributor"
+
+      r:
+        id: "lang_r"
+        name: R
+        description: Statistical computing language
+        domains: [data_science, statistics, analytics]
+        requires: []
+        substitutes: [python]
+        complements: [tidyverse, ggplot2, shiny]
+        proficiency_indicators:
+          1: "Basic syntax, vectors"
+          2: "Tidyverse, data manipulation"
+          3: "Statistical modeling, visualization"
+          4: "Package development, advanced stats"
+          5: "CRAN contributor, stats expert"
+
+      swift:
+        id: "lang_swift"
+        name: Swift
+        description: Apple platforms primary language
+        domains: [ios, macos]
+        requires: []
+        substitutes: [objective_c]
+        complements: [swiftui, uikit, combine]
+        proficiency_indicators:
+          1: "Basic syntax, optionals"
+          2: "Protocols, generics, closures"
+          3: "Concurrency, SwiftUI"
+          4: "Performance, compiler optimization"
+          5: "Swift evolution contributor"
+
+  # ==========================================================================
+  # FRAMEWORKS & LIBRARIES
+  # ==========================================================================
+
+  frameworks_libraries:
+    id: 2
+    name: Frameworks & Libraries
+    description: Software frameworks and major libraries
+
+    frontend:
+      react:
+        id: "fw_react"
+        name: React
+        description: Component-based UI library
+        requires: [javascript]
+        substitutes: [vue, angular, svelte]
+        complements: [redux, nextjs, typescript, testing_library]
+        proficiency_indicators:
+          1: "Components, props, state"
+          2: "Hooks, context, routing"
+          3: "Performance, patterns, testing"
+          4: "Architecture, advanced patterns"
+          5: "Core contributor, library author"
+
+      vue:
+        id: "fw_vue"
+        name: Vue.js
+        description: Progressive JavaScript framework
+        requires: [javascript]
+        substitutes: [react, angular]
+        complements: [vuex, nuxt, typescript]
+        proficiency_indicators:
+          1: "Components, directives"
+          2: "Composition API, Vuex"
+          3: "Nuxt, performance, testing"
+          4: "Plugin development, architecture"
+          5: "Core contributor"
+
+      angular:
+        id: "fw_angular"
+        name: Angular
+        description: Enterprise frontend framework
+        requires: [typescript]
+        substitutes: [react, vue]
+        complements: [rxjs, ngrx, material]
+        proficiency_indicators:
+          1: "Components, services, modules"
+          2: "RxJS, routing, forms"
+          3: "Architecture, testing, performance"
+          4: "Large-scale applications"
+          5: "Core contributor"
+
+      nextjs:
+        id: "fw_nextjs"
+        name: Next.js
+        description: React framework for production
+        requires: [react]
+        substitutes: [gatsby, remix]
+        complements: [vercel, typescript]
+        proficiency_indicators:
+          1: "Pages, routing"
+          2: "SSR, SSG, API routes"
+          3: "Performance, ISR, middleware"
+          4: "Large-scale, optimization"
+          5: "Vercel contributor"
+
+    backend:
+      django:
+        id: "fw_django"
+        name: Django
+        description: Python web framework
+        requires: [python]
+        substitutes: [flask, fastapi]
+        complements: [postgresql, celery, redis, drf]
+        proficiency_indicators:
+          1: "Models, views, templates"
+          2: "ORM, auth, admin"
+          3: "DRF, async, testing"
+          4: "Performance, scaling"
+          5: "Core contributor"
+
+      flask:
+        id: "fw_flask"
+        name: Flask
+        description: Lightweight Python web framework
+        requires: [python]
+        substitutes: [django, fastapi]
+        complements: [sqlalchemy, celery, redis]
+        proficiency_indicators:
+          1: "Routes, templates"
+          2: "Blueprints, extensions"
+          3: "Testing, async"
+          4: "Production patterns"
+          5: "Core contributor"
+
+      fastapi:
+        id: "fw_fastapi"
+        name: FastAPI
+        description: Modern async Python web framework
+        requires: [python]
+        substitutes: [flask, django]
+        complements: [pydantic, sqlalchemy, async]
+        proficiency_indicators:
+          1: "Routes, Pydantic models"
+          2: "Dependency injection, async"
+          3: "OpenAPI, testing, middleware"
+          4: "Performance, architecture"
+          5: "Core contributor"
+
+      spring:
+        id: "fw_spring"
+        name: Spring Framework
+        description: Enterprise Java framework
+        requires: [java]
+        substitutes: [quarkus, micronaut]
+        complements: [spring_boot, hibernate, maven]
+        proficiency_indicators:
+          1: "IoC, DI basics"
+          2: "Spring Boot, MVC, Data"
+          3: "Security, Cloud, testing"
+          4: "Microservices, reactive"
+          5: "Core contributor"
+
+      express:
+        id: "fw_express"
+        name: Express.js
+        description: Node.js web framework
+        requires: [nodejs]
+        substitutes: [fastify, koa, nestjs]
+        complements: [mongodb, postgresql, typescript]
+        proficiency_indicators:
+          1: "Routes, middleware"
+          2: "Error handling, sessions"
+          3: "Testing, security"
+          4: "Performance, architecture"
+          5: "Core contributor"
+
+      rails:
+        id: "fw_rails"
+        name: Ruby on Rails
+        description: Ruby web framework
+        requires: [ruby]
+        substitutes: [sinatra]
+        complements: [postgresql, redis, sidekiq]
+        proficiency_indicators:
+          1: "MVC, ActiveRecord"
+          2: "Testing, APIs"
+          3: "Performance, scaling"
+          4: "Engines, advanced patterns"
+          5: "Core contributor"
+
+    data:
+      pandas:
+        id: "lib_pandas"
+        name: pandas
+        description: Python data manipulation library
+        requires: [python]
+        substitutes: [polars]
+        complements: [numpy, matplotlib, jupyter]
+        proficiency_indicators:
+          1: "DataFrames, basic operations"
+          2: "Groupby, merge, pivot"
+          3: "Performance, custom functions"
+          4: "Large datasets, optimization"
+          5: "Core contributor"
+
+      numpy:
+        id: "lib_numpy"
+        name: NumPy
+        description: Numerical computing library
+        requires: [python]
+        substitutes: []
+        complements: [pandas, scipy, matplotlib]
+        proficiency_indicators:
+          1: "Arrays, basic operations"
+          2: "Broadcasting, indexing"
+          3: "Linear algebra, performance"
+          4: "C extensions, optimization"
+          5: "Core contributor"
+
+      spark:
+        id: "fw_spark"
+        name: Apache Spark
+        description: Distributed data processing
+        requires: [python, scala, java]
+        substitutes: [dask, ray]
+        complements: [hadoop, delta_lake, databricks]
+        proficiency_indicators:
+          1: "DataFrames, basic transformations"
+          2: "SQL, joins, aggregations"
+          3: "Optimization, partitioning"
+          4: "Streaming, ML, architecture"
+          5: "Core contributor"
+
+      dbt:
+        id: "tool_dbt"
+        name: dbt (data build tool)
+        description: SQL transformation framework
+        requires: [sql]
+        substitutes: []
+        complements: [snowflake, bigquery, airflow]
+        proficiency_indicators:
+          1: "Models, refs"
+          2: "Tests, documentation"
+          3: "Macros, packages"
+          4: "CI/CD, large projects"
+          5: "Core contributor"
+
+    ml:
+      pytorch:
+        id: "fw_pytorch"
+        name: PyTorch
+        description: Deep learning framework
+        requires: [python]
+        substitutes: [tensorflow, jax]
+        complements: [numpy, cuda, huggingface]
+        proficiency_indicators:
+          1: "Tensors, basic models"
+          2: "Custom layers, training loops"
+          3: "Distributed, optimization"
+          4: "Custom ops, research"
+          5: "Core contributor"
+
+      tensorflow:
+        id: "fw_tensorflow"
+        name: TensorFlow
+        description: Deep learning framework
+        requires: [python]
+        substitutes: [pytorch, jax]
+        complements: [keras, numpy, cuda]
+        proficiency_indicators:
+          1: "Keras, basic models"
+          2: "Custom layers, callbacks"
+          3: "TF Serving, optimization"
+          4: "Custom ops, research"
+          5: "Core contributor"
+
+      scikit_learn:
+        id: "lib_sklearn"
+        name: scikit-learn
+        description: Machine learning library
+        requires: [python]
+        substitutes: []
+        complements: [pandas, numpy, matplotlib]
+        proficiency_indicators:
+          1: "Basic models, fit/predict"
+          2: "Pipelines, cross-validation"
+          3: "Custom estimators, feature engineering"
+          4: "Production patterns"
+          5: "Core contributor"
+
+      huggingface:
+        id: "lib_hf"
+        name: Hugging Face Transformers
+        description: NLP model library
+        requires: [python, pytorch]
+        substitutes: []
+        complements: [pytorch, datasets]
+        proficiency_indicators:
+          1: "Pre-trained models"
+          2: "Fine-tuning, tokenizers"
+          3: "Custom models, training"
+          4: "Optimization, deployment"
+          5: "Core contributor"
+
+  # ==========================================================================
+  # TOOLS & PLATFORMS
+  # ==========================================================================
+
+  tools_platforms:
+    id: 3
+    name: Tools & Platforms
+    description: Development tools, cloud platforms, and infrastructure
+
+    cloud:
+      aws:
+        id: "cloud_aws"
+        name: Amazon Web Services (AWS)
+        description: Leading cloud platform
+        requires: []
+        substitutes: [gcp, azure]
+        complements: [terraform, kubernetes]
+        key_services:
+          compute: [ec2, lambda, ecs, eks]
+          storage: [s3, ebs, efs]
+          database: [rds, dynamodb, redshift]
+          networking: [vpc, route53, cloudfront]
+          ml: [sagemaker, bedrock]
+        certifications: [solutions_architect, developer, devops, ml_specialty]
+        proficiency_indicators:
+          1: "Console navigation, basic services"
+          2: "IAM, common services, CLI"
+          3: "IaC, well-architected, multiple services"
+          4: "Cost optimization, security, scale"
+          5: "All services, architecture expert"
+
+      gcp:
+        id: "cloud_gcp"
+        name: Google Cloud Platform
+        description: Google's cloud platform
+        requires: []
+        substitutes: [aws, azure]
+        complements: [terraform, kubernetes]
+        key_services:
+          compute: [compute_engine, cloud_run, gke]
+          storage: [cloud_storage, filestore]
+          database: [cloud_sql, bigtable, spanner]
+          data: [bigquery, dataflow, pubsub]
+          ml: [vertex_ai, automl]
+        certifications: [cloud_architect, data_engineer, ml_engineer]
+        proficiency_indicators:
+          1: "Console, basic services"
+          2: "IAM, BigQuery, GKE basics"
+          3: "IaC, architecture patterns"
+          4: "Optimization, security"
+          5: "All services, architecture expert"
+
+      azure:
+        id: "cloud_azure"
+        name: Microsoft Azure
+        description: Microsoft's cloud platform
+        requires: []
+        substitutes: [aws, gcp]
+        complements: [terraform, kubernetes]
+        key_services:
+          compute: [virtual_machines, functions, aks]
+          storage: [blob_storage, files]
+          database: [sql_database, cosmos_db]
+          data: [synapse, data_factory]
+          ml: [azure_ml, cognitive_services]
+        certifications: [solutions_architect, developer, data_engineer]
+        proficiency_indicators:
+          1: "Portal, basic services"
+          2: "ARM/Bicep, common services"
+          3: "Architecture patterns, IaC"
+          4: "Optimization, security"
+          5: "All services, architecture expert"
+
+    containers:
+      docker:
+        id: "tool_docker"
+        name: Docker
+        description: Container platform
+        requires: [linux]
+        substitutes: [podman]
+        complements: [kubernetes, compose]
+        proficiency_indicators:
+          1: "Basic commands, Dockerfile"
+          2: "Multi-stage, networking, volumes"
+          3: "Security, optimization"
+          4: "Registry, CI/CD patterns"
+          5: "Container internals expert"
+
+      kubernetes:
+        id: "tool_k8s"
+        name: Kubernetes
+        description: Container orchestration platform
+        requires: [docker, linux]
+        substitutes: [docker_swarm, nomad]
+        complements: [helm, istio, prometheus]
+        certifications: [cka, ckad, cks]
+        proficiency_indicators:
+          1: "Pods, deployments, services"
+          2: "ConfigMaps, secrets, networking"
+          3: "Operators, HPA, security"
+          4: "Cluster admin, architecture"
+          5: "Core contributor, CNCF expert"
+
+    databases:
+      postgresql:
+        id: "db_postgres"
+        name: PostgreSQL
+        description: Advanced open-source RDBMS
+        requires: [sql]
+        substitutes: [mysql, sqlite]
+        complements: [python, django, nodejs]
+        proficiency_indicators:
+          1: "Basic queries, schemas"
+          2: "Indexes, constraints, functions"
+          3: "Performance tuning, replication"
+          4: "Extensions, internals"
+          5: "Contributor, expert DBA"
+
+      mongodb:
+        id: "db_mongodb"
+        name: MongoDB
+        description: Document database
+        requires: []
+        substitutes: [couchdb, dynamodb]
+        complements: [nodejs, mongoose]
+        proficiency_indicators:
+          1: "CRUD, basic queries"
+          2: "Indexes, aggregation"
+          3: "Sharding, replication"
+          4: "Performance, architecture"
+          5: "Expert DBA, contributor"
+
+      redis:
+        id: "db_redis"
+        name: Redis
+        description: In-memory data store
+        requires: []
+        substitutes: [memcached]
+        complements: [python, nodejs, celery]
+        proficiency_indicators:
+          1: "Basic operations"
+          2: "Data structures, pub/sub"
+          3: "Cluster, persistence"
+          4: "Optimization, modules"
+          5: "Expert, contributor"
+
+    data_warehouse:
+      snowflake:
+        id: "dw_snowflake"
+        name: Snowflake
+        description: Cloud data warehouse
+        requires: [sql]
+        substitutes: [bigquery, redshift, databricks]
+        complements: [dbt, fivetran, airflow]
+        proficiency_indicators:
+          1: "Basic queries, warehouses"
+          2: "Optimization, sharing"
+          3: "Architecture, cost management"
+          4: "Native apps, streams"
+          5: "Architect, expert"
+
+      bigquery:
+        id: "dw_bigquery"
+        name: BigQuery
+        description: Google's serverless data warehouse
+        requires: [sql]
+        substitutes: [snowflake, redshift]
+        complements: [dbt, dataflow, looker]
+        proficiency_indicators:
+          1: "Basic queries"
+          2: "Optimization, partitioning"
+          3: "ML, cost management"
+          4: "Architecture, streaming"
+          5: "Expert, all features"
+
+    orchestration:
+      airflow:
+        id: "tool_airflow"
+        name: Apache Airflow
+        description: Workflow orchestration platform
+        requires: [python]
+        substitutes: [dagster, prefect, luigi]
+        complements: [dbt, spark, kubernetes]
+        proficiency_indicators:
+          1: "Basic DAGs"
+          2: "Operators, sensors, XComs"
+          3: "Custom operators, testing"
+          4: "Production patterns, scale"
+          5: "Contributor, expert"
+
+    cicd:
+      github_actions:
+        id: "tool_gha"
+        name: GitHub Actions
+        description: CI/CD platform
+        requires: [git]
+        substitutes: [gitlab_ci, jenkins, circleci]
+        complements: [docker, kubernetes, terraform]
+        proficiency_indicators:
+          1: "Basic workflows"
+          2: "Matrix builds, artifacts"
+          3: "Custom actions, security"
+          4: "Complex pipelines"
+          5: "Expert, action author"
+
+    monitoring:
+      datadog:
+        id: "tool_datadog"
+        name: Datadog
+        description: Monitoring and observability platform
+        requires: []
+        substitutes: [newrelic, splunk]
+        complements: [kubernetes, aws]
+        proficiency_indicators:
+          1: "Basic dashboards"
+          2: "APM, logs, metrics"
+          3: "Custom integrations"
+          4: "Architecture, cost"
+          5: "Expert, all products"
+
+      prometheus:
+        id: "tool_prometheus"
+        name: Prometheus
+        description: Open-source monitoring system
+        requires: []
+        substitutes: [influxdb]
+        complements: [grafana, alertmanager, kubernetes]
+        proficiency_indicators:
+          1: "Basic queries"
+          2: "PromQL, alerting"
+          3: "Federation, recording rules"
+          4: "Scale, architecture"
+          5: "Contributor, expert"
+
+    iac:
+      terraform:
+        id: "tool_terraform"
+        name: Terraform
+        description: Infrastructure as Code tool
+        requires: []
+        substitutes: [pulumi, cloudformation, bicep]
+        complements: [aws, gcp, azure, kubernetes]
+        certifications: [terraform_associate]
+        proficiency_indicators:
+          1: "Basic resources"
+          2: "Modules, state"
+          3: "Workspaces, testing"
+          4: "Custom providers"
+          5: "Core contributor"
+
+  # ==========================================================================
+  # SOFT SKILLS & COMPETENCIES
+  # ==========================================================================
+
+  soft_skills:
+    id: 4
+    name: Professional Competencies
+    description: Non-technical skills and behaviors
+
+    leadership:
+      people_management:
+        id: "soft_people_mgmt"
+        name: People Management
+        description: Managing and developing team members
+        proficiency_indicators:
+          1: "Provides feedback to peers"
+          2: "Mentors juniors informally"
+          3: "Manages 1-3 direct reports"
+          4: "Manages 5-10, develops managers"
+          5: "Organizational leadership"
+
+      technical_leadership:
+        id: "soft_tech_lead"
+        name: Technical Leadership
+        description: Leading technical direction without formal authority
+        proficiency_indicators:
+          1: "Guides own work"
+          2: "Guides team decisions"
+          3: "Sets team technical direction"
+          4: "Cross-team technical vision"
+          5: "Organization-wide technical strategy"
+
+      project_leadership:
+        id: "soft_project_lead"
+        name: Project Leadership
+        description: Leading project execution
+        proficiency_indicators:
+          1: "Executes assigned tasks"
+          2: "Leads small features"
+          3: "Leads medium projects"
+          4: "Leads complex initiatives"
+          5: "Transforms organizations"
+
+    communication:
+      written:
+        id: "soft_written"
+        name: Written Communication
+        description: Clear written documentation and communication
+        proficiency_indicators:
+          1: "Clear code comments"
+          2: "Good documentation"
+          3: "Technical specs and proposals"
+          4: "Executive communications"
+          5: "Published author"
+
+      verbal:
+        id: "soft_verbal"
+        name: Verbal Communication
+        description: Effective speaking and presentation
+        proficiency_indicators:
+          1: "Clear team updates"
+          2: "Presents to team"
+          3: "Presents to leadership"
+          4: "Presents to executives"
+          5: "Conference speaker"
+
+      stakeholder:
+        id: "soft_stakeholder"
+        name: Stakeholder Management
+        description: Managing relationships and expectations
+        proficiency_indicators:
+          1: "Works with direct team"
+          2: "Coordinates with other teams"
+          3: "Manages cross-functional stakeholders"
+          4: "Influences senior leadership"
+          5: "Executive stakeholder management"
+
+    problem_solving:
+      analytical:
+        id: "soft_analytical"
+        name: Analytical Thinking
+        description: Breaking down complex problems
+        proficiency_indicators:
+          1: "Solves well-defined problems"
+          2: "Identifies root causes"
+          3: "Structures ambiguous problems"
+          4: "Defines problem spaces"
+          5: "Strategic problem framing"
+
+      creative:
+        id: "soft_creative"
+        name: Creative Problem Solving
+        description: Novel approaches to challenges
+        proficiency_indicators:
+          1: "Applies standard solutions"
+          2: "Adapts existing approaches"
+          3: "Creates novel solutions"
+          4: "Innovative thinking"
+          5: "Industry-changing innovation"
+
+    collaboration:
+      teamwork:
+        id: "soft_teamwork"
+        name: Teamwork
+        description: Working effectively with others
+        proficiency_indicators:
+          1: "Works independently"
+          2: "Collaborates on tasks"
+          3: "Drives team outcomes"
+          4: "Builds high-performing teams"
+          5: "Creates collaborative culture"
+
+      cross_functional:
+        id: "soft_crossfunc"
+        name: Cross-Functional Collaboration
+        description: Working across different functions
+        proficiency_indicators:
+          1: "Works within function"
+          2: "Coordinates with adjacent teams"
+          3: "Leads cross-functional projects"
+          4: "Builds cross-functional relationships"
+          5: "Bridges organizational silos"
+
+  # ==========================================================================
+  # DOMAIN EXPERTISE
+  # ==========================================================================
+
+  domains:
+    id: 5
+    name: Domain Expertise
+    description: Industry and business domain knowledge
+
+    industry:
+      fintech:
+        id: "domain_fintech"
+        name: Financial Technology
+        description: Financial services and technology
+        key_knowledge:
+          - Payment processing
+          - Banking regulations (PCI-DSS, SOC2)
+          - Trading systems
+          - Risk modeling
+        related_skills: [python, java, sql, aws]
+
+      healthtech:
+        id: "domain_healthtech"
+        name: Healthcare Technology
+        description: Healthcare and medical technology
+        key_knowledge:
+          - HIPAA compliance
+          - Clinical workflows
+          - Health data standards (HL7, FHIR)
+          - FDA regulations
+        related_skills: [python, java, sql]
+
+      ecommerce:
+        id: "domain_ecommerce"
+        name: E-Commerce
+        description: Online retail and marketplaces
+        key_knowledge:
+          - Product catalogs
+          - Shopping cart and checkout
+          - Inventory management
+          - Search and recommendations
+        related_skills: [python, javascript, elasticsearch]
+
+      saas:
+        id: "domain_saas"
+        name: B2B SaaS
+        description: Business software as a service
+        key_knowledge:
+          - Multi-tenancy
+          - Subscription billing
+          - Enterprise integrations
+          - Security and compliance
+        related_skills: [fullstack, cloud]
+
+    technical:
+      distributed_systems:
+        id: "domain_distributed"
+        name: Distributed Systems
+        description: Building systems across multiple nodes
+        key_knowledge:
+          - CAP theorem
+          - Consensus algorithms
+          - Eventual consistency
+          - Fault tolerance
+        related_skills: [go, java, kubernetes]
+
+      machine_learning:
+        id: "domain_ml"
+        name: Machine Learning
+        description: ML model development and deployment
+        key_knowledge:
+          - Supervised/unsupervised learning
+          - Deep learning
+          - MLOps
+          - Feature engineering
+        related_skills: [python, pytorch, tensorflow]
+
+      security:
+        id: "domain_security"
+        name: Security Engineering
+        description: Application and infrastructure security
+        key_knowledge:
+          - OWASP Top 10
+          - Authentication/authorization
+          - Encryption
+          - Penetration testing
+        related_skills: [linux, networking, cloud]
+
+# ============================================================================
+# SKILL RELATIONSHIPS
+# ============================================================================
+
+relationships:
+  description: |
+    Common skill relationships for matching and suggestion.
+    Used by agents to infer related skills and substitutes.
+
+  language_framework_map:
+    python: [django, flask, fastapi, pandas, numpy, pytorch, tensorflow]
+    javascript: [react, vue, angular, express, nextjs, nodejs]
+    typescript: [react, angular, nestjs, nextjs]
+    java: [spring, hibernate, maven, gradle]
+    go: [gin, echo, grpc]
+    rust: [actix, tokio, rocket]
+    scala: [spark, akka, cats]
+    ruby: [rails, sinatra, rspec]
+
+  cloud_service_map:
+    aws:
+      compute: [ec2, lambda, ecs, eks]
+      storage: [s3, ebs]
+      database: [rds, dynamodb, redshift]
+    gcp:
+      compute: [compute_engine, cloud_run, gke]
+      storage: [cloud_storage]
+      database: [cloud_sql, bigtable, bigquery]
+    azure:
+      compute: [virtual_machines, functions, aks]
+      storage: [blob_storage]
+      database: [sql_database, cosmos_db]
+
+  substitution_groups:
+    frontend_frameworks: [react, vue, angular, svelte]
+    python_backend: [django, flask, fastapi]
+    java_backend: [spring, quarkus, micronaut]
+    cloud_providers: [aws, gcp, azure]
+    container_orchestration: [kubernetes, docker_swarm, nomad]
+    ml_frameworks: [pytorch, tensorflow, jax]
+    data_warehouses: [snowflake, bigquery, redshift, databricks]
+    workflow_orchestration: [airflow, dagster, prefect, luigi]
+
+  common_stacks:
+    python_data:
+      languages: [python, sql]
+      frameworks: [pandas, numpy, dbt]
+      tools: [jupyter, airflow]
+      platforms: [snowflake, aws]
+
+    python_ml:
+      languages: [python, sql]
+      frameworks: [pytorch, huggingface, scikit_learn]
+      tools: [jupyter, mlflow]
+      platforms: [aws, cuda]
+
+    react_fullstack:
+      languages: [javascript, typescript]
+      frameworks: [react, nextjs, express]
+      tools: [postgresql, redis]
+      platforms: [vercel, aws]
+
+    java_enterprise:
+      languages: [java]
+      frameworks: [spring, hibernate]
+      tools: [maven, gradle, postgresql]
+      platforms: [kubernetes, aws]
+
+    go_infrastructure:
+      languages: [go]
+      frameworks: [grpc]
+      tools: [kubernetes, terraform, prometheus]
+      platforms: [aws, gcp]

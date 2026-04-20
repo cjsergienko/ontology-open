@@ -1,0 +1,42 @@
+{
+  "type": "web_search_results",
+  "tool": "firecrawl",
+  "query": "ontology management for RAG systems and LLM agent pipelines 2024 2025 tools",
+  "results": [
+    {
+      "title": "Automating agentic collaborative ontology engineering with role-playing simulation of LLM-powered agents and RAG technology | The Knowledge Engineering Review | Cambridge Core",
+      "url": "https://www.cambridge.org/core/journals/knowledge-engineering-review/article/automating-agentic-collaborative-ontology-engineering-with-roleplaying-simulation-of-llmpowered-agents-and-rag-technology/C4DFC9BD18020226B4CC763BE7056659",
+      "domain": "www.cambridge.org",
+      "description": "Automating agentic collaborative ontology engineering with role-playing simulation of LLM-powered agents and RAG technology - Volume 40",
+      "favicon_url": "https://www.cambridge.org/core/cambridge-core/public/images/favicon.ico"
+    },
+    {
+      "title": "Ontology-Driven GraphRAG: A Framework for Zero-Noise Knowledge Extraction | by Akash Goyal | Medium",
+      "url": "https://medium.com/@aiwithakashgoyal/beyond-simple-extraction-how-production-grade-ontologies-transform-graphrag-from-prototype-to-333742fa41a6",
+      "domain": "medium.com",
+      "description": "\u201c\u201d is published by Akash Goyal.",
+      "favicon_url": "https://miro.medium.com/v2/5d8de952517e8160e40ef9841c781cdc14a5db313057fa3c3de41c6f5b494b19"
+    },
+    {
+      "title": "Generative Ontology: When Structured Knowledge Learns to Create",
+      "url": "https://arxiv.org/html/2602.05636v2",
+      "domain": "arxiv.org",
+      "description": null,
+      "favicon_url": "https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon-16x16.png"
+    },
+    {
+      "title": "Best GraphRAG Tools for Enterprise AI - Lettria",
+      "url": "https://www.lettria.com/blogpost/best-graphrag-tools-for-enterprise-ai",
+      "domain": "www.lettria.com",
+      "description": "A practical comparison of the best GraphRAG tools for enterprises, covering performance, governance, latency, and real-world use cases in regulated environments.",
+      "favicon_url": "https://cdn.prod.website-files.com/62e2b9ca46af9a61f6c19666/62e3a037a0b46e8ac2ff30fc_favicon-lettria.svg"
+    },
+    {
+      "title": "Reintroducing the Ontology Pipeline for semantic knowledge ...",
+      "url": "https://www.linkedin.com/posts/jmtalisman_interest-in-ontologies-is-peaking-right-now-activity-7378937437537882112-QoUt",
+      "domain": "www.linkedin.com",
+      "description": "Here's a clear 9-step pipeline to build a modern Vector RAG system from scratch. 1./ Ingest & Preprocess Data \u279e Start with tools like web ...",
+      "favicon_url": ""
+    }
+  ]
+}
