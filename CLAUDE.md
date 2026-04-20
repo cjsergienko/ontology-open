@@ -10,11 +10,11 @@ Visual web tool for designing ontologies, taxonomies, and knowledge graphs that 
 **Stack:** Next.js 16 (Turbopack, dev mode), React Flow, TypeScript, Tailwind v4
 **Data:** SQLite at `/Users/sserg/ontology/data/ontologies.db` (better-sqlite3)
 
-### Git repos (two remotes)
+### Git repos
 | Remote | Repo | Visibility | Purpose |
 |--------|------|------------|---------|
-| `origin` | `cjsergienko/ontology` | Private | Primary — what gets deployed to ontology.live |
-| `public` | `cjsergienko/ontology-open` | **Public** | Open research edition — mirrors main |
+| `origin` | `cjsergienko/ontology-open` | **Public** | **Primary** — all work goes here, deploys to ontology.live |
+| `backup` | `cjsergienko/ontology` | Private | History only — do not push here |
 
 ---
 
