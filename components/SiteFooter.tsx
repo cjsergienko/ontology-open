@@ -56,7 +56,6 @@ export function SiteFooter() {
                 <div style={{ fontSize: 11, color: '#6366f1', letterSpacing: '0.1em', marginBottom: 12 }}>PRODUCT</div>
                 {[
                   { label: 'Features', href: '/#features' },
-                  { label: 'Pricing', href: '/#pricing' },
                   { label: 'Launch App', href: '/dashboard' },
                 ].map(l => (
                   <a key={l.label} href={l.href} style={{
