@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
 import { CapabilityTiles } from './CapabilityTiles'
 
 const FEATURES = [
@@ -76,81 +76,6 @@ const FEATURES = [
     ),
     title: 'AI Pipeline Ready',
     desc: 'Designed as the structural backbone for agent clusters. Router → Cluster agents → Combiner → Scorer. Your ontology drives every step.',
-  },
-]
-
-const PRICING = [
-  {
-    name: 'Free',
-    price: '€0',
-    period: '',
-    tagline: 'Try the builder, no card needed',
-    highlighted: false,
-    cta: 'Get started free',
-    ctaHref: '/login',
-    planKey: null as string | null,
-    features: [
-      '2 ontologies',
-      '50 nodes per ontology',
-      'Visual graph editor',
-      'JSON export',
-      'Demo ontology access',
-    ],
-  },
-  {
-    name: 'Starter',
-    price: '€29',
-    period: '/month',
-    tagline: 'For individuals building structured domains',
-    highlighted: false,
-    cta: 'Start with Starter',
-    ctaHref: '/login',
-    planKey: 'starter',
-    features: [
-      '10 ontologies',
-      '500 nodes per ontology',
-      '10 AI-assisted imports/month',
-      'Visual graph editor',
-      'JSON + YAML export',
-      'Email support',
-    ],
-  },
-  {
-    name: 'Pro',
-    price: '€149',
-    period: '/month',
-    tagline: 'For AI engineers & knowledge teams',
-    highlighted: true,
-    badge: 'Most Popular',
-    cta: 'Start with Pro',
-    ctaHref: '/login',
-    planKey: 'pro',
-    features: [
-      'Unlimited ontologies',
-      'Unlimited nodes',
-      '100 AI imports + 20 analyses/month',
-      'JSON + YAML export',
-      'API access',
-      'Priority support',
-    ],
-  },
-  {
-    name: 'Business',
-    price: '€499',
-    period: '/month',
-    tagline: 'For teams with unlimited AI pipeline usage',
-    highlighted: false,
-    cta: 'Contact us',
-    ctaHref: 'mailto:contact@ontology.live',
-    planKey: null,
-    features: [
-      'Unlimited ontologies',
-      'Unlimited nodes',
-      'Unlimited AI imports & analyses',
-      'API access',
-      'Dedicated support',
-      'Custom integrations',
-    ],
   },
 ]
 
@@ -250,36 +175,11 @@ function HeroGraph() {
       <text className="lbl lbl6" x="200" y="348" textAnchor="middle" fontSize="11" fill="#c4b5fd" fontFamily="JetBrains Mono, monospace">Senior</text>
       <text className="lbl lbl7" x="320" y="348" textAnchor="middle" fontSize="11" fill="#c4b5fd" fontFamily="JetBrains Mono, monospace">hiring</text>
       <text className="lbl lbl8" x="50" y="332" textAnchor="middle" fontSize="10" fill="#6ee7b7" fontFamily="JetBrains Mono, monospace">is_a</text>
-      <text className="lbl lbl8" x="470" y="332" textAnchor="middle" fontSize="10" fill="#6ee7b7" fontFamily="JetBrains Mono, monospace">has_value</text>
     </svg>
   )
 }
 
 export function LandingPage() {
-  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null)
-
-  async function handleCheckout(planKey: string) {
-    setCheckoutLoading(planKey)
-    try {
-      const res = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planKey }),
-        redirect: 'manual',
-      })
-      // Not authenticated (NextAuth 307 or explicit 401)
-      if (res.type === 'opaqueredirect' || res.status === 401 || !res.ok) {
-        sessionStorage.setItem('pendingCheckoutPlan', planKey)
-        window.location.href = '/login'
-        return
-      }
-      const data = await res.json()
-      if (data.url) window.location.href = data.url
-    } finally {
-      setCheckoutLoading(null)
-    }
-  }
-
   return (
     <div className="landing-page" style={{
       background: '#070b14',
@@ -288,34 +188,8 @@ export function LandingPage() {
       overflowX: 'hidden',
     }}>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .lp-hero-section { padding: 48px 20px !important; min-height: unset !important; }
-          .lp-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .lp-hero-graph { display: none !important; }
-          .lp-domain-strip { padding: 16px 20px !important; }
-          .lp-four-ways { padding: 56px 20px 48px !important; }
-          .lp-features-section { padding: 60px 20px !important; }
-          .lp-features-grid { grid-template-columns: 1fr !important; }
-          .lp-pricing-section { padding: 60px 20px !important; }
-          .lp-pricing-grid { grid-template-columns: 1fr !important; }
-          .lp-pricing-grid > div { transform: none !important; }
-          .lp-comparison-section { padding: 32px 20px 60px !important; }
-          .lp-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-          .lp-table-scroll table { min-width: 520px; }
-          .lp-cta-section { padding: 60px 20px !important; }
-        }
-        @media (min-width: 769px) and (max-width: 1024px) {
-          .lp-hero-section { padding: 60px 32px !important; }
-          .lp-hero-grid { gap: 40px !important; }
-          .lp-features-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .lp-pricing-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .lp-pricing-grid > div { transform: none !important; }
-        }
-      `}</style>
-
       {/* ── HERO ────────────────────────────────────────────────── */}
-      <section className="lp-hero-section" style={{
+      <section style={{
         minHeight: '92vh',
         display: 'flex',
         alignItems: 'center',
@@ -343,7 +217,7 @@ export function LandingPage() {
           backgroundSize: '48px 48px',
         }}/>
 
-        <div className="lp-hero-grid" style={{
+        <div style={{
           maxWidth: 1200, width: '100%', margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -421,32 +295,6 @@ export function LandingPage() {
                   <path d="M3 7h8M7 3l4 4-4 4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
-              <a
-                href="#pricing"
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 8,
-                  padding: '14px 28px',
-                  borderRadius: 9999,
-                  background: 'transparent',
-                  border: '1px solid rgba(99,102,241,0.35)',
-                  color: '#a5b4fc',
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 600,
-                  fontSize: 14,
-                  textDecoration: 'none',
-                  transition: 'border-color 0.2s, color 0.2s',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'rgba(99,102,241,0.7)'
-                  e.currentTarget.style.color = '#c7d2fe'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(99,102,241,0.35)'
-                  e.currentTarget.style.color = '#a5b4fc'
-                }}
-              >
-                See Pricing
-              </a>
             </div>
 
             {/* Stats strip */}
@@ -475,7 +323,7 @@ export function LandingPage() {
           </div>
 
           {/* Right: Graph visualization */}
-          <div className="lp-hero-graph" style={{
+          <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             position: 'relative',
           }}>
@@ -508,7 +356,7 @@ export function LandingPage() {
       </section>
 
       {/* ── DOMAIN STRIP ─────────────────────────────────────────── */}
-      <section className="lp-domain-strip" style={{
+      <section style={{
         borderTop: '1px solid rgba(99,102,241,0.08)',
         borderBottom: '1px solid rgba(99,102,241,0.08)',
         padding: '24px 40px',
@@ -533,7 +381,7 @@ export function LandingPage() {
       </section>
 
       {/* ── FOUR WAYS TO WORK ────────────────────────────────────── */}
-      <section className="lp-four-ways" style={{
+      <section style={{
         padding: '80px 40px 70px',
         borderTop: '1px solid rgba(99,102,241,0.08)',
         background: 'rgba(8,11,22,0.6)',
@@ -565,7 +413,7 @@ export function LandingPage() {
       </section>
 
       {/* ── FEATURES ─────────────────────────────────────────────── */}
-      <section id="features" className="lp-features-section" style={{ padding: '100px 40px' }}>
+      <section id="features" style={{ padding: '100px 40px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 64 }}>
             <div style={{
@@ -583,7 +431,7 @@ export function LandingPage() {
             </h2>
           </div>
 
-          <div className="lp-features-grid" style={{
+          <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: 24,
@@ -630,280 +478,8 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* ── PRICING ──────────────────────────────────────────────── */}
-      <section id="pricing" className="lp-pricing-section" style={{
-        padding: '100px 40px',
-        background: 'rgba(9,13,28,0.8)',
-        borderTop: '1px solid rgba(99,102,241,0.08)',
-      }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 64 }}>
-            <div style={{
-              display: 'inline-block',
-              fontSize: 11, color: '#f59e0b', letterSpacing: '0.15em',
-              marginBottom: 16, textTransform: 'uppercase',
-            }}>Pricing</div>
-            <h2 style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800, fontSize: 'clamp(28px, 3vw, 40px)',
-              color: '#f1f5f9', margin: '0 0 16px 0', letterSpacing: '-0.02em',
-            }}>
-              Start building today
-            </h2>
-            <p style={{ fontSize: 15, color: '#64748b', margin: 0 }}>
-              From solo ontology designers to enterprise AI platform teams
-            </p>
-          </div>
-
-          <div className="lp-pricing-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 20,
-            alignItems: 'stretch',
-          }}>
-            {/* Standard plans */}
-            {PRICING.map((plan) => (
-              <div
-                key={plan.name}
-                style={{
-                  background: plan.highlighted ? '#0a0e1e' : '#0d1224',
-                  border: plan.highlighted
-                    ? '2px solid #6366f1'
-                    : '1px solid rgba(99,102,241,0.12)',
-                  borderRadius: 16,
-                  padding: '32px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '20px',
-                  position: 'relative',
-                  transform: plan.highlighted ? 'scale(1.03)' : 'none',
-                  boxShadow: plan.highlighted
-                    ? '0 0 40px rgba(99,102,241,0.15)'
-                    : 'none',
-                  overflow: 'hidden',
-                }}
-              >
-                {plan.highlighted && (
-                  <div style={{
-                    position: 'absolute', top: 0, left: 0, right: 0,
-                    background: 'linear-gradient(90deg, #6366f1, #818cf8)',
-                    padding: '7px',
-                    textAlign: 'center',
-                    fontSize: 10,
-                    fontFamily: "'Syne', sans-serif",
-                    fontWeight: 700,
-                    color: '#fff',
-                    letterSpacing: '0.1em',
-                  }}>
-                    MOST POPULAR
-                  </div>
-                )}
-
-                <div style={{ paddingTop: plan.highlighted ? 24 : 0 }}>
-                  <div style={{
-                    fontSize: 11, color: plan.highlighted ? '#a5b4fc' : '#475569',
-                    letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8,
-                  }}>
-                    {plan.name}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span style={{
-                      fontFamily: "'Syne', sans-serif",
-                      fontWeight: 800,
-                      fontSize: 32,
-                      color: plan.highlighted ? '#f1f5f9' : '#e2e8f0',
-                      letterSpacing: '-0.02em',
-                    }}>{plan.price}</span>
-                    {plan.period && (
-                      <span style={{ fontSize: 13, color: '#475569' }}>{plan.period}</span>
-                    )}
-                  </div>
-                  <div style={{ fontSize: 12, color: '#475569', marginTop: 8 }}>
-                    {plan.tagline}
-                  </div>
-                </div>
-
-                <div style={{
-                  height: 1,
-                  background: plan.highlighted
-                    ? 'rgba(99,102,241,0.3)'
-                    : 'rgba(99,102,241,0.08)',
-                }}/>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-                  {plan.features.map(f => (
-                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <div style={{
-                        width: 18, height: 18, borderRadius: '50%',
-                        background: plan.highlighted
-                          ? 'rgba(99,102,241,0.2)'
-                          : 'rgba(99,102,241,0.08)',
-                        border: `1px solid ${plan.highlighted ? 'rgba(99,102,241,0.5)' : 'rgba(99,102,241,0.2)'}`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        flexShrink: 0,
-                      }}>
-                        <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                          <path d="M1.5 4.5l2.5 2.5 3.5-4" stroke={plan.highlighted ? '#818cf8' : '#6366f1'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </div>
-                      <span style={{
-                        fontSize: 13,
-                        color: plan.highlighted ? '#cbd5e1' : '#64748b',
-                      }}>{f}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {plan.planKey ? (
-                  <button
-                    onClick={() => handleCheckout(plan.planKey!)}
-                    disabled={checkoutLoading === plan.planKey}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      textAlign: 'center',
-                      padding: '13px 0',
-                      borderRadius: 9999,
-                      background: plan.highlighted ? '#6366f1' : 'transparent',
-                      border: plan.highlighted ? 'none' : '1px solid rgba(99,102,241,0.3)',
-                      color: plan.highlighted ? '#fff' : '#818cf8',
-                      fontFamily: "'Syne', sans-serif",
-                      fontWeight: 700,
-                      fontSize: 13,
-                      transition: 'all 0.2s',
-                      opacity: checkoutLoading === plan.planKey ? 0.6 : 1,
-                    }}
-                    onMouseEnter={e => {
-                      if (checkoutLoading) return
-                      if (plan.highlighted) {
-                        e.currentTarget.style.background = '#4f46e5'
-                      } else {
-                        e.currentTarget.style.borderColor = 'rgba(99,102,241,0.6)'
-                        e.currentTarget.style.color = '#a5b4fc'
-                      }
-                      e.currentTarget.style.transform = 'translateY(-1px)'
-                    }}
-                    onMouseLeave={e => {
-                      if (plan.highlighted) {
-                        e.currentTarget.style.background = '#6366f1'
-                      } else {
-                        e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'
-                        e.currentTarget.style.color = '#818cf8'
-                      }
-                      e.currentTarget.style.transform = 'translateY(0)'
-                    }}
-                  >
-                    {checkoutLoading === plan.planKey ? 'Redirecting…' : plan.cta}
-                  </button>
-                ) : (
-                  <a
-                    href={plan.ctaHref}
-                    suppressHydrationWarning
-                    style={{
-                      display: 'block',
-                      textAlign: 'center',
-                      padding: '13px 0',
-                      borderRadius: 9999,
-                      background: plan.highlighted ? '#6366f1' : 'transparent',
-                      border: plan.highlighted ? 'none' : '1px solid rgba(99,102,241,0.3)',
-                      color: plan.highlighted ? '#fff' : '#818cf8',
-                      fontFamily: "'Syne', sans-serif",
-                      fontWeight: 700,
-                      fontSize: 13,
-                      textDecoration: 'none',
-                      transition: 'all 0.2s',
-                    }}
-                    onMouseEnter={e => {
-                      if (plan.highlighted) {
-                        e.currentTarget.style.background = '#4f46e5'
-                      } else {
-                        e.currentTarget.style.borderColor = 'rgba(99,102,241,0.6)'
-                        e.currentTarget.style.color = '#a5b4fc'
-                      }
-                      e.currentTarget.style.transform = 'translateY(-1px)'
-                    }}
-                    onMouseLeave={e => {
-                      if (plan.highlighted) {
-                        e.currentTarget.style.background = '#6366f1'
-                      } else {
-                        e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'
-                        e.currentTarget.style.color = '#818cf8'
-                      }
-                      e.currentTarget.style.transform = 'translateY(0)'
-                    }}
-                  >
-                    {plan.cta}
-                  </a>
-                )}
-              </div>
-            ))}
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── PLAN COMPARISON TABLE ────────────────────────────────── */}
-      <section className="lp-comparison-section" style={{ padding: '60px 40px 100px', background: '#070b14' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <h3 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 700, fontSize: 20,
-            color: '#f1f5f9', margin: '0 0 32px 0', textAlign: 'center',
-          }}>
-            Plan comparison
-          </h3>
-          <div className="lp-table-scroll" style={{
-            background: '#0d1224',
-            border: '1px solid rgba(99,102,241,0.1)',
-            borderRadius: 16,
-            overflow: 'hidden',
-          }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-              <thead>
-                <tr style={{ borderBottom: '1px solid rgba(99,102,241,0.12)' }}>
-                  <th style={{ textAlign: 'left', padding: '18px 24px', color: '#475569', fontWeight: 500 }}>Feature</th>
-                  {['Free', 'Starter', 'Pro', 'Business'].map(p => (
-                    <th key={p} style={{
-                      padding: '18px 24px', color: p === 'Pro' ? '#a5b4fc' : '#64748b',
-                      fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 13,
-                      textAlign: 'center',
-                    }}>{p}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Ontologies', '2', '10', 'Unlimited', 'Unlimited'],
-                  ['Nodes per ontology', '50', '500', 'Unlimited', 'Unlimited'],
-                  ['AI imports/month', '—', '10', '100', 'Unlimited'],
-                  ['AI analyses/month', '—', '—', '20', 'Unlimited'],
-                  ['YAML export', '—', '✓', '✓', '✓'],
-                  ['API access', '—', '—', '✓', '✓'],
-                ].map(([label, ...vals], i) => (
-                  <tr key={label} style={{
-                    borderBottom: '1px solid rgba(99,102,241,0.06)',
-                    background: i % 2 === 0 ? 'transparent' : 'rgba(99,102,241,0.02)',
-                  }}>
-                    <td style={{ padding: '14px 24px', color: '#94a3b8' }}>{label}</td>
-                    {vals.map((v, vi) => (
-                      <td key={vi} style={{
-                        padding: '14px 24px',
-                        textAlign: 'center',
-                        color: v === '✓' ? '#6366f1' : v === '—' ? '#1e293b' : '#cbd5e1',
-                        fontWeight: v === '✓' ? 600 : 400,
-                        fontSize: v === '✓' ? 16 : 13,
-                      }}>{v}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA SECTION ──────────────────────────────────────────── */}
-      <section className="lp-cta-section" style={{
+      <section style={{
         padding: '100px 40px',
         background: 'linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.08) 100%)',
         borderTop: '1px solid rgba(99,102,241,0.15)',

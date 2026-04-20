@@ -1,28 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import type { NodeType } from '@/lib/types'
 import type { OntologyListItem } from '@/lib/storage'
-import { PlusIcon, BoxIcon, NetworkIcon, TrashIcon, ArrowRightIcon, ZapIcon } from 'lucide-react'
+import { PlusIcon, BoxIcon, NetworkIcon, TrashIcon, ArrowRightIcon } from 'lucide-react'
 import { NewOntologyModal } from './NewOntologyModal'
 import { CapabilityTiles } from './CapabilityTiles'
 
 interface Props {
   initialOntologies: OntologyListItem[]
-}
-
-interface UserInfo {
-  plan: string
-  limits: { ontologies: number; importsPerMonth: number; analyzePerMonth: number }
-  usage: { ontologies: number; importsThisMonth: number; analyzesThisMonth: number }
-}
-
-const PLAN_COLORS: Record<string, string> = {
-  free: '#64748b',
-  starter: '#3b82f6',
-  pro: '#8b5cf6',
-  business: '#f59e0b',
 }
 
 const DOMAIN_COLORS: Record<string, string> = {
@@ -142,24 +129,6 @@ export function OntologyHome({ initialOntologies }: Props) {
   const pathname = usePathname()
   const [ontologies, setOntologies] = useState(initialOntologies)
   const [deleting, setDeleting] = useState<string | null>(null)
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-
-  useEffect(() => {
-    fetch('/api/users/me').then(r => r.ok ? r.json() : null).then(d => { if (d) setUserInfo(d) })
-  }, [])
-
-  useEffect(() => {
-    const pendingPlan = sessionStorage.getItem('pendingCheckoutPlan')
-    if (!pendingPlan) return
-    sessionStorage.removeItem('pendingCheckoutPlan')
-    fetch('/api/stripe/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan: pendingPlan }),
-    }).then(r => r.ok ? r.json() : null).then(d => {
-      if (d?.url) window.location.href = d.url
-    })
-  }, [])
 
   const modal = searchParams.get('modal')
   const modalOpen = modal === 'create' || modal === 'upload' || modal === 'import'
@@ -183,7 +152,7 @@ export function OntologyHome({ initialOntologies }: Props) {
   const COLS = '72px 1fr 96px 80px 80px 64px 64px 96px 36px'
 
   return (
-    <div className="dashboard-page flex flex-col" style={{ background: 'var(--bg)' }}>
+    <div className="dashboard-page flex flex-col" style={{ background: 'var(--bg)', minHeight: '100%' }}>
       {/* Header */}
       <header style={{ borderBottom: '1px solid var(--border)', padding: '14px 40px' }} className="flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
@@ -203,33 +172,6 @@ export function OntologyHome({ initialOntologies }: Props) {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {userInfo && (
-            <div className="flex items-center gap-2" style={{ paddingRight: 16 }}>
-              <span style={{
-                fontSize: 11,
-                padding: '3px 10px',
-                borderRadius: 9999,
-                background: `${PLAN_COLORS[userInfo.plan] ?? '#64748b'}18`,
-                color: PLAN_COLORS[userInfo.plan] ?? '#64748b',
-                border: `1px solid ${PLAN_COLORS[userInfo.plan] ?? '#64748b'}40`,
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                textTransform: 'uppercase' as const,
-              }}>
-                {userInfo.plan}
-              </span>
-              {userInfo.plan === 'free' && (
-                <button
-                  onClick={() => router.push('/#pricing')}
-                  className="flex items-center gap-1 text-xs font-medium transition-opacity hover:opacity-80"
-                  style={{ color: '#f59e0b' }}
-                >
-                  <ZapIcon size={11} />
-                  Upgrade
-                </button>
-              )}
-            </div>
-          )}
         <button
           onClick={() => openModal('create')}
           className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium transition-all"
@@ -253,37 +195,6 @@ export function OntologyHome({ initialOntologies }: Props) {
         <div style={{ marginBottom: 36 }}>
           <CapabilityTiles onAction={openModal} />
         </div>
-
-        {/* Plan usage warning */}
-        {userInfo && userInfo.limits.ontologies !== -1 && (
-          <div style={{
-            marginBottom: 20,
-            padding: '10px 16px',
-            borderRadius: 8,
-            background: 'rgba(99,102,241,0.06)',
-            border: '1px solid rgba(99,102,241,0.15)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 12,
-          }}>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-              <span style={{ color: 'var(--text)', fontWeight: 600 }}>
-                {userInfo.usage.ontologies}
-              </span>
-              {' / '}
-              {userInfo.limits.ontologies} ontologies on <strong>{userInfo.plan}</strong> plan
-            </div>
-            <button
-              onClick={() => router.push('/#pricing')}
-              className="flex items-center gap-1 text-xs font-medium"
-              style={{ color: '#f59e0b', whiteSpace: 'nowrap' as const }}
-            >
-              <ZapIcon size={11} />
-              Upgrade
-            </button>
-          </div>
-        )}
 
         {ontologies.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-6 py-20">
