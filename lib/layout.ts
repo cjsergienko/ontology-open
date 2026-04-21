@@ -3,8 +3,8 @@ import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } 
 import type { Node, Edge } from '@xyflow/react'
 import type { OntologyNode } from './types'
 
-const NODE_WIDTH = 200
-const NODE_HEIGHT = 60
+export const NODE_WIDTH = 200
+export const NODE_HEIGHT = 60
 const COLLISION_RADIUS = Math.sqrt(NODE_WIDTH ** 2 + NODE_HEIGHT ** 2) / 2 + 60
 
 export type LayoutKind = 'force' | 'spring' | 'tree-tb' | 'tree-lr' | 'circular'
@@ -29,7 +29,7 @@ function buildDegreeMap(nodes: Node[], edges: Edge[]): Map<string, number> {
   return deg
 }
 
-function highestDegree(nodes: Node[], edges: Edge[]): string | null {
+export function highestDegree(nodes: Node[], edges: Edge[]): string | null {
   const deg = buildDegreeMap(nodes, edges)
   let best: string | null = null, bestDeg = -1
   for (const [id, d] of deg) { if (d > bestDeg) { bestDeg = d; best = id } }

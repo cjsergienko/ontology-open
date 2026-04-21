@@ -39,7 +39,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { JDPreviewPanel } from './JDPreviewPanel'
-import { applyLayout, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
+import { applyLayout, highestDegree, NODE_WIDTH, NODE_HEIGHT, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
 
 const nodeTypes: NodeTypes = {
   ontology: OntologyNodeComponent,
@@ -169,7 +169,7 @@ function OntologyEditorInner({ initialOntology, readOnly = false }: Props) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const { fitView } = useReactFlow()
+  const { fitView, setCenter } = useReactFlow()
 
   const [ontology, setOntology] = useState(initialOntology)
   const [nodes, setNodes, onNodesChange] = useNodesState(toFlowNodes(initialOntology.nodes))
@@ -226,10 +226,18 @@ function OntologyEditorInner({ initialOntology, readOnly = false }: Props) {
     setParams({ layout: kind })
     setNodes(ns => {
       const laid = applyLayout(ns, edges, kind)
-      setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 50)
+      const mainId = highestDegree(laid, edges)
+      const mainNode = mainId ? laid.find(n => n.id === mainId) : null
+      if (mainNode) {
+        const cx = mainNode.position.x + NODE_WIDTH / 2
+        const cy = mainNode.position.y + NODE_HEIGHT / 2
+        setTimeout(() => setCenter(cx, cy, { zoom: 0.75, duration: 400 }), 50)
+      } else {
+        setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 50)
+      }
       return laid
     })
-  }, [edges, fitView, setNodes, setParams])
+  }, [edges, fitView, setCenter, setNodes, setParams])
 
   // Auto-layout on first mount using URL-persisted kind
   useEffect(() => {
