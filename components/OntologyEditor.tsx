@@ -227,10 +227,10 @@ function OntologyEditorInner({ initialOntology, readOnly = false }: Props) {
     setNodes(ns => {
       const laid = applyLayout(ns, edges, kind)
       const mainId = mainNode(laid, edges)
-      const mainNode = mainId ? laid.find(n => n.id === mainId) : null
-      if (mainNode) {
-        const cx = mainNode.position.x + NODE_WIDTH / 2
-        const cy = mainNode.position.y + NODE_HEIGHT / 2
+      const centerNode = mainId ? laid.find(n => n.id === mainId) : null
+      if (centerNode) {
+        const cx = centerNode.position.x + NODE_WIDTH / 2
+        const cy = centerNode.position.y + NODE_HEIGHT / 2
         setTimeout(() => setCenter(cx, cy, { zoom: 0.75, duration: 400 }), 50)
       } else {
         setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 50)
