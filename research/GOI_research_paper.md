@@ -782,7 +782,7 @@ We discussed limitations including LLM consistency challenges, maximum token con
 
 Future work will focus on hierarchical schema induction for large corpora, provenance tracking and confidence scoring, OWL export with axiom inference, enhanced relationship discovery, active learning for iterative refinement, benchmark dataset creation, multi-modal schema induction, and user studies measuring the organizational impact of GOI-produced schemas on team coordination. By lowering barriers to ontology engineering and enabling domain-agnostic schema discovery, GOI contributes to the broader goal of making structured knowledge accessible to both AI systems and the diverse human teams that build them.
 
-The code, documentation, and example ontologies are available at https://github.com/cjsergienko/ontology. A live demo is available at https://ontology.live. We invite the research community to apply GOI to new document types, extend the framework, and contribute to the development of universal ontology induction methods.
+The code, documentation, and example ontologies are available at https://github.com/cjsergienko/ontology-open. A live demo is available at https://ontology.live. We invite the research community to apply GOI to new document types, extend the framework, and contribute to the development of universal ontology induction methods.
 
 ---
 
@@ -800,7 +800,7 @@ The code, documentation, and example ontologies are available at https://github.
 
 [6] B. Zhang and H. Soh, "Extract, Define, Canonicalize: An LLM-based Framework for Knowledge Graph Construction," *Proc. EMNLP*, 2024.
 
-[7] Authors, "AutoClusRE: An Automatic Clustering-Based Method for Relation Extraction and Knowledge Graph Construction," *arXiv preprint*, 2024. <!-- TODO: verify final authors/venue -->
+[7] T. Wang, D. Shi, J. Aguilar, and J. Zurada, "AutoClusRE: An Automatic Clustering-Based Method for Relation Extraction and Knowledge Graph Construction," *Research Square* (Preprint), doi:10.21203/rs.3.rs-7705090/v1, 2024.
 
 [8] J. Cano-Benito et al., "OntoGenix: Leveraging Large Language Models for Enhanced Ontology Engineering from Datasets," *Information Processing & Management*, vol. 62, no. 3, 2024.
 
@@ -834,7 +834,7 @@ The code, documentation, and example ontologies are available at https://github.
 
 [23] N. Fathallah et al., "NeOn-GPT: A Large Language Model-Powered Pipeline for Ontology Learning," *The Semantic Web: ESWC 2024 Satellite Events*, Springer, 2024. <!-- moved from [25] -->
 
-[24] P. Haase et al., "metaphactory: A Platform for Knowledge Graph Management," *Proc. ISWC (Posters & Demos)*, 2019. <!-- TODO: verify exact citation -->
+[24] P. Haase, D.M. Herzig, A. Kozlov, A. Nikolov, and J. Trame, "metaphactory: A Platform for Knowledge Graph Management," *Semantic Web*, vol. 10, no. 6, 2019. doi:10.3233/SW-190360
 
 [25] N. Fathallah et al., "NeOn-GPT: A Large Language Model-Powered Pipeline for Ontology Learning," *The Semantic Web: ESWC 2024 Satellite Events*, Springer, 2024.
 
