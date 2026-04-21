@@ -2,7 +2,7 @@ import { getDb } from './db'
 import { getPlanLimits, DEMO_ONTOLOGY_ID, type Plan } from './plans'
 import { randomUUID } from 'crypto'
 
-export const TOKEN_LIMIT = 3000
+export const TOKEN_LIMIT = 6000
 
 export interface DbUser {
   id: string

@@ -2,7 +2,7 @@
  * Open-edition AI quota e2e tests.
  *
  * No plan tiers. All users get full access. The only gate is a token quota:
- * TOKEN_LIMIT = 3000 output tokens per user (tracked in users.tokens_used).
+ * TOKEN_LIMIT = 6000 output tokens per user (tracked in users.tokens_used).
  *
  * When tokens_used >= TOKEN_LIMIT, AI routes return HTTP 402.
  * Non-AI routes (create, export, list) are always open.
@@ -72,7 +72,7 @@ test.describe('AI token quota', () => {
   })
 
   test('import is blocked (402) when token quota exceeded', async ({ request }) => {
-    await setup(request, { tokensUsed: 3000 })
+    await setup(request, { tokensUsed: 6000 })
     const res = await postImport(request)
     expect(res.status()).toBe(402)
     const body = await res.json()
@@ -80,7 +80,7 @@ test.describe('AI token quota', () => {
   })
 
   test('upload is blocked (402) when token quota exceeded', async ({ request }) => {
-    await setup(request, { tokensUsed: 3000 })
+    await setup(request, { tokensUsed: 6000 })
     const res = await request.post('/api/ontologies/upload')
     expect(res.status()).toBe(402)
     const body = await res.json()
@@ -101,7 +101,7 @@ test.describe('non-AI routes always open', () => {
   test.afterEach(async ({ request }) => { await cleanup(request) })
 
   test('ontology creation is unlimited even at max tokens', async ({ request }) => {
-    await setup(request, { tokensUsed: 3000 })
+    await setup(request, { tokensUsed: 6000 })
     for (let i = 0; i < 5; i++) {
       const res = await createOntology(request, `Ontology ${i + 1}`)
       expect(res.status()).toBe(201)
@@ -121,7 +121,7 @@ test.describe('non-AI routes always open', () => {
   })
 
   test('YAML export works even when token quota exceeded', async ({ request }) => {
-    await setup(request, { fresh: true, tokensUsed: 3000 })
+    await setup(request, { fresh: true, tokensUsed: 6000 })
     const list = await request.get('/api/ontologies')
     const ontologies = await list.json()
     const id = ontologies[0].id
