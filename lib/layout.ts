@@ -36,6 +36,21 @@ export function highestDegree(nodes: Node[], edges: Edge[]): string | null {
   return best
 }
 
+export function mainNode(nodes: Node[], edges: Edge[]): string | null {
+  const deg = buildDegreeMap(nodes, edges)
+  // Prefer the highest-degree class node; fall back to highest-degree overall
+  const classNodes = nodes.filter(n => (n.data as unknown as OntologyNode)?.type === 'class')
+  if (classNodes.length > 0) {
+    let best: string | null = null, bestDeg = -1
+    for (const n of classNodes) {
+      const d = deg.get(n.id) ?? 0
+      if (d > bestDeg) { bestDeg = d; best = n.id }
+    }
+    return best
+  }
+  return highestDegree(nodes, edges)
+}
+
 function validEdges(nodes: Node[], edges: Edge[]): Edge[] {
   const ids = new Set(nodes.map(n => n.id))
   return edges.filter(e => ids.has(e.source) && ids.has(e.target))
