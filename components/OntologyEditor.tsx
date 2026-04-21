@@ -39,7 +39,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { JDPreviewPanel } from './JDPreviewPanel'
-import { applyLayout, highestDegree, NODE_WIDTH, NODE_HEIGHT, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
+import { applyLayout, mainNode, NODE_WIDTH, NODE_HEIGHT, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
 
 const nodeTypes: NodeTypes = {
   ontology: OntologyNodeComponent,
@@ -226,7 +226,7 @@ function OntologyEditorInner({ initialOntology, readOnly = false }: Props) {
     setParams({ layout: kind })
     setNodes(ns => {
       const laid = applyLayout(ns, edges, kind)
-      const mainId = highestDegree(laid, edges)
+      const mainId = mainNode(laid, edges)
       const mainNode = mainId ? laid.find(n => n.id === mainId) : null
       if (mainNode) {
         const cx = mainNode.position.x + NODE_WIDTH / 2
