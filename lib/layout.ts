@@ -37,18 +37,28 @@ export function highestDegree(nodes: Node[], edges: Edge[]): string | null {
 }
 
 export function mainNode(nodes: Node[], edges: Edge[]): string | null {
-  const deg = buildDegreeMap(nodes, edges)
-  // Prefer the highest-degree class node; fall back to highest-degree overall
   const classNodes = nodes.filter(n => (n.data as unknown as OntologyNode)?.type === 'class')
-  if (classNodes.length > 0) {
-    let best: string | null = null, bestDeg = -1
-    for (const n of classNodes) {
-      const d = deg.get(n.id) ?? 0
-      if (d > bestDeg) { bestDeg = d; best = n.id }
-    }
-    return best
+  if (classNodes.length === 0) return highestDegree(nodes, edges)
+
+  // Count in-degree and out-degree separately for class nodes
+  const inDeg = new Map<string, number>()
+  const outDeg = new Map<string, number>()
+  for (const n of classNodes) { inDeg.set(n.id, 0); outDeg.set(n.id, 0) }
+  for (const e of edges) {
+    if (inDeg.has(e.target))  inDeg.set(e.target,  (inDeg.get(e.target)  ?? 0) + 1)
+    if (outDeg.has(e.source)) outDeg.set(e.source, (outDeg.get(e.source) ?? 0) + 1)
   }
-  return highestDegree(nodes, edges)
+
+  // Root = class with fewest incoming edges; break ties by most outgoing edges
+  let best: string | null = null, bestIn = Infinity, bestOut = -1
+  for (const n of classNodes) {
+    const i = inDeg.get(n.id) ?? 0
+    const o = outDeg.get(n.id) ?? 0
+    if (i < bestIn || (i === bestIn && o > bestOut)) {
+      bestIn = i; bestOut = o; best = n.id
+    }
+  }
+  return best
 }
 
 function validEdges(nodes: Node[], edges: Edge[]): Edge[] {
