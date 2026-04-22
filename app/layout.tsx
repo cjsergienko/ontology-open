@@ -5,9 +5,16 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ontology.live'),
   title: 'ontology.live — Visual Ontology & Knowledge Graph Designer',
   description: 'Design ontologies, taxonomies, and knowledge graphs visually. The structural backbone for AI agent pipelines.',
-  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'ontology.live — Visual Ontology & Knowledge Graph Designer',
+    description: 'Design ontologies, taxonomies, and knowledge graphs visually. The structural backbone for AI agent pipelines.',
+    url: 'https://ontology.live',
+    siteName: 'ontology.live',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
