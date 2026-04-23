@@ -85,7 +85,6 @@ export function SiteHeader() {
           <nav className="sh-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             {[
               { label: 'Features', href: '/#features' },
-              { label: 'Pricing', href: '/#pricing' },
             ].map(item => (
               <a
                 key={item.label}
@@ -195,7 +194,6 @@ export function SiteHeader() {
         >
           {[
             { label: 'Features', href: '/#features' },
-            { label: 'Pricing', href: '/#pricing' },
           ].map(item => (
             <a
               key={item.label}
