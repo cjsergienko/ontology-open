@@ -49,17 +49,18 @@ from Document Corpora Using Large Language Models}
 
 \titlerunning{Generative Ontology Induction}
 
-\author{Sergei Sergienko\inst{1}\thanks{An earlier version of this work was deposited at Zenodo: \url{https://doi.org/10.5281/zenodo.19772179}.}}
+\author{Sergei Sergienko\inst{1}\,\href{https://orcid.org/0009-0009-5180-7115}{(ORCID: 0009-0009-5180-7115)}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19772179}{10.5281/zenodo.19772179}).}}
 
 \authorrunning{S. Sergienko}
 
 \institute{Pivots Global\\
-\email{ssergienko@pivotsglobal.com}}
+\email{ssergienko@ontology.live}}
 
 \maketitle
 
 % -------------------------------------------------------
 \begin{abstract}
+{\normalsize
 Ontology engineering remains a critical bottleneck in knowledge-intensive
 AI systems. Existing automated approaches either depend on predefined
 schemas, operate within narrow domains, or produce unstructured outputs
@@ -67,23 +68,25 @@ unsuitable for downstream pipelines.
 
 We introduce \textbf{Generative Ontology Induction (GOI)}, a
 domain-agnostic framework that induces a \emph{generative
-blueprint}---entities, dimensions, properties, relationships, and
-constraints---from a corpus of examples and exports it as a typed graph
+blueprint}-entities, dimensions, properties, relationships, and
+constraints-from a corpus of examples and exports it as a typed graph
 (six node types, seven edge types) in YAML/JSON. We introduce the
 \textbf{Node Coverage Score}, a novel evaluation metric that measures
 the percentage of ontology dimension nodes appearing in generated
 outputs.
 
-A controlled generative validation on two contrasting ontologies shows
-that GOI-prompted generation by construction covers 100\% of applicable
-ontology nodes; a generic three-field template recovers 95.7\% on
-familiar invoices but collapses to 65.4\% on a custom 63-node hiring
-taxonomy. The structural coverage holds regardless of how familiar the
-document type is to the model.
+A controlled generative validation on two contrasting ontologies-a
+familiar Software Services Invoice schema and a custom Job Description
+Ontology-shows that GOI-prompted generation by construction covers
+100\% of applicable ontology nodes; a generic three-field template
+recovers 95.7\% on the invoice schema but collapses to 65.4\% on the
+Job Description Ontology. The structural coverage holds regardless of
+how familiar the document type is to the model.
 
 \keywords{Ontology learning \and Schema induction \and Large language
 models \and Knowledge graphs \and Domain-agnostic methods \and
 Generative models \and Cross-functional teams}
+}
 \end{abstract}
 
 % -------------------------------------------------------
@@ -93,8 +96,8 @@ Generative models \and Cross-functional teams}
 
 Modern AI systems increasingly rely on structured knowledge to ground
 reasoning, guide generation, and ensure consistency across complex
-workflows. Ontologies---formal representations of entities,
-relationships, and constraints within a domain---serve as the backbone
+workflows. Ontologies-formal representations of entities,
+relationships, and constraints within a domain-serve as the backbone
 for knowledge graphs, semantic search, retrieval-augmented generation
 (RAG), and multi-agent orchestration. Yet ontology engineering remains a
 labor-intensive, expert-driven process that creates a fundamental
@@ -135,8 +138,8 @@ This paper introduces \textbf{Generative Ontology Induction (GOI)}, a
 framework designed to address these gaps through four core contributions:
 
 \textbf{First}, we formalize the concept of \emph{generative
-ontology}---the structural schema that defines a document class and
-enables generation of new instances---and distinguish it from
+ontology}-the structural schema that defines a document class and
+enables generation of new instances-and distinguish it from
 descriptive entity extraction. GOI reverse-engineers this generative
 blueprint by analyzing multiple examples of the same document type,
 identifying recurring dimensions, properties, relationships, and
@@ -151,7 +154,7 @@ YAML/JSON export for pipeline integration.
 
 \textbf{Third}, we introduce the \textbf{Node Coverage Score}, a novel
 evaluation metric that measures the percentage of dimension nodes in an
-induced ontology that appear in outputs generated from that ontology---a
+induced ontology that appear in outputs generated from that ontology-a
 direct structural-completeness signal that token-level metrics miss.
 
 \textbf{Fourth}, we identify and address a practical
@@ -191,15 +194,15 @@ zero-shot manner~\cite{giglou2023llms4ol}. Schema-from-text pipelines that
 do not assume a predefined schema perform extraction then define and
 canonicalize schema elements post-hoc, enabling domain-agnostic
 operation~\cite{zhang2024edc}. Prompt-only competitive methods apply LLM
-prompting---including retrieval-augmented prompts and sampling
-strategies---to construct terms, types, and taxonomies across domains
+prompting-including retrieval-augmented prompts and sampling
+strategies-to construct terms, types, and taxonomies across domains
 without model fine-tuning~\cite{beliaeva2025}. OntoGenix~\cite{canobenito2024ontogenix}
 shows that LLMs can be directly leveraged for ontology engineering from
 tabular datasets, generating reusable conceptual models. Recent
 benchmarking efforts such as Text2KGBench~\cite{mihindukulasooriya2023text2kgbench}
 have begun to standardize evaluation of ontology-driven knowledge graph
-generation from text, surfacing the need for structural---not just
-token-level---evaluation criteria.
+generation from text, surfacing the need for structural-not just
+token-level-evaluation criteria.
 
 \subsection{Knowledge Graph Construction from Document Collections}
 
@@ -262,7 +265,7 @@ supports iterative schema discovery through AI-assisted abstraction and
 contrastive refinement, enabling non-experts to discover structural
 patterns from examples with human-in-the-loop validation.
 Despite these advances, all existing visual tools are designed either
-for ontology specialists or for general non-technical users---none
+for ontology specialists or for general non-technical users-none
 explicitly address the communication dynamics of cross-functional AI
 product teams.
 
@@ -305,7 +308,7 @@ The literature reveals six concrete gaps that GOI addresses:
     attention to the communication needs of mixed-expertise engineering
     teams~\cite{hemid2024kgraphx,tudorache2013webprotege,sadeh2024schemex}.
     GOI is the first system designed to produce a schema artifact
-    simultaneously useful to researchers, engineers, and developers---without
+    simultaneously useful to researchers, engineers, and developers-without
     requiring any of them to leave their domain of expertise.
 \end{enumerate}
 
@@ -330,7 +333,7 @@ to discover a typed graph $\mathcal{G} = (V, E, \tau_V, \tau_E)$ where:
     from a fixed edge type vocabulary $\mathcal{T}_E$,
 \end{itemize}
 such that $\mathcal{G}$ represents the \emph{generative blueprint} of
-class $C$---the structural schema that governs how documents of type $C$
+class $C$-the structural schema that governs how documents of type $C$
 are composed and that enables generation of new instances of $C$ from a
 fresh prompt.
 
@@ -374,17 +377,17 @@ types and seven edge types, designed for cross-domain applicability:
 
 \paragraph{Node Types ($|\mathcal{T}_V| = 6$):}
 \begin{itemize}
-  \item \texttt{class} --- A major conceptual category in the document
+  \item \texttt{class} - A major conceptual category in the document
     type (e.g., ``Author'', ``Section'', ``Product'').
-  \item \texttt{property} --- An attribute of a class (e.g., ``title'',
+  \item \texttt{property} - An attribute of a class (e.g., ``title'',
     ``publication\_date'', ``price'').
-  \item \texttt{value} --- A specific allowed value or enumeration
+  \item \texttt{value} - A specific allowed value or enumeration
     member for a property.
-  \item \texttt{dimension} --- A structural axis or organizing principle
+  \item \texttt{dimension} - A structural axis or organizing principle
     of the document type (e.g., ``Methodology'', ``Results'',
     ``Responsibilities'').
-  \item \texttt{relation} --- A named relationship between classes.
-  \item \texttt{constraint} --- A rule or restriction on values,
+  \item \texttt{relation} - A named relationship between classes.
+  \item \texttt{constraint} - A rule or restriction on values,
     cardinalities, or co-occurrence.
 \end{itemize}
 
@@ -468,8 +471,8 @@ pan, and node search. All edits are persisted in a SQLite database via
   \includegraphics[width=\textwidth]{ontology_graph.png}
   \caption{The \emph{Software Services Invoice Ontology} rendered in the
     \texttt{ontology.live} editor (48 nodes, 54 edges). The left
-    palette enumerates GOI's typed vocabulary --- class, property,
-    value, dimension, relation, constraint --- and the typed edge set
+    palette enumerates GOI's typed vocabulary - class, property,
+    value, dimension, relation, constraint - and the typed edge set
     used to connect them (\texttt{is\_a}, \texttt{has\_property},
     \texttt{has\_value}, \texttt{relates\_to}, \texttt{part\_of},
     \texttt{constrains}, \texttt{instance\_of}). The central
@@ -482,11 +485,8 @@ pan, and node search. All edits are persisted in a SQLite database via
 
 \subsection{System Architecture}
 
-GOI is implemented as a full-stack web application using Next.js~16,
-React~19, TypeScript, and Tailwind~CSS~v4 for the frontend; Next.js API
-routes, the Anthropic Claude API (Sonnet model), and the Anthropic Files
-API for the backend; and SQLite via \texttt{better-sqlite3} for
-persistence.
+The reference implementation is a TypeScript web application backed
+by a relational store, with Anthropic's Claude as the LLM backend.
 
 % -------------------------------------------------------
 \section{The Node Coverage Score}
@@ -513,7 +513,7 @@ purpose, regardless of how well it matches a reference schema.
 Let $\mathcal{G} = (V, E, \tau_V, \tau_E)$ be an induced ontology and
 let $o$ be an output generated from $\mathcal{G}$ as a generation
 specification. Let $D \subseteq V$ be the set of \emph{non-context
-dimension nodes}---dimension nodes that represent structural axes
+dimension nodes}-dimension nodes that represent structural axes
 (section-level organizing principles) rather than contextual metadata.
 
 The \textbf{Node Coverage Score} is defined as:
@@ -557,7 +557,7 @@ utility for generation tasks.
 We evaluate GOI through a controlled generative validation: given an
 ontology as the only context, we measure whether an LLM can instantiate
 a complete, schema-valid document from scratch. The ontology itself
-serves as the gold standard --- a property that holds independently of
+serves as the gold standard - a property that holds independently of
 any labeled corpus.
 
 \subsection{Corpora}
@@ -568,16 +568,15 @@ corpus of 20 real B2B invoices internal to the author's
 organization; this corpus is withheld from supplementary materials due
 to seller, client, and contractor confidentiality, but a
 structurally-identical anonymized version of the resulting ontology is
-included. The Job Description Ontology ontology was induced from
-senior engineering job postings published on
-\url{https://pivotshiring.com}; three anonymized postings are
-reproduced in the supplementary bundle.
+included. The Job Description Ontology ontology was induced from a
+publicly accessible corpus of senior engineering job postings; three
+anonymized postings are reproduced in the supplementary bundle.
 
 \subsection{Ontology-as-Prompt: Generative Validation}
 \label{sec:ontology-as-prompt}
 
 A core question for any induced ontology is whether it is dense enough
-to \emph{originate} a document---whether, supplied as the only context,
+to \emph{originate} a document-whether, supplied as the only context,
 it lets an LLM instantiate a complete, schema-valid artifact from
 scratch. The gold standard (the ontology itself) coincides with the
 input, so this evaluation is intrinsically reproducible: the ontology
@@ -590,7 +589,7 @@ populating every property, reflecting each dimension, and satisfying
 every constraint. \textbf{System~B} is a generic 3-field template
 (\texttt{title}, \texttt{content}, \texttt{metadata}). Both systems
 run on the same LLM with identical decoding settings; no corpus is
-consumed---generation is from scratch in both cases. We evaluate two
+consumed-generation is from scratch in both cases. We evaluate two
 ontologies of contrasting familiarity: a Software Services Invoice
 ontology (a document type the LLM has seen at scale during
 pretraining) and a Job Description Ontology ontology (a custom
@@ -643,7 +642,7 @@ JD instance per the ontology's own coverage contract), System~A
 instantiated 26/26 applicable non-context nodes (100\%). System~B
 instantiated only 17/26 (65.4\%): it omitted the \texttt{cat\_org\_context}
 class entirely (no About-the-Company section was emitted) and missed
-eight custom properties---\texttt{company\_stage}, \texttt{company\_size},
+eight custom properties-\texttt{company\_stage}, \texttt{company\_size},
 \texttt{employer\_brand}, \texttt{education\_req},
 \texttt{career\_trajectory}, \texttt{cert\_profile}, and
 \texttt{candidate\_market}. The gap explodes to 34.6~pp because the
@@ -712,22 +711,18 @@ property correctness or content quality.
 structural schema of a document class into a six-node, seven-edge
 typed graph with YAML/JSON export. Our controlled generative
 validation shows GOI-prompted generation by construction covers
-100\% of applicable nodes on a novel 63-node taxonomy versus 65.4\%
-for a generic three-field template---a structural guarantee generic
-prompting cannot offer.
+100\% of applicable nodes on the custom Job Description Ontology
+versus 65.4\% for a generic three-field template-a structural
+guarantee generic prompting cannot offer.
 
 % -------------------------------------------------------
 % Acknowledgments / Funding / Data Availability
 % -------------------------------------------------------
 \section*{Acknowledgments and Data Availability}
-This research received no external funding. The source code,
-documentation, and example ontologies are publicly available:
-
-\begin{itemize}[leftmargin=*,nosep]
-  \item \textbf{Source repository:} \url{https://github.com/cjsergienko/ontology-open}
-  \item \textbf{Live demo:} \url{https://ontology.live}
-  \item \textbf{Video demonstrations:} \url{https://www.youtube.com/@GenerativeOntologyInduction}
-\end{itemize}
+This research received no external funding. Source code and a live
+demonstration of the reference implementation are available at
+\url{https://ontology.live} (repository:
+\url{https://github.com/cjsergienko/ontology-open}).
 
 \paragraph{Supplementary Materials.}\sloppy A reproducibility bundle at
 \texttt{research/supplementary/} contains the Job Description
@@ -872,7 +867,7 @@ Automatic Constructors for Domain Knowledge Graph. In: Proc.\ ACL
 The two prompts used in the \S\ref{sec:ontology-as-prompt} generative
 validation are reproduced verbatim below for reproducibility.
 
-\subsection*{System A --- GOI generation prompt}
+\subsection*{System A - GOI generation prompt}
 
 \begin{verbatim}
 You are a structured-document author. The ontology below defines
@@ -908,7 +903,7 @@ Return TWO things, separated by the literal line "===STRUCTURED===":
 Begin.
 \end{verbatim}
 
-\subsection*{System B --- GST baseline prompt}
+\subsection*{System B - GST baseline prompt}
 
 \begin{verbatim}
 You are a structured-document author. Generate one realistic
