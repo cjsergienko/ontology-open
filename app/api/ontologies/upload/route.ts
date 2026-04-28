@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { saveOntology } from '@/lib/storage'
 import { sseStream } from '@/lib/sse'
+import { consumeStagedFile, getStagedFile } from '@/lib/uploadStaging'
 import type { OntologyNode, OntologyEdge, NodeType } from '@/lib/types'
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY!
@@ -70,8 +71,9 @@ function layoutNodes(nodes: Omit<OntologyNode, 'position'>[]): OntologyNode[] {
   })
 }
 
-function fileToContentBlock(name: string, mime: string, bytes: ArrayBuffer, index: number): object[] {
-  const base64 = Buffer.from(bytes).toString('base64')
+function fileToContentBlock(name: string, mime: string, bytes: ArrayBuffer | Buffer, index: number): object[] {
+  const buf: Buffer = Buffer.isBuffer(bytes) ? bytes : Buffer.from(new Uint8Array(bytes))
+  const base64 = buf.toString('base64')
   const isImage = mime.startsWith('image/')
   const isPdf = mime === 'application/pdf'
   const isText = mime.startsWith('text/') || ['application/json', 'application/yaml', 'application/xml'].some(t => mime.includes(t))
@@ -93,13 +95,19 @@ function fileToContentBlock(name: string, mime: string, bytes: ArrayBuffer, inde
   } else {
     let text: string
     if (isText) {
-      text = Buffer.from(bytes).toString('utf-8').slice(0, 80_000)
+      text = buf.toString('utf-8').slice(0, 80_000)
     } else {
-      try { text = Buffer.from(bytes).toString('utf-8').slice(0, 80_000) }
-      catch { text = `[Binary file: ${name}, ${bytes.byteLength} bytes]` }
+      try { text = buf.toString('utf-8').slice(0, 80_000) }
+      catch { text = `[Binary file: ${name}, ${buf.byteLength} bytes]` }
     }
     return [{ type: 'text', text: `${label}\n${text}\n${endLabel}` }]
   }
+}
+
+interface FileInput {
+  name: string
+  mime: string
+  bytes: ArrayBuffer | Buffer
 }
 
 export async function POST(req: Request) {
@@ -117,26 +125,73 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'token_limit' }, { status: 402 })
   }
 
-  const formData = await req.formData()
-  const files = formData.getAll('file') as File[]
-  if (files.length === 0) return NextResponse.json({ error: 'No files provided' }, { status: 400 })
+  // Resolve input source: JSON { stagingIds } (sequential staging path) or
+  // legacy multipart formData (single-shot small uploads).
+  const contentType = req.headers.get('content-type') ?? ''
+  const fileInputs: FileInput[] = []
+  // Track stagingIds used so we can clear them only on success.
+  const consumedStagingIds: string[] = []
+
+  if (contentType.includes('application/json')) {
+    let body: { stagingIds?: unknown }
+    try {
+      body = await req.json() as { stagingIds?: unknown }
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+    }
+    const ids = Array.isArray(body.stagingIds) ? body.stagingIds.filter((x): x is string => typeof x === 'string') : []
+    if (ids.length === 0) {
+      return NextResponse.json({ error: 'No stagingIds provided' }, { status: 400 })
+    }
+    // Validate ownership BEFORE consuming, so a single bad id doesn't drop
+    // the whole batch from the store.
+    for (const id of ids) {
+      const entry = getStagedFile(id)
+      if (!entry) {
+        return NextResponse.json({ error: `Staged file not found or expired: ${id}` }, { status: 400 })
+      }
+      if (entry.ownerEmail !== sessionUser.email) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      }
+    }
+    for (const id of ids) {
+      const entry = getStagedFile(id)
+      if (!entry) continue
+      fileInputs.push({ name: entry.name, mime: entry.mime, bytes: entry.bytes })
+      consumedStagingIds.push(id)
+    }
+  } else {
+    const formData = await req.formData()
+    const files = formData.getAll('file') as File[]
+    if (files.length === 0) return NextResponse.json({ error: 'No files provided' }, { status: 400 })
+    for (const file of files) {
+      const bytes = await file.arrayBuffer()
+      fileInputs.push({
+        name: file.name,
+        mime: file.type || 'application/octet-stream',
+        bytes,
+      })
+    }
+  }
+
+  if (fileInputs.length === 0) {
+    return NextResponse.json({ error: 'No files provided' }, { status: 400 })
+  }
 
   // Build content blocks for all files
   const contentBlocks: object[] = []
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i]
-    const bytes = await file.arrayBuffer()
-    const mime = file.type || 'application/octet-stream'
-    contentBlocks.push(...fileToContentBlock(file.name, mime, bytes, i))
+  for (let i = 0; i < fileInputs.length; i++) {
+    const f = fileInputs[i]
+    contentBlocks.push(...fileToContentBlock(f.name, f.mime, f.bytes, i))
   }
 
-  const instruction = files.length === 1
+  const instruction = fileInputs.length === 1
     ? `Analyze this example document and extract the generative ontology for this document type.`
-    : `Analyze these ${files.length} example documents of the same type. Identify the common entities, dimensions, properties, and relationships that define this document class. Extract the generative ontology.`
+    : `Analyze these ${fileInputs.length} example documents of the same type. Identify the common entities, dimensions, properties, and relationships that define this document class. Extract the generative ontology.`
 
   contentBlocks.push({ type: 'text', text: instruction })
 
-  const defaultName = files.length === 1 ? files[0].name : `${files.length} examples`
+  const defaultName = fileInputs.length === 1 ? fileInputs[0].name : `${fileInputs.length} examples`
 
   return sseStream(async () => {
     const anthropicResp = await fetch('https://api.anthropic.com/v1/messages', {
@@ -184,6 +239,11 @@ export async function POST(req: Request) {
     saveOntology(ontology, user.id)
     const outputTokens: number = claudeData.usage?.output_tokens ?? 0
     incrementTokensUsed(sessionUser.email, outputTokens)
+
+    // Drop staged entries only after the LLM call + save succeed, so the user
+    // can retry the finalize step without re-uploading on transient failures.
+    for (const id of consumedStagingIds) consumeStagedFile(id)
+
     return ontology
   })
 }

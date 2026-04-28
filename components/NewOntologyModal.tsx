@@ -7,6 +7,7 @@ import {
   PlusIcon, PencilIcon, UploadIcon, FilesIcon,
 } from 'lucide-react'
 import { TokenLimitModal } from './TokenLimitModal'
+import { compressImage } from '@/lib/imageCompress'
 
 interface Props {
   onClose: () => void
@@ -66,6 +67,9 @@ export function NewOntologyModal({ onClose }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showTokenLimit, setShowTokenLimit] = useState(false)
+  // Sequential staging progress for the analyze flow.
+  // null = not staging (LLM phase or idle); otherwise current/total counters.
+  const [stageProgress, setStageProgress] = useState<{ current: number; total: number } | null>(null)
 
   // Build mode
   const [form, setForm] = useState({ name: '', description: '', domain: '' })
@@ -165,10 +169,40 @@ export function NewOntologyModal({ onClose }: Props) {
     if (analyzeFiles.length === 0) return
     setLoading(true)
     setError(null)
+    setStageProgress({ current: 0, total: analyzeFiles.length })
     try {
-      const fd = new FormData()
-      for (const f of analyzeFiles) fd.append('file', f)
-      const resp = await fetch('/api/ontologies/upload', { method: 'POST', body: fd })
+      // Stage each file sequentially. Compress images first to dodge platform
+      // body-size caps on the long tail of phone-camera screenshots.
+      const stagingIds: string[] = []
+      for (let i = 0; i < analyzeFiles.length; i++) {
+        const original = analyzeFiles[i]
+        setStageProgress({ current: i + 1, total: analyzeFiles.length })
+        const prepared = await compressImage(original)
+        if (process.env.NODE_ENV !== 'production' && prepared !== original) {
+          console.log(
+            `[upload] compressed ${original.name}: ${original.size} -> ${prepared.size} bytes ` +
+            `(${((1 - prepared.size / original.size) * 100).toFixed(1)}% smaller)`
+          )
+        }
+        const fd = new FormData()
+        fd.append('file', prepared)
+        const stageResp = await fetch('/api/ontologies/upload/stage', { method: 'POST', body: fd })
+        if (!stageResp.ok) {
+          const err = await stageResp.json().catch(() => ({})) as { error?: string }
+          throw new Error(err.error ?? `Failed to stage ${original.name} (status ${stageResp.status})`)
+        }
+        const { stagingId } = await stageResp.json() as { stagingId: string }
+        stagingIds.push(stagingId)
+      }
+
+      // All files staged. Finalize with one JSON call so the LLM still sees
+      // every file in a single message (induction quality depends on this).
+      setStageProgress(null)
+      const resp = await fetch('/api/ontologies/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stagingIds }),
+      })
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({})) as { error?: string }
         if (resp.status === 402) { setShowTokenLimit(true); setLoading(false); return }
@@ -186,6 +220,7 @@ export function NewOntologyModal({ onClose }: Props) {
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
       setLoading(false)
+      setStageProgress(null)
     }
   }
 
@@ -455,7 +490,9 @@ export function NewOntologyModal({ onClose }: Props) {
 
               {loading && (
                 <p className="text-center text-xs" style={{ color: 'var(--text-dim)' }}>
-                  Analyzing your documents and extracting the ontology structure…
+                  {stageProgress
+                    ? `Uploading file ${stageProgress.current} of ${stageProgress.total}…`
+                    : 'Analyzing your documents and extracting the ontology structure…'}
                 </p>
               )}
             </>
@@ -505,7 +542,11 @@ export function NewOntologyModal({ onClose }: Props) {
               {loading ? (
                 <><span className="inline-block w-3 h-3 rounded-full border-2 animate-spin"
                   style={{ borderColor: 'var(--text-muted)', borderTopColor: 'transparent' }} />
-                  {mode === 'import' ? 'Importing…' : 'Analyzing…'} <ElapsedTimer /></>
+                  {mode === 'import'
+                    ? 'Importing…'
+                    : stageProgress
+                      ? `Uploading ${stageProgress.current}/${stageProgress.total}…`
+                      : 'Analyzing…'} <ElapsedTimer /></>
               ) : submitLabel()}
             </button>
           )}
