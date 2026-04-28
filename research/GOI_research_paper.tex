@@ -17,6 +17,8 @@
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric}
 
 \hypersetup{
   colorlinks=true,
@@ -362,6 +364,34 @@ This formulation distinguishes GOI from entity extraction (which
 produces per-document instance graphs) and from ontology population
 (which adds instances to a predefined schema). GOI operates at the
 \emph{class level}: it discovers the schema, not instances.
+Figure~\ref{fig:pipeline} shows the end-to-end pipeline.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=4mm,
+  every node/.style={
+    rectangle, rounded corners, draw, thick, align=center,
+    minimum height=15mm, text width=20mm, font=\sffamily\small
+  },
+  arr/.style={-Stealth, thick}
+]
+\node (corpus) {\textbf{Document}\\\textbf{Corpus}\\\footnotesize PDF, images,\\\footnotesize text, JSON, YAML};
+\node[right=of corpus] (prompt) {\textbf{Multi-Document}\\\textbf{Prompt}\\\footnotesize generative\\\footnotesize framing};
+\node[right=of prompt] (llm) {\textbf{LLM}\\\textbf{Schema}\\\textbf{Induction}};
+\node[right=of llm] (graph) {\textbf{Typed}\\\textbf{Knowledge Graph}\\\footnotesize 6 node types,\\\footnotesize 7 edge types};
+\node[right=of graph] (export) {\textbf{YAML/JSON}\\\textbf{Export}\\\footnotesize pipeline-ready};
+\draw[arr] (corpus) -- (prompt);
+\draw[arr] (prompt) -- (llm);
+\draw[arr] (llm) -- (graph);
+\draw[arr] (graph) -- (export);
+\end{tikzpicture}
+\caption{GOI's end-to-end ontology induction pipeline. Multi-format
+documents are sampled into a single multi-document prompt that
+elicits a typed graph; the resulting structure exports directly to
+YAML/JSON for downstream LLM pipelines.}
+\label{fig:pipeline}
+\end{figure}
 
 \subsection{Node and Edge Type System}
 
@@ -723,11 +753,13 @@ prompting cannot offer.
 % -------------------------------------------------------
 \section*{Acknowledgments and Data Availability}
 This research received no external funding. The source code,
-documentation, and example ontologies are publicly available at
-\url{https://github.com/cjsergienko/ontology-open}; a live demo is
-at \url{https://ontology.live}; video demonstrations are on the
-\textit{Generative Ontology Induction} YouTube channel
-(\url{https://www.youtube.com/@GenerativeOntologyInduction}).
+documentation, and example ontologies are publicly available:
+
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Source repository:} \url{https://github.com/cjsergienko/ontology-open}
+  \item \textbf{Live demo:} \url{https://ontology.live}
+  \item \textbf{Video demonstrations:} \url{https://www.youtube.com/@GenerativeOntologyInduction}
+\end{itemize}
 
 \paragraph{Supplementary Materials.}\sloppy A reproducibility bundle at
 \texttt{research/supplementary/} contains the Job Description
@@ -735,7 +767,8 @@ Ontology JSON (63 nodes), an anonymized structural version of
 the Software Services Invoice ontology JSON (48 nodes; example
 values replaced with synthetic placeholders), the four
 LLM-generated documents used in \S\ref{sec:ontology-as-prompt}, and
-the two prompt templates (System~A and~B). Three publicly-listed
+the two prompt templates (System~A and~B; see
+Appendix~\ref{app:prompts}). Three publicly-listed
 job postings used to induce the JD ontology are at
 \texttt{research/job\_descriptions/}.\par
 
@@ -861,5 +894,70 @@ Automatic Constructors for Domain Knowledge Graph. In: Proc.\ ACL
 (2024)
 
 \end{thebibliography}
+
+% -------------------------------------------------------
+\appendix
+\section{Generation Prompts}
+\label{app:prompts}
+% -------------------------------------------------------
+
+The two prompts used in the \S\ref{sec:ontology-as-prompt} generative
+validation are reproduced verbatim below for reproducibility.
+
+\subsection*{System A --- GOI generation prompt}
+
+\begin{verbatim}
+You are a structured-document author. The ontology below defines
+the schema and rules for a class of business documents. Your task
+is to GENERATE one realistic, fully-instantiated example document
+of this type, in plain text format suitable for a real-world reader.
+
+The generated document MUST:
+- instantiate every class node defined in the ontology
+- populate every property attached to those classes (use plausible,
+  realistic values --- invent names, dates, amounts, descriptions
+  as needed)
+- explicitly reflect EACH dimension node by making its value
+  visible in the document body
+- satisfy every constraint node (perform any required arithmetic,
+  include any required citations, derived fields, or invariants)
+- be self-consistent: numbers add up, dates align, identifiers are
+  coherent
+
+# Ontology (authoritative schema and rules)
+{ontology JSON}
+
+# Output rules
+Return TWO things, separated by the literal line "===STRUCTURED===":
+
+1. The human-readable document text (what a real document of this
+   type would look like --- header, body, structured sections,
+   footer as appropriate to the document type).
+2. A JSON object listing, for every node id in the ontology, the
+   exact value or text snippet you used in the document. Use null
+   only for nodes you genuinely could not instantiate.
+
+Begin.
+\end{verbatim}
+
+\subsection*{System B --- GST baseline prompt}
+
+\begin{verbatim}
+You are a structured-document author. Generate one realistic
+example document of type "{document_type}" using the following
+minimal template:
+
+  - title:    a short subject line for the document
+  - content:  the body of the document
+  - metadata: a free-form key/value block of any incidental details
+
+Use plausible invented values. Return as plain text.
+
+Begin.
+\end{verbatim}
+
+\noindent The placeholder \texttt{\{document\_type\}} is set to
+\texttt{"invoice"} for Case~1 and \texttt{"job posting"} for
+Case~2.
 
 \end{document}
