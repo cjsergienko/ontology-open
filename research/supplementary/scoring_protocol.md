@@ -21,8 +21,9 @@ In addition, structural nodes flagged in the JSON with
 `metadata.generate === "context"` are excluded — these are
 generation-control axes (employer-brand voice, posting platform, JD tone,
 etc.) that legitimately steer content without surfacing as visible document
-slots. This filter only affects the JD ontology; the Invoice and
-Pain-Management ontologies do not use the `context` flag.
+slots. This filter only affects the JD ontology; the Invoice,
+Pain-Management, and Professional Services Contract ontologies do not use
+the `context` flag.
 
 ## Detection rules
 
@@ -97,3 +98,21 @@ emitting the final two structural nodes (`Signature Block` and
 `Radiologist`); these are the two missing nodes in the case 3 System A
 score. This is an honest truncation gap reflecting a long, verbose
 generation, not a detection failure.
+
+## Notes on case 4
+
+Case 4's Professional Services Contract & Statement of Work ontology
+similarly has no nodes of type `constraint`; the two `constrains` edges
+attach properties and provisions directly to the nodes they govern
+(e.g. `Termination Provisions --[constrains]--> Contract Term`,
+`Fee Structure --[constrains]--> Weekly Hours Cap`). The structural
+backbone of case 4 therefore consists entirely of `class`, `property`,
+and `dimension` nodes (46 total).
+
+Case 4's System A output instantiated all 46 structural nodes
+(100.0%). System B emitted a generic fixed-fee UX design contract that
+covered 36/46 nodes (78.3%); the 10 missed nodes are precisely the
+SOW-specific structural backbone the LLM's prior does not surface
+unprompted (auto-renewal, hourly rate, non-solicitation, exclusivity,
+severability, SOW number, assumptions/risks, communication plan,
+weekly hours cap, indemnification).

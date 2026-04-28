@@ -1,0 +1,446 @@
+# CONSULTING AGREEMENT & STATEMENT OF WORK
+## Agreement No. VX0903202401
+
+---
+
+**CONSULTING AGREEMENT**
+
+**Agreement Type:** Consulting Agreement with Integrated Statement of Work
+**Agreement Identifier:** VX0903202401
+**Effective Date:** 03/09/2024
+
+---
+
+This Consulting Agreement ("Agreement") is entered into as of March 9, 2024 ("Effective Date"), by and between:
+
+**SERVICE PROVIDER / EXECUTOR:**
+
+**Westline Doo Beograd**
+Knez Mihailova 12, 11000 Belgrade, Serbia
+Company Registration Number: 20435189
+Phone: +381 645 217 904
+Email: contact@westlinedoo.com
+Represented by: **Marko Petrović, Chief Executive Officer**
+
+(hereinafter referred to as "Company" or "Executor")
+
+AND
+
+**CLIENT:**
+
+**Vexora Analytics, Inc.**
+742 Brannan Street, Suite 400, San Francisco, CA 94103, USA
+EIN / Tax ID: 88-3147062
+Email: legal@vexoraanalytics.com
+Phone: +1 (415) 900-2281
+Represented by: **Sofia Harrington, Chief Operating Officer**
+
+(hereinafter referred to as "Client")
+
+---
+
+**AGREEMENT TYPE:** Consulting Agreement
+**SERVICE DOMAIN / TYPE:** Machine Learning Engineering & Data Science Research
+**FEE / COMPENSATION STRUCTURE:** Hourly Rate — USD 65.00 per hour, capped at 40 hours per week
+**CURRENCY:** USD
+
+---
+
+## ARTICLE 1 — PURPOSE AND SCOPE
+
+The Company agrees to provide professional consulting services to the Client in the domain of **Machine Learning Engineering and Data Science Research**, as more fully described in **Exhibit A – Statement of Work #3** attached hereto and incorporated herein by reference. This Agreement establishes the legal framework governing all such services, obligations, intellectual property, and compensation arrangements between the Parties.
+
+---
+
+## ARTICLE 2 — CONTRACT TERM / DURATION
+
+**Start Date:** March 9, 2024
+**End Date:** September 8, 2024
+**Duration:** 6 months
+
+This Agreement shall commence on March 9, 2024 and shall remain in effect through September 8, 2024, unless earlier terminated in accordance with Article 11 hereof.
+
+**Auto-Renewal:** This Agreement will not be automatically renewed. Any extension of the term must be agreed upon in writing by both Parties no later than fifteen (15) days prior to the end date.
+
+---
+
+## ARTICLE 3 — INDEPENDENT CONTRACTOR STATUS
+
+The Company is providing services hereunder as an independent business and not as an employee, agent, partner, or joint venturer of the Client. Each Party shall be and act as an independent contractor and not as a partner, joint venturer, or agent of the other. The Company shall have full control over the manner and means of performing the services, subject to Client's reasonable direction as to outcomes and deliverables. Nothing in this Agreement shall be construed to create an employer-employee relationship between Client and Company, or between Client and any personnel engaged by Company to perform services hereunder.
+
+---
+
+## ARTICLE 4 — FEE / COMPENSATION STRUCTURE
+
+**Fee Structure:** Hourly Rate
+**Hourly Rate:** USD $65.00 per hour
+**Weekly Hours Cap:** 40 hours per week
+**Currency:** USD
+
+**Maximum Potential Compensation:** At the cap of 40 hours per week for 26 weeks (6 months), the total maximum compensation under this Agreement shall not exceed **$67,600.00 USD** without a written amendment executed by both Parties.
+
+**Payment Schedule:** The Company shall submit itemized invoices to the Client on a monthly basis, in arrears, reflecting the actual number of hours worked and services rendered during the preceding calendar month. Client shall remit payment within thirty (30) days of receipt of each invoice. Invoices shall be sent to: legal@vexoraanalytics.com.
+
+**Total / Fixed Fee Cap:** $67,600.00 USD (computed as: $65.00/hr × 40 hrs/week × 26 weeks)
+
+Invoices submitted by the Company shall reference Agreement No. VX0903202401 and the applicable Statement of Work number (#3).
+
+---
+
+## ARTICLE 5 — EXCLUSIVITY
+
+This Agreement is **not exclusive**. Both Parties are entitled to enter into other similar agreements with third parties, provided that the Company shall not enter into any engagement that creates a direct conflict of interest with the Client's business interests or requires disclosure of the Client's Proprietary Information. The Company may be engaged in other business activities not conflicting with the services performed hereunder.
+
+---
+
+## ARTICLE 6 — INTELLECTUAL PROPERTY OWNERSHIP
+
+All inventions, discoveries, developments, improvements, work product, software, algorithms, models, documentation, data sets, reports, and other materials created, conceived, reduced to practice, or delivered by the Company or its personnel in connection with the services performed under this Agreement (collectively, "Work Product") shall be deemed works made for hire to the maximum extent permitted by applicable law.
+
+**IP assigned from:** Westline Doo Beograd (Company / Executor)
+**IP vests in:** Vexora Analytics, Inc. (Client)
+
+The Client shall own solely and exclusively, in perpetuity and throughout the universe, all right, title, and interest in and to the Work Product, including all intellectual property rights therein. To the extent any Work Product does not qualify as a work made for hire, the Company hereby irrevocably assigns to the Client all right, title, and interest in and to such Work Product. The Company shall execute any further documents reasonably requested by Client to perfect or evidence such ownership.
+
+The Company represents that it has no pre-existing IP rights that conflict with this assignment, and any pre-existing tools or libraries incorporated into Work Product shall be disclosed in writing to Client prior to incorporation.
+
+---
+
+## ARTICLE 7 — CONFIDENTIALITY / NON-DISCLOSURE
+
+7.1 The Company shall hold in strict confidence and shall not, without the prior written consent of Client, disclose to any third party any Proprietary Information of the Client. "Proprietary Information" includes, without limitation, trade secrets, technical data, product plans, business strategies, customer lists, financial information, and the terms of this Agreement.
+
+7.2 All terms and conditions of this Agreement must be kept strictly confidential by both Parties and may not be disclosed to any third party unless disclosure is required by applicable law, regulation, or court order, in which case the disclosing Party shall provide prompt prior written notice to the other Party to the extent permitted by law.
+
+7.3 The obligations of confidentiality set forth in this Article shall survive the expiration or termination of this Agreement for a period of three (3) years.
+
+---
+
+## ARTICLE 8 — NON-SOLICITATION
+
+During the term of this Agreement and for a period of one (1) year following the completion or termination of services hereunder, the Company shall not, directly or indirectly, encourage, solicit, recruit, or hire any employee, officer, or consultant of the Client, or assist any third party in doing so, without the prior written consent of the Client. Similarly, the Client shall not solicit or recruit any personnel of the Company during the same restricted period without prior written consent of the Company.
+
+---
+
+## ARTICLE 9 — REPRESENTATIONS AND WARRANTIES
+
+The Company represents and warrants to the Client that:
+
+(a) **Professional Standards:** All services performed under this Agreement shall be performed in a professional and workmanlike manner, consistent with industry best practices and the standard of care applicable to experienced machine learning engineering and data science professionals.
+
+(b) **Qualifications:** The Company and all personnel assigned to perform services hereunder possess the necessary qualifications, experience, skills, and expertise to perform the services described in this Agreement and Exhibit A.
+
+(c) **Originality:** All Work Product delivered hereunder shall be original and shall not infringe upon any patent, copyright, trademark, trade secret, or other intellectual property right of any third party.
+
+(d) **Legal Compliance:** The Company shall perform all services in full compliance with all applicable laws, regulations, and ordinances, including but not limited to data protection laws.
+
+(e) **Authority:** The Company has full legal authority to enter into and perform this Agreement, and the execution and performance of this Agreement do not conflict with any other agreement or obligation of the Company.
+
+---
+
+## ARTICLE 10 — INDEMNIFICATION
+
+The Company agrees to defend, indemnify, and hold harmless the Client and its officers, directors, employees, and agents from and against any and all claims, damages, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to: (i) any claims by the Company's personnel for compensation, employee benefits, taxes, insurance, or other employment-related matters; (ii) any breach of the Company's representations and warranties under this Agreement; or (iii) any gross negligence or willful misconduct by the Company or its personnel in the performance of services hereunder.
+
+---
+
+## ARTICLE 11 — TERMINATION PROVISIONS
+
+11.1 **Termination by Client for Convenience:** Client may terminate this Agreement at any time upon **fourteen (14) days' prior written notice** to the Company.
+
+11.2 **Termination by Client for Cause:** Client may terminate this Agreement immediately upon written notice if the Company materially breaches this Agreement and fails to cure such breach within five (5) days of receiving written notice of the breach, or if the Client is not satisfied with the quality of services delivered in accordance with the acceptance criteria set forth in Exhibit A.
+
+11.3 **Termination by Company for Non-Payment:** The Company may terminate this Agreement upon **thirty (30) days' written notice** to the Client if the Client fails to remit any undisputed payment within the timeframe specified in Article 4, provided such failure is not cured within said thirty (30) day notice period.
+
+11.4 **Effect of Termination:** Upon termination, the Company shall deliver to Client all completed and in-progress Work Product, and Client shall pay the Company for all services rendered and accepted through the effective date of termination on a pro-rata hourly basis.
+
+---
+
+## ARTICLE 12 — GOVERNING LAW AND DISPUTE RESOLUTION
+
+**Governing Law:** This Agreement shall be governed by and construed in accordance with the **laws of the State of California**, without regard to its conflict of laws provisions.
+
+**Dispute Resolution:** Any dispute, controversy, or claim arising out of or relating to this Agreement, or the breach, termination, or validity thereof, shall be finally resolved by binding arbitration in the **State of California, in accordance with the rules of JAMS (Judicial Arbitration and Mediation Services)**. The arbitration shall be conducted by a single arbitrator mutually agreed upon by the Parties, or, failing agreement, appointed by JAMS. The arbitration shall be conducted in English, and the award shall be final and binding upon both Parties. Judgment upon the award may be entered in any court of competent jurisdiction. Notwithstanding the foregoing, either Party may seek emergency injunctive relief in a court of competent jurisdiction to prevent irreparable harm pending arbitration.
+
+---
+
+## ARTICLE 13 — AMENDMENTS
+
+Any amendment, modification, or supplement to this Agreement must be made **in writing and signed by duly authorized representatives of both Parties**. No oral modification or course of dealing shall be deemed to alter the terms hereof.
+
+---
+
+## ARTICLE 14 — SEVERABILITY
+
+If any provision of this Agreement is found by a court or arbitrator of competent jurisdiction to be invalid, void, or unenforceable, such provision shall be modified to the minimum extent necessary to make it valid and enforceable, and the remaining provisions of this Agreement shall remain in full force and effect and shall be enforceable as if such invalid, void, or unenforceable provision had not been included.
+
+---
+
+## ARTICLE 15 — ENTIRE AGREEMENT / INTEGRATION
+
+This Agreement, together with Exhibit A (Statement of Work #3) attached hereto, constitutes the entire agreement between the Parties with respect to the subject matter hereof and supersedes all prior and contemporaneous agreements, understandings, negotiations, and discussions, whether oral or written, between the Parties relating to the subject matter of this Agreement. No representations, warranties, or inducements have been made by either Party except as expressly set forth herein.
+
+---
+
+## ARTICLE 16 — ASSIGNABILITY
+
+**Company (Executor):** The Company shall not assign, transfer, delegate, or subcontract any of its rights or obligations under this Agreement without the prior written consent of the Client, which consent shall not be unreasonably withheld.
+
+**Client:** The Client may fully assign and transfer this Agreement, including all rights and obligations hereunder, to any successor entity, affiliate, or acquirer of all or substantially all of the Client's business, without the consent of the Company, provided that Client provides written notice of such assignment to the Company within ten (10) days thereof.
+
+---
+
+---
+
+# EXHIBIT A — STATEMENT OF WORK #3
+
+**Statement of Work Number:** #3
+**Reference Agreement:** Consulting Agreement No. VX0903202401
+**Effective Date of SOW:** March 9, 2024
+
+---
+
+## 1. CONTEXT AND BACKGROUND
+
+Vexora Analytics, Inc. is a San Francisco-based data intelligence company that develops AI-powered analytics platforms for enterprise clients in the financial services and retail sectors. The Company is currently building **VexoraInsight v2.0**, a next-generation machine learning pipeline designed to ingest high-volume transactional data streams and produce real-time predictive signals for inventory optimization and demand forecasting.
+
+The existing v1.0 infrastructure relies on batch-processing ML models with significant latency and limited accuracy on sparse datasets. Vexora Analytics requires specialized expertise in machine learning engineering and data science research to redesign the core model training pipeline, implement online learning capabilities, and develop robust ground truth labeling tooling to support supervised learning at scale. Westline Doo Beograd has the requisite expertise to provide these services under this Statement of Work.
+
+---
+
+## 2. SERVICES DESCRIPTION
+
+**Service Domain / Type:** Machine Learning Engineering & Data Science Research
+
+The Company (Executor) shall provide the following professional consulting services:
+
+- Design and implementation of online learning algorithms for real-time predictive modeling
+- Ground truth data modeling and automated annotation pipeline engineering
+- ML programming for demand forecasting models (time-series, ensemble methods)
+- Feature engineering and data pipeline optimization for high-throughput ingestion
+- Model evaluation frameworks, A/B testing scaffolding, and performance benchmarking
+- Technical documentation and knowledge transfer to Client's internal engineering team
+
+---
+
+## 3. DELIVERABLES / MILESTONES
+
+The following specific deliverables shall be produced and delivered in accordance with the schedule below. All deliverables are priced in **USD** and costs shall be credited against monthly hourly invoices at the applicable rate of **$65.00/hour**.
+
+| # | Deliverable / Milestone | Due Date | Estimated Cost (USD) |
+|---|------------------------|----------|----------------------|
+| 1 | Online Learning Algorithm Prototype — initial implementation of streaming ML model with configurable update frequency and evaluation hooks | 04/08/2024 | $5,200.00 |
+| 2 | Ground Truth Labeling Pipeline — automated annotation module with quality scoring and human-in-the-loop escalation workflow | 05/09/2024 | $8,450.00 |
+| 3 | Demand Forecasting Model v1 — time-series ensemble model (ARIMA + gradient boosting) trained on Client's historical transaction data | 06/10/2024 | $9,100.00 |
+| 4 | Feature Engineering & Data Ingestion Optimization — refactored data pipeline reducing preprocessing latency by target 60% | 07/08/2024 | $7,800.00 |
+| 5 | Model Evaluation Framework & A/B Testing Scaffolding — automated benchmarking suite and shadow deployment tooling | 08/05/2024 | $6,500.00 |
+| 6 | Final Integration, Documentation & Knowledge Transfer | 09/08/2024 | $5,850.00 |
+| | **TOTAL ESTIMATED MILESTONE COST** | | **$42,900.00** |
+
+> **Note on Arithmetic Consistency:** The above milestone costs represent estimated labor at $65.00/hour, totaling approximately 660 hours across the 6-month engagement. Remaining hours up to the 40-hour/week cap (1,040 total maximum hours) are allocated to ongoing research, code review, meetings, and iterative refinement. Total maximum compensation remains capped at **$67,600.00 USD** (1,040 hours × $65.00).
+
+---
+
+## 4. CONTRACT TERM (SOW-SPECIFIC)
+
+**Start Date:** March 9, 2024
+**End Date:** September 8, 2024
+**Auto-Renewal:** This Statement of Work will not be automatically renewed. Any continuation of services requires a new or amended Statement of Work executed in writing by both Parties.
+
+---
+
+## 5. FEE / COMPENSATION STRUCTURE (SOW-SPECIFIC)
+
+**Fee Structure:** Hourly Rate
+**Hourly Rate:** $65.00 USD per hour
+**Weekly Hours Cap:** 40 hours per week
+**Currency:** USD
+**Total / Fixed Fee Cap:** $67,600.00 USD
+**Payment Schedule:** Payable monthly in arrears, within thirty (30) days after receipt of itemized invoice. Invoices shall be submitted by the Company on or before the 5th business day of each calendar month for services rendered in the prior month.
+
+---
+
+## 6. ASSUMPTIONS, RISKS, AND CONSTRAINTS
+
+The following assumptions have been made in scoping this Statement of Work. If any assumption is found to be invalid, the Parties shall engage in a written change request process prior to any change in scope, timeline, or cost:
+
+**Assumptions:**
+- Client will provide timely access to all necessary data sets, APIs, cloud infrastructure credentials, and internal subject matter experts required for the Company to perform services.
+- Client's existing data warehouse is accessible via standard SQL/BigQuery interfaces; no custom data extraction tooling is required.
+- Integration with Client's production payment processing systems is **out of scope** for this SOW.
+- The Company (Executor) is responsible for choosing the technical stack and ML framework best suited for the deliverables, subject to Client's approval of the initial architecture proposal.
+- Client will designate a primary technical point of contact who is available for at minimum four (4) hours per week for collaboration and review.
+
+**Risks:**
+- Delays in data access or infrastructure provisioning by Client may cause corresponding delays in deliverable due dates, which shall be adjusted by mutual written agreement.
+- Changes to Client's product requirements mid-engagement may require a change order and additional compensation.
+
+**Out of Scope:**
+- Mobile application development
+- Payments system integration
+- DevOps and cloud infrastructure management (beyond configuration guidance)
+- Legal or regulatory compliance consulting
+
+---
+
+## 7. ACCEPTANCE OF DELIVERABLES
+
+Upon submission of each deliverable, the Client shall evaluate whether the deliverable meets the acceptance criteria specified in the applicable milestone description (see Section 3 above). Client determines in its sole reasonable discretion whether each deliverable meets the stated acceptance criteria.
+
+- If the Client accepts a deliverable, it shall provide written notice of acceptance to the Company within **seven (7) business days** of submission.
+- If the Client rejects a deliverable, it shall provide written notice specifying in reasonable detail the deficiencies identified. The Company (Executor) must remedy all identified failures and re-submit the corrected deliverable within **five (5) business days** of receiving the rejection notice.
+- If the Company fails to remedy deficiencies within the cure period, Client may, at its election, accept the partial deliverable at a pro-rated cost, extend the cure period by written agreement, or treat such failure as a material breach for purposes of Article 11.
+
+---
+
+## 8. COMMUNICATION PLAN
+
+The Parties agree to the following communication cadence for the duration of this Statement of Work:
+
+- **Weekly Status Meeting:** Every Monday at 10:00 AM Pacific Time (PT), via video conference (Zoom or Google Meet), attended by the Company's assigned lead engineer and Client's designated technical point of contact. Duration: 45 minutes.
+- **Bi-Weekly Demo Session:** Every other Thursday, the Company shall present a working demonstration of progress on current milestones. Attended by both technical and business stakeholders.
+- **On-Demand Meetings:** Either Party may request ad hoc meetings for requirement clarification, blocker resolution, or urgent matters with a minimum of 24 hours' advance notice.
+- **Asynchronous Communication:** Day-to-day coordination via a dedicated Slack channel (#vexora-westline-ml-project) to be created and maintained by the Client.
+- **Written Status Reports:** Company shall deliver a written progress report via email by end-of-day every Friday, summarizing tasks completed, hours logged for the week, blockers encountered, and planned activities for the following week.
+- **Primary Contacts for Notices:**
+  - Company: Marko Petrović — contact@westlinedoo.com / +381 645 217 904
+  - Client: Sofia Harrington — legal@vexoraanalytics.com / +1 (415) 900-2281
+
+---
+
+## SIGNATURE PAGE
+
+This Agreement, including Exhibit A (Statement of Work #3), is entered into as of the Effective Date first written above.
+
+---
+
+**SERVICE PROVIDER / EXECUTOR:**
+
+**Westline Doo Beograd**
+
+By: ___________________________
+Name: Marko Petrović
+Title: Chief Executive Officer
+Date: March 9, 2024
+Address: Knez Mihailova 12, 11000 Belgrade, Serbia
+Registration No.: 20435189
+Email: contact@westlinedoo.com
+Phone: +381 645 217 904
+
+---
+
+**CLIENT:**
+
+**Vexora Analytics, Inc.**
+
+By: ___________________________
+Name: Sofia Harrington
+Title: Chief Operating Officer
+Date: March 9, 2024
+Address: 742 Brannan Street, Suite 400, San Francisco, CA 94103, USA
+EIN: 88-3147062
+Email: legal@vexoraanalytics.com
+Phone: +1 (415) 900-2281
+
+---
+
+*This document consists of the Consulting Agreement (Articles 1–16) and Exhibit A — Statement of Work #3. Both components together constitute Agreement No. VX0903202401.*
+
+===STRUCTURED===
+
+```json
+{
+  "agreement": "Consulting Agreement with Integrated Statement of Work, Agreement No. VX0903202401",
+  "agreement_id": "VX0903202401",
+  "agreement_type": "Consulting Agreement",
+  "effective_date": "03/09/2024",
+  "service_provider_party": "Westline Doo Beograd, Knez Mihailova 12, 11000 Belgrade, Serbia; Registration No. 20435189; contact@westlinedoo.com; +381 645 217 904; represented by Marko Petrović, Chief Executive Officer",
+  "client_party": "Vexora Analytics, Inc., 742 Brannan Street, Suite 400, San Francisco, CA 94103, USA; EIN 88-3147062; legal@vexoraanalytics.com; +1 (415) 900-2281; represented by Sofia Harrington, Chief Operating Officer",
+  "party_name": {
+    "service_provider": "Westline Doo Beograd",
+    "client": "Vexora Analytics, Inc."
+  },
+  "party_address": {
+    "service_provider": "Knez Mihailova 12, 11000 Belgrade, Serbia",
+    "client": "742 Brannan Street, Suite 400, San Francisco, CA 94103, USA"
+  },
+  "party_registration_number": {
+    "service_provider": "20435189",
+    "client": "88-3147062"
+  },
+  "party_contact": {
+    "service_provider": "contact@westlinedoo.com; +381 645 217 904",
+    "client": "legal@vexoraanalytics.com; +1 (415) 900-2281"
+  },
+  "authorized_representative": {
+    "service_provider": "Marko Petrović, Chief Executive Officer",
+    "client": "Sofia Harrington, Chief Operating Officer"
+  },
+  "services_section": "Machine Learning Engineering and Data Science Research: online learning algorithms, ground truth data modeling and annotation pipeline, ML programming for demand forecasting, feature engineering, model evaluation frameworks, A/B testing scaffolding, documentation and knowledge transfer",
+  "service_type": "Machine Learning Engineering & Data Science Research",
+  "deliverable": [
+    {
+      "name": "Online Learning Algorithm Prototype",
+      "deliverable_due_date": "04/08/2024",
+      "deliverable_cost": "$5,200.00"
+    },
+    {
+      "name": "Ground Truth Labeling Pipeline",
+      "deliverable_due_date": "05/09/2024",
+      "deliverable_cost": "$8,450.00"
+    },
+    {
+      "name": "Demand Forecasting Model v1",
+      "deliverable_due_date": "06/10/2024",
+      "deliverable_cost": "$9,100.00"
+    },
+    {
+      "name": "Feature Engineering & Data Ingestion Optimization",
+      "deliverable_due_date": "07/08/2024",
+      "deliverable_cost": "$7,800.00"
+    },
+    {
+      "name": "Model Evaluation Framework & A/B Testing Scaffolding",
+      "deliverable_due_date": "08/05/2024",
+      "deliverable_cost": "$6,500.00"
+    },
+    {
+      "name": "Final Integration, Documentation & Knowledge Transfer",
+      "deliverable_due_date": "09/08/2024",
+      "deliverable_cost": "$5,850.00"
+    }
+  ],
+  "deliverable_due_date": "04/08/2024 through 09/08/2024 (per milestone schedule in Exhibit A Section 3)",
+  "deliverable_cost": "Milestone costs range from $5,200.00 to $9,100.00; total estimated milestone cost $42,900.00 USD",
+  "contract_term": "March 9, 2024 to September 8, 2024 (6 months)",
+  "start_date": "March 9, 2024",
+  "end_date": "September 8, 2024",
+  "auto_renewal": "This Agreement will not be automatically renewed. Any extension requires written agreement by both Parties no later than fifteen (15) days prior to end date.",
+  "fee_structure": "Hourly Rate of $65.00 USD per hour, capped at 40 hours per week; total maximum compensation $67,600.00 USD",
+  "hourly_rate": "$65.00 USD per hour",
+  "total_fee": "$67,600.00 USD (computed as $65.00/hr × 40 hrs/week × 26 weeks)",
+  "payment_schedule": "Payable monthly in arrears within thirty (30) days after receipt of itemized invoice; invoices submitted by Company by the 5th business day of each calendar month",
+  "currency": "USD",
+  "hours_cap": "40 hours per week",
+  "ip_ownership": "All Work Product created under this Agreement shall vest solely and exclusively in perpetuity in Vexora Analytics, Inc. (Client); assigned from Westline Doo Beograd (Company/Executor) to Client; deemed works made for hire; Company irrevocably assigns all right, title, and interest in Work Product to Client",
+  "confidentiality_clause": "Company shall hold in strict confidence all Proprietary Information of Client and shall not disclose it to any third party without prior written consent; all terms of Agreement are confidential; confidentiality obligations survive termination for three (3) years",
+  "non_solicitation": "During the term and for one (1) year following completion or termination of services, Company shall not directly or indirectly encourage, solicit, recruit, or hire any employee, officer, or consultant of Client; Client shall similarly not solicit Company personnel during the same period",
+  "warranty_clause": "Services performed in professional and workmanlike manner consistent with industry best practices; Company and personnel possess necessary qualifications and experience; Work Product is original and does not infringe third-party IP rights; services performed in compliance with all applicable laws; Company has full legal authority to enter into Agreement",
+  "termination_clause": "Client may terminate for convenience upon 14 days' written notice; Client may terminate for cause if breach not cured within 5 days; Company may terminate upon 30 days' written notice if Client fails to pay undisputed amounts; upon termination Company delivers all Work Product and Client pays for services rendered through effective termination date",
+  "governing_law": "Laws of the State of California",
+  "dispute_resolution": "Binding arbitration in the State of California in accordance with JAMS rules; single arbitrator; conducted in English; award final and binding; judgment may be entered in any court of competent jurisdiction; emergency injunctive relief available in court",
+  "exclusivity": "This Agreement is not exclusive; both Parties are entitled to enter into other similar agreements with third parties, provided Company does not create direct conflict of interest with Client's business or disclose Client's Proprietary Information",
+  "independent_contractor_status": "The Company is providing services as an independent business and not as an employee, agent, partner, or joint venturer of the Client; each Party shall be and act as an independent contractor and not as a partner, joint venturer, or agent of the other",
+  "amendments_clause": "Any amendment, modification, or supplement must be made in writing and signed by duly authorized representatives of both Parties; no oral modification or course of dealing shall alter the terms",
+  "severability_clause": "If any provision is found invalid, void, or unenforceable, it shall be modified to the minimum extent necessary to make it valid and enforceable; remaining provisions shall remain in full force and effect",
+  "entire_agreement_clause": "This Agreement together with Exhibit A constitutes the entire agreement between the Parties with respect to the subject matter hereof and supersedes all prior and contemporaneous agreements, understandings, negotiations, and discussions, whether oral or written",
+  "assignability": "Company shall not assign, transfer, delegate, or subcontract any rights or obligations without prior written consent of Client; Client may fully assign and transfer this Agreement to any successor entity, affiliate, or acquirer without consent of Company, provided written notice within 10 days",
+  "statement_of_work": "Exhibit A — Statement of Work #3, attached to and incorporated into Consulting Agreement No. VX0903202401, effective March 9, 2024",
+  "sow_number": "#3",
+  "context_background": "Vexora Analytics, Inc. is building VexoraInsight v2.0, a next-generation ML pipeline for real-time predictive signals for inventory optimization and demand forecasting; existing v1.0 relies on batch-processing ML models with significant latency and limited accuracy; Company requires ML engineering expertise to redesign model training pipeline, implement online learning capabilities, and develop ground truth labeling tooling",
+  "assumptions_risks": "Client will provide timely access to data sets, APIs, cloud infrastructure credentials, and subject matter experts; integration with payment processing systems is out of scope; Company responsible for choosing technical stack subject to Client approval; delays in data access may cause milestone date adjustments; mobile development, payments integration, DevOps management, and legal compliance consulting are out of scope",
+  "acceptance_criteria": "Client determines in its sole reasonable discretion whether each deliverable meets acceptance criteria; Client provides written acceptance within 7 business days of submission; if rejected, Company must remedy failures and resubmit within 5 business days of rejection notice; failure to cure may be treated as material breach",
+  "communication_plan": "Weekly status meeting every Monday at 10:00 AM PT via video conference (45 minutes); bi-weekly demo session every other Thursday; on-demand meetings with 24 hours' advance notice; asynchronous communication via dedicated Slack channel #vexora-westline-ml-project; written progress reports every Friday via email",
+  "indemnification": "Company agrees to defend, indemnify, and hold harmless Client and its officers, directors, employees, and agents from and against all claims, damages, liabilities, costs, and expenses arising out of claims by Company's personnel for compensation, employee benefits, taxes, or insurance; breach of Company's representations and warranties; or gross negligence or willful misconduct by Company or its personnel"
+}
+```

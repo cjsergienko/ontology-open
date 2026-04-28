@@ -15,17 +15,26 @@ supplementary/
 │   │                                        anonymized — see note below)
 │   ├── jd_ontology.json                   # Case 2: Job Description Ontology
 │   │                                        (63 nodes; published verbatim)
-│   └── pain_visit_ontology.json           # Case 3: Pain-Management Clinical
-│                                            Visit Record Ontology
-│                                            (45 nodes; example values fully
-│                                            anonymized — see note below)
+│   ├── pain_visit_ontology.json           # Case 3: Pain-Management Clinical
+│   │                                        Visit Record Ontology
+│   │                                        (45 nodes; example values fully
+│   │                                        anonymized — see note below)
+│   └── contract_ontology.json             # Case 4: Professional Services
+│                                            Contract & Statement of Work
+│                                            Ontology (46 nodes; example
+│                                            values fully anonymized — see
+│                                            note below)
 ├── generated_outputs/
 │   ├── case1_invoice_goi.txt              # System A on Invoice ontology
 │   ├── case1_invoice_gst.txt              # System B (3-field) for "invoice"
 │   ├── case2_jd_goi.txt                   # System A on JD ontology
 │   ├── case2_jd_gst.txt                   # System B (3-field) for "job posting"
 │   ├── case3_pain_visit_goi.txt           # System A on Pain-Management ontology
-│   └── case3_pain_visit_gst.txt           # System B for "clinical visit record"
+│   ├── case3_pain_visit_gst.txt           # System B for "clinical visit record"
+│   ├── case4_contract_goi.txt             # System A on Professional Services
+│   │                                        Contract & SOW ontology
+│   └── case4_contract_gst.txt             # System B for "professional
+│                                            services contract"
 ├── job_descriptions/                      # Case 2 corpus (3 anonymized listings)
 │   ├── README.md
 │   ├── 01_ml_infrastructure_engineer.md
@@ -89,9 +98,37 @@ JSON contains no real PHI; the structural schema is unchanged from
 the version used in the experiment, so the reported case 3 coverage
 scores remain reproducible.
 
+The Professional Services Contract & Statement of Work ontology
+(`contract_ontology.json`) was induced from a confidential corpus
+of 20 consulting agreements, contractor contracts, and statements
+of work internal to the author's organization. Every node's
+`examples` array has been replaced with synthetic
+legally-plausible equivalents — synthetic Serbian and Western
+corporate names (e.g. "Westline Doo Beograd", "Cohort Office d.o.o",
+"Northcrest AI, Inc.", "Brightline Labs Inc", "Selvedge AI Inc"),
+plausible-but-fictional addresses ("Knez Mihailova 12, 11000
+Belgrade, Serbia"; "150 University Ave, Palo Alto, CA 94301, USA"),
+synthetic registration / tax-ID numbers of similar format and
+length, synthetic contact information under the new corporate
+domain, synthetic agreement identifiers preserving the original
+project-code-plus-date pattern (e.g. "NORTH4082023", "AM100320251",
+"BL1601241", "SV0801231"), and synthetic signatory names with
+matching role/title structure (e.g. "Marko Petrović, CEO";
+"Daniel Whitcomb, Chief Operating Officer";
+"Helena Park, CEO/Cofounder"). Generic legal-clause language
+(boilerplate IP, confidentiality, non-solicitation, severability,
+entire-agreement, indemnification text), generic service categories
+(Machine Learning Engineering, Software Development, UI/UX Design,
+Data Science Research), governing-law phrases, currency codes
+(USD/EUR/RSD), and standard rate ranges are preserved as
+non-identifying legal/business content. The published JSON contains
+no real party-identifying data; the structural schema is unchanged
+from the version used in the experiment, so the reported case 4
+coverage scores remain reproducible.
+
 ## Reproducing the experiment
 
-For each of the three ontologies:
+For each of the four ontologies:
 
 1. Open a fresh chat session with the LLM (paper §5.3 specifies the
    model identifier `claude-sonnet-4-6`; both systems share identical
@@ -103,7 +140,8 @@ For each of the three ontologies:
 3. Run **System B** by pasting the contents of
    `prompts/system_b_gst_baseline.txt`, swapping the document type
    label (`"invoice"` for Case 1, `"job posting"` for Case 2,
-   `"clinical visit record"` for Case 3).
+   `"clinical visit record"` for Case 3, and
+   `"professional services contract"` for Case 4).
 4. Score the resulting documents against the ontology's nodes
    following the rules in `scoring_protocol.md`. The deterministic
    scorer is at `scripts/case_score_coverage.ts`; running
@@ -113,7 +151,7 @@ For each of the three ontologies:
 
 ## Corpus availability
 
-The three cases differ in what source corpus is published, reflecting
+The four cases differ in what source corpus is published, reflecting
 the original sources:
 
 - **Case 2 (JD).** The Job Description Ontology was
@@ -141,6 +179,18 @@ the original sources:
   signature date replaced with synthetic clinically-plausible
   equivalents (see Anonymization note above), so the structural
   schema is reproduced faithfully without any real PHI.
+- **Case 4 (Professional Services Contract).** The Professional
+  Services Contract & Statement of Work Ontology was induced from a
+  confidential corpus of 20 consulting agreements, contractor
+  contracts, and statements of work internal to the author's
+  organization. The corpus contains real party-identifying data
+  (client and provider legal names, registered addresses, tax IDs,
+  contact details, agreement identifiers, and authorized
+  signatories) and is **withheld in full**; the published ontology
+  JSON has every such example value replaced with synthetic
+  legally-plausible equivalents (see Anonymization note above), so
+  the structural schema is reproduced faithfully without any real
+  party-identifying data.
 
 Reviewers requiring corpus access for replication of the induction
 step itself may contact the author under a confidentiality

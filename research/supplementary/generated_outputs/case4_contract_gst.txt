@@ -1,0 +1,172 @@
+TITLE: Professional Services Agreement – UX Research & Design Consulting
+
+CONTENT:
+
+PROFESSIONAL SERVICES CONTRACT
+
+This Professional Services Agreement ("Agreement") is entered into as of March 14, 2025, by and between:
+
+CLIENT:
+Hartwell & Briggs Financial Group, LLC
+1200 Westlake Avenue North, Suite 400
+Seattle, WA 98109
+("Client")
+
+SERVICE PROVIDER:
+Nadia Okonkwo Design Studio, Inc.
+88 Folsom Street, Unit 12
+San Francisco, CA 94105
+("Provider")
+
+---
+
+1. SCOPE OF SERVICES
+
+Provider agrees to perform the following services ("Services") for Client:
+
+  a. Discovery & Research Phase – Conduct stakeholder interviews, competitive
+     analysis, and user research sessions (up to 12 participants) to identify
+     usability gaps in Client's retail investment portal.
+
+  b. Wireframing & Prototyping – Deliver low- and high-fidelity wireframes for
+     a minimum of eight (8) core user flows, including onboarding, portfolio
+     overview, and trade execution screens.
+
+  c. Usability Testing – Facilitate two (2) rounds of moderated usability tests
+     and provide written findings reports after each round.
+
+  d. Design Handoff – Deliver a complete Figma component library and annotated
+     design specifications suitable for front-end engineering handoff.
+
+---
+
+2. TERM
+
+This Agreement commences on April 1, 2025, and shall continue through
+September 30, 2025, unless earlier terminated in accordance with Section 8.
+
+---
+
+3. COMPENSATION AND PAYMENT
+
+  3.1  Fixed Fee. Client shall pay Provider a total fixed fee of $84,000 USD,
+       payable according to the following milestone schedule:
+
+         Milestone 1 – Contract execution:              $21,000 (25%)
+         Milestone 2 – Discovery report delivered:      $21,000 (25%)
+         Milestone 3 – High-fidelity prototypes approved: $25,200 (30%)
+         Milestone 4 – Final design handoff accepted:   $16,800 (20%)
+
+  3.2  Expenses. Pre-approved out-of-pocket expenses (travel, participant
+       incentives) shall be reimbursed at cost, not to exceed $4,500 in
+       aggregate, and invoiced monthly with receipts attached.
+
+  3.3  Payment Terms. Each invoice is due within thirty (30) days of receipt.
+       Late payments accrue interest at 1.5% per month.
+
+---
+
+4. INDEPENDENT CONTRACTOR
+
+Provider is an independent contractor. Nothing in this Agreement creates an
+employment, partnership, or joint-venture relationship. Provider is solely
+responsible for all taxes, benefits, and insurance obligations arising from
+the Services.
+
+---
+
+5. INTELLECTUAL PROPERTY
+
+Upon receipt of full payment, Provider assigns to Client all right, title, and
+interest in the deliverables produced specifically for this engagement,
+including all copyrights therein. Provider retains the right to display
+representative work samples in its portfolio, subject to Client's prior
+written approval of any public disclosure.
+
+---
+
+6. CONFIDENTIALITY
+
+Each party agrees to hold the other's Confidential Information in strict
+confidence, not to disclose it to third parties, and to use it solely to
+fulfill obligations under this Agreement. These obligations survive termination
+for a period of three (3) years.
+
+---
+
+7. WARRANTIES AND LIMITATION OF LIABILITY
+
+  7.1  Provider warrants that the Services will be performed in a professional
+       and workmanlike manner consistent with industry standards.
+
+  7.2  NEITHER PARTY SHALL BE LIABLE FOR INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+       DAMAGES. Provider's total liability under this Agreement shall not exceed
+       the total fees paid by Client in the three (3) months preceding the claim.
+
+---
+
+8. TERMINATION
+
+Either party may terminate this Agreement for convenience upon thirty (30) days
+written notice. In the event of termination, Client shall pay for all Services
+satisfactorily completed through the termination date, plus any non-cancelable
+expenses incurred.
+
+---
+
+9. GOVERNING LAW & DISPUTE RESOLUTION
+
+This Agreement is governed by the laws of the State of Washington, without
+regard to conflict-of-law principles. Disputes shall first be submitted to
+good-faith mediation; if unresolved within sixty (60) days, the parties consent
+to binding arbitration under AAA Commercial Arbitration Rules in Seattle, WA.
+
+---
+
+10. ENTIRE AGREEMENT
+
+This Agreement, together with any Statements of Work attached hereto,
+constitutes the entire agreement between the parties and supersedes all prior
+negotiations, representations, or agreements. Amendments must be in writing
+and signed by both parties.
+
+---
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date
+first written above.
+
+HARTWELL & BRIGGS FINANCIAL GROUP, LLC
+
+Signature: ___________________________
+Name:      Marcus T. Ellison
+Title:     Chief Operating Officer
+Date:      March 14, 2025
+
+
+NADIA OKONKWO DESIGN STUDIO, INC.
+
+Signature: ___________________________
+Name:      Nadia Okonkwo
+Title:     Principal & CEO
+Date:      March 14, 2025
+
+---
+
+METADATA:
+
+  contract_id:          NOD-HBF-2025-003
+  document_version:     1.0 – Final Execution Copy
+  created_date:         2025-03-10
+  executed_date:        2025-03-14
+  contract_type:        Fixed-Fee Professional Services
+  industry_sector:      Financial Technology / UX Design
+  primary_contact_client:   Rebecca Cho, VP Product, rcho@hartwellbriggs.com
+  primary_contact_provider: Nadia Okonkwo, nadia@okonkwostudio.com
+  legal_review_completed:   Yes – Reviewed by Claire Nguyen, Esq. (Client counsel)
+  jurisdiction:         State of Washington, USA
+  currency:             USD
+  total_contract_value: $88,500 (fees + max expenses)
+  nda_on_file:          Yes – executed 2025-01-22
+  project_codename:     Project Compass
+  software_tools:       Figma, Maze, Dovetail, Zoom
+  filing_location:      SharePoint > Legal > Contracts > Active > 2025

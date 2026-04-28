@@ -1,0 +1,1569 @@
+{
+  "ontology": {
+    "name": "Professional Services Contract & Statement of Work Ontology",
+    "description": "Models consulting agreements, contractor contracts, and statements of work (SOW) used to formalize professional service engagements between a service provider company and a client or consultant, covering services, compensation, IP rights, and legal terms.",
+    "domain": "legal"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "agreement",
+        "type": "class",
+        "label": "Agreement / Contract",
+        "description": "The top-level legal document establishing a professional services relationship between parties",
+        "semantics": "Varies by subtype: Consulting Agreement, Statement of Work, Company Address Registration Agreement, or Contract. Each has a unique identifier/number.",
+        "examples": [
+          "Consulting Agreement",
+          "Statement of Work No NORTH4082023",
+          "Contract AM100320251",
+          "Company Address Registration Agreement"
+        ]
+      },
+      {
+        "id": "agreement_id",
+        "type": "property",
+        "label": "Agreement Identifier",
+        "description": "Unique alphanumeric identifier or number assigned to the agreement",
+        "semantics": "Varies per document; often encodes client or project code and date",
+        "examples": [
+          "NORTH4082023",
+          "AM100320251",
+          "BL1601241",
+          "SV0801231"
+        ]
+      },
+      {
+        "id": "agreement_type",
+        "type": "dimension",
+        "label": "Agreement Type",
+        "description": "The category of service contract document",
+        "semantics": "Key axis of variation determining structure, sections, and required fields",
+        "examples": [
+          "Consulting Agreement",
+          "Statement of Work (SOW)",
+          "Contractor Contract",
+          "Company Address Registration Agreement"
+        ]
+      },
+      {
+        "id": "effective_date",
+        "type": "property",
+        "label": "Effective Date",
+        "description": "The date on which the agreement becomes legally binding and effective",
+        "semantics": "Varies per instance; may differ from execution/signing date",
+        "examples": [
+          "01.08.2023",
+          "07/17/2023",
+          "24.06.2024"
+        ]
+      },
+      {
+        "id": "service_provider_party",
+        "type": "class",
+        "label": "Service Provider / Executor / Company",
+        "description": "The entity providing professional services; typically the company issuing the contract",
+        "semantics": "Usually Westline Doo Beograd acting as executor or company; role label varies by document type",
+        "examples": [
+          "Westline Doo Beograd",
+          "Cohort Office d.o.o"
+        ]
+      },
+      {
+        "id": "client_party",
+        "type": "class",
+        "label": "Client / Consultant / Contractor",
+        "description": "The counterparty receiving or providing services depending on agreement direction",
+        "semantics": "Can be an individual consultant, a foreign company, or an individual entrepreneur; role varies",
+        "examples": [
+          "Mirela Ardelean",
+          "Northcrest AI, Inc.",
+          "Brightline Labs Inc",
+          "Alessio Marconi",
+          "Selvedge AI Inc"
+        ]
+      },
+      {
+        "id": "party_name",
+        "type": "property",
+        "label": "Party Legal Name",
+        "description": "Full legal name of the party as registered",
+        "semantics": "Varies per instance; can be individual name or company name",
+        "examples": [
+          "Westline Doo Beograd",
+          "Brightline Labs Inc",
+          "Aslan Demirci",
+          "Cohort Office d.o.o"
+        ]
+      },
+      {
+        "id": "party_address",
+        "type": "property",
+        "label": "Party Address",
+        "description": "Physical or registered address of the party",
+        "semantics": "Varies; includes street, city, state, zip, country",
+        "examples": [
+          "Knez Mihailova 12, 11000 Belgrade, Serbia",
+          "150 University Ave, Palo Alto, CA 94301, USA"
+        ]
+      },
+      {
+        "id": "party_registration_number",
+        "type": "property",
+        "label": "Registration / Tax ID Number",
+        "description": "Official company registration number, VAT/TAX ID, or employer identification number",
+        "semantics": "Present for companies; varies by jurisdiction",
+        "examples": [
+          "20435189",
+          "107284316",
+          "87-4129055",
+          "20518734"
+        ]
+      },
+      {
+        "id": "party_contact",
+        "type": "property",
+        "label": "Party Contact Information",
+        "description": "Contact details including phone number and email address for notices",
+        "semantics": "Varies per party; email used for formal notices",
+        "examples": [
+          "contact@westlinedoo.com",
+          "MPETROVIC@WESTLINEDOO.COM",
+          "+381 645 217 904"
+        ]
+      },
+      {
+        "id": "authorized_representative",
+        "type": "class",
+        "label": "Authorized Representative / Signatory",
+        "description": "The individual who signs on behalf of a party, with their name and title",
+        "semantics": "Each party has one; name and title vary per instance",
+        "examples": [
+          "Marko Petrović, CEO",
+          "Daniel Whitcomb, Chief Operating Officer",
+          "Helena Park, CEO/Cofounder"
+        ]
+      },
+      {
+        "id": "services_section",
+        "type": "class",
+        "label": "Services Description",
+        "description": "The defined scope of professional services the consultant or contractor will perform",
+        "semantics": "Varies widely; can be a list, table with modules/tasks, or narrative description",
+        "examples": [
+          "AlgorithmsforAuto-Labeling, GroundTruthDataModeling, MLProgramming",
+          "machine learning software engineering services",
+          "Android logistics application development"
+        ]
+      },
+      {
+        "id": "service_type",
+        "type": "dimension",
+        "label": "Service Domain / Type",
+        "description": "The category or domain of services being performed",
+        "semantics": "Key differentiator; drives specificity of deliverables and technical requirements",
+        "examples": [
+          "Machine Learning Engineering",
+          "Software Development",
+          "Backend Development",
+          "UI/UX Design",
+          "Company Address Registration",
+          "Data Science Research"
+        ]
+      },
+      {
+        "id": "deliverable",
+        "type": "class",
+        "label": "Deliverable / Milestone",
+        "description": "A specific output or milestone to be produced and delivered under the agreement",
+        "semantics": "Varies per project; often presented in a table with due dates and costs",
+        "examples": [
+          "Orders API",
+          "Tracking on Map",
+          "Youtube Video Scraper Library",
+          "Background removal module"
+        ]
+      },
+      {
+        "id": "deliverable_due_date",
+        "type": "property",
+        "label": "Deliverable Due Date",
+        "description": "The date by which a specific deliverable must be completed and submitted",
+        "semantics": "Varies per milestone; specified in milestone table",
+        "examples": [
+          "08/17/2023",
+          "10/17/2023",
+          "12/17/2023"
+        ]
+      },
+      {
+        "id": "deliverable_cost",
+        "type": "property",
+        "label": "Deliverable Cost",
+        "description": "The payment amount associated with a specific deliverable or milestone",
+        "semantics": "Varies per milestone; currency may be USD or EUR",
+        "examples": [
+          "$4,000",
+          "$1,000",
+          "1000 EUR",
+          "$500"
+        ]
+      },
+      {
+        "id": "contract_term",
+        "type": "class",
+        "label": "Contract Term / Duration",
+        "description": "The time period during which the agreement is in effect",
+        "semantics": "Expressed as start and end dates or a duration; varies per agreement",
+        "examples": [
+          "01.08.2023 to 31 October 2023",
+          "6 months starting August 1, 2023 ending Jan 30, 2024",
+          "12 months"
+        ]
+      },
+      {
+        "id": "start_date",
+        "type": "property",
+        "label": "Start Date",
+        "description": "The date on which services commence under the agreement",
+        "semantics": "Often same as effective date; varies per instance",
+        "examples": [
+          "01.08.2023",
+          "August 1, 2023",
+          "January 16, 2024"
+        ]
+      },
+      {
+        "id": "end_date",
+        "type": "property",
+        "label": "End Date",
+        "description": "The date on which the agreement or services conclude",
+        "semantics": "Varies per instance; may be fixed date or event-based",
+        "examples": [
+          "31 October 2023",
+          "Jan 30, 2024",
+          "March 27, 2026"
+        ]
+      },
+      {
+        "id": "auto_renewal",
+        "type": "property",
+        "label": "Auto-Renewal Clause",
+        "description": "Whether the agreement automatically renews at the end of the term",
+        "semantics": "Boolean; consulting agreements often explicitly state no auto-renewal",
+        "examples": [
+          "Agreement will not be automatically renewed",
+          "renewed periodically for additional 6 or 12 months"
+        ]
+      },
+      {
+        "id": "fee_structure",
+        "type": "dimension",
+        "label": "Fee / Compensation Structure",
+        "description": "The model by which the service provider is compensated",
+        "semantics": "Key dimension: hourly rate vs fixed fee drives payment schedule and tracking",
+        "examples": [
+          "Hourly Fee of $30 per hour",
+          "Fixed fee of $20,000",
+          "Hourly fee of 45.00 EUR",
+          "Monthly package 60 EUR VAT included"
+        ]
+      },
+      {
+        "id": "hourly_rate",
+        "type": "property",
+        "label": "Hourly Rate",
+        "description": "The per-hour compensation rate when fee structure is hourly",
+        "semantics": "Varies per agreement; currency in USD, EUR, or RSD",
+        "examples": [
+          "$30/hour",
+          "45.00 EUR/hour",
+          "$65.00 USD/hour",
+          "2,152 RSD/hour"
+        ]
+      },
+      {
+        "id": "total_fee",
+        "type": "property",
+        "label": "Total / Fixed Fee",
+        "description": "The total aggregate payment amount for the entire scope of work",
+        "semantics": "Present in fixed-fee agreements and aggregate caps in hourly agreements",
+        "examples": [
+          "$20,000.00",
+          "$5,000.00",
+          "108,160.00 EUR",
+          "$2,000"
+        ]
+      },
+      {
+        "id": "payment_schedule",
+        "type": "property",
+        "label": "Payment Schedule / Terms",
+        "description": "How and when payments are made: monthly, quarterly, upon milestone acceptance",
+        "semantics": "Varies; monthly arrears common for hourly, milestone-based for fixed-fee",
+        "examples": [
+          "payable monthly in arrears 30 days after receipt of invoice",
+          "within 30 days of receipt",
+          "quarterly in advance"
+        ]
+      },
+      {
+        "id": "ip_ownership",
+        "type": "class",
+        "label": "Intellectual Property Ownership",
+        "description": "Clause specifying who owns inventions, work product, and IP created under the agreement",
+        "semantics": "Typically company/client owns all IP; varies in scope of rights assigned",
+        "examples": [
+          "Company shall own solely and exclusively in perpetuity all right title and interest",
+          "Client shall own all right title and interest in source code"
+        ]
+      },
+      {
+        "id": "confidentiality_clause",
+        "type": "class",
+        "label": "Confidentiality / Non-Disclosure",
+        "description": "Obligations to keep agreement terms and proprietary information confidential",
+        "semantics": "Standard clause; scope and exceptions vary slightly",
+        "examples": [
+          "All terms must be kept confidential unless disclosure required by law",
+          "Consultant will hold in confidence and not disclose Proprietary Information"
+        ]
+      },
+      {
+        "id": "non_solicitation",
+        "type": "class",
+        "label": "Non-Solicitation Clause",
+        "description": "Restriction on soliciting or hiring the other party's employees during and after the agreement",
+        "semantics": "Present in detailed consulting agreements; typically 1-year post-service period",
+        "examples": [
+          "Consultant will not encourage or solicit any employee of Company for 1 year after services"
+        ]
+      },
+      {
+        "id": "warranty_clause",
+        "type": "class",
+        "label": "Representations and Warranties",
+        "description": "Consultant's representations about qualifications, originality of work, and compliance with laws",
+        "semantics": "Standard in detailed agreements; covers professional standards, IP non-infringement, compliance",
+        "examples": [
+          "Services will be performed in professional workmanlike manner",
+          "Consultant has necessary qualifications and experience"
+        ]
+      },
+      {
+        "id": "termination_clause",
+        "type": "class",
+        "label": "Termination Provisions",
+        "description": "Conditions and procedures under which the agreement may be terminated by either party",
+        "semantics": "Varies in notice periods and grounds; typically 5-30 days written notice",
+        "examples": [
+          "Company may terminate upon 5 days written notice",
+          "Consultant may terminate after 30 days if Company fails to pay",
+          "Client may terminate if not satisfied with service quality"
+        ]
+      },
+      {
+        "id": "governing_law",
+        "type": "property",
+        "label": "Governing Law / Jurisdiction",
+        "description": "The legal jurisdiction whose laws govern interpretation and enforcement of the agreement",
+        "semantics": "Varies; Serbia most common, also California or state of incorporation",
+        "examples": [
+          "laws of Serbia",
+          "laws of the State of California",
+          "laws of Republic of Serbia"
+        ]
+      },
+      {
+        "id": "dispute_resolution",
+        "type": "class",
+        "label": "Dispute Resolution Mechanism",
+        "description": "Process for resolving disputes, typically arbitration with specific rules and venue",
+        "semantics": "Varies between simple governing law clause and detailed JAMS arbitration provisions",
+        "examples": [
+          "Commercial Court in Belgrade",
+          "arbitration in State of California per JAMS rules",
+          "relevant Serbian arbitration institution"
+        ]
+      },
+      {
+        "id": "exclusivity",
+        "type": "property",
+        "label": "Exclusivity Clause",
+        "description": "Whether the agreement is exclusive or permits parties to work with others",
+        "semantics": "Many agreements explicitly state non-exclusive arrangement",
+        "examples": [
+          "Agreement is not exclusive and Parties entitled to enter other similar agreements",
+          "Consultant may be engaged in other business not conflicting with Company"
+        ]
+      },
+      {
+        "id": "independent_contractor_status",
+        "type": "property",
+        "label": "Independent Contractor Status",
+        "description": "Clause establishing consultant/contractor as independent business, not employee",
+        "semantics": "Standard in most agreements; affects tax, benefits, and liability",
+        "examples": [
+          "Consultant is providing services as independent business",
+          "each party shall be and act as independent contractor and not a partner"
+        ]
+      },
+      {
+        "id": "amendments_clause",
+        "type": "property",
+        "label": "Amendments Provision",
+        "description": "How changes to the agreement must be made and documented",
+        "semantics": "Always requires written form signed by both parties",
+        "examples": [
+          "amendments must be in writing signed by both Parties",
+          "changes determined by Annex to the Contract signed by both parties"
+        ]
+      },
+      {
+        "id": "severability_clause",
+        "type": "property",
+        "label": "Severability Clause",
+        "description": "Provision that invalid or unenforceable clauses do not invalidate the whole agreement",
+        "semantics": "Standard boilerplate; near-identical across documents",
+        "examples": [
+          "if any provision found void, remaining provisions remain enforceable"
+        ]
+      },
+      {
+        "id": "entire_agreement_clause",
+        "type": "property",
+        "label": "Entire Agreement / Integration Clause",
+        "description": "Clause stating the document supersedes all prior agreements on the subject matter",
+        "semantics": "Standard; confirms document is complete and final",
+        "examples": [
+          "constitutes entire agreement superseding all prior agreements and understandings"
+        ]
+      },
+      {
+        "id": "statement_of_work",
+        "type": "class",
+        "label": "Statement of Work (SOW) / Exhibit A",
+        "description": "Attached exhibit defining specific services, term, and fees for a given work order under a master agreement",
+        "semantics": "Can be standalone or attached to master consulting agreement; numbered sequentially",
+        "examples": [
+          "Statement of Work #1",
+          "Statement of Work #7",
+          "Exhibit A - Statement of Work #2"
+        ]
+      },
+      {
+        "id": "sow_number",
+        "type": "property",
+        "label": "SOW Number / Reference",
+        "description": "Sequential number identifying the statement of work within a master agreement",
+        "semantics": "Increments per engagement; referenced in agreement header",
+        "examples": [
+          "#1",
+          "#2",
+          "#7"
+        ]
+      },
+      {
+        "id": "context_background",
+        "type": "class",
+        "label": "Context and Background Section",
+        "description": "Narrative description of the business context and purpose of the project",
+        "semantics": "Present in SOW-type documents; describes business problem being solved",
+        "examples": [
+          "Platform connecting neighborhood retailers with last-mile couriers",
+          "Android logistics application for neighborhood retailers"
+        ]
+      },
+      {
+        "id": "assumptions_risks",
+        "type": "class",
+        "label": "Assumptions, Risks and Constraints",
+        "description": "List of project assumptions, out-of-scope items, and risk management procedures",
+        "semantics": "Present in detailed SOWs; if violated triggers change request process",
+        "examples": [
+          "Payments system integration is out of scope",
+          "Executor responsible for choosing technical stack"
+        ]
+      },
+      {
+        "id": "acceptance_criteria",
+        "type": "class",
+        "label": "Acceptance of Deliverables",
+        "description": "Process by which client evaluates and accepts or rejects completed deliverables",
+        "semantics": "Present in project-based SOWs; specifies re-submission timeframe",
+        "examples": [
+          "Client determines in sole discretion if deliverables meet acceptance criteria; executor must remedy failures within 5 days"
+        ]
+      },
+      {
+        "id": "communication_plan",
+        "type": "class",
+        "label": "Communication Plan",
+        "description": "Agreed meeting cadence and communication protocols between parties during project execution",
+        "semantics": "Present in larger project SOWs; varies in frequency and format",
+        "examples": [
+          "Weekly meeting, bi-weekly demo session, on-demand meetings for requirement clarification"
+        ]
+      },
+      {
+        "id": "hours_cap",
+        "type": "property",
+        "label": "Weekly Hours Cap",
+        "description": "Maximum number of billable hours per week for hourly engagements",
+        "semantics": "Present in hourly agreements; typically 40 hours/week",
+        "examples": [
+          "cap of 40 hours per week",
+          "40 hours per week for 52 weeks"
+        ]
+      },
+      {
+        "id": "currency",
+        "type": "dimension",
+        "label": "Currency",
+        "description": "The monetary currency used for compensation in the agreement",
+        "semantics": "Varies by party geography and negotiation; affects amount interpretation",
+        "examples": [
+          "USD",
+          "EUR",
+          "RSD"
+        ]
+      },
+      {
+        "id": "indemnification",
+        "type": "class",
+        "label": "Indemnification Clause",
+        "description": "Obligation of consultant to defend and hold harmless the company from claims by consultant's personnel",
+        "semantics": "Standard in detailed consulting agreements",
+        "examples": [
+          "Consultant agrees to defend, indemnify, and hold harmless Company from claims by Consultant's personnel for compensation, tax, insurance"
+        ]
+      },
+      {
+        "id": "assignability",
+        "type": "property",
+        "label": "Assignability",
+        "description": "Whether and how each party may assign their rights and obligations under the agreement",
+        "semantics": "Typically company can assign freely; consultant/contractor cannot without consent",
+        "examples": [
+          "Consultant will not assign without written consent of Company",
+          "Company may fully assign and transfer this Agreement"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "agreement",
+        "target": "agreement_type",
+        "label": "classified by",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "agreement_id",
+        "label": "identified by",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "effective_date",
+        "label": "effective from",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "service_provider_party",
+        "label": "has party",
+        "type": "relates_to"
+      },
+      {
+        "source": "agreement",
+        "target": "client_party",
+        "label": "has party",
+        "type": "relates_to"
+      },
+      {
+        "source": "service_provider_party",
+        "target": "party_name",
+        "label": "has name",
+        "type": "has_property"
+      },
+      {
+        "source": "service_provider_party",
+        "target": "party_address",
+        "label": "has address",
+        "type": "has_property"
+      },
+      {
+        "source": "service_provider_party",
+        "target": "party_registration_number",
+        "label": "has registration",
+        "type": "has_property"
+      },
+      {
+        "source": "service_provider_party",
+        "target": "party_contact",
+        "label": "has contact",
+        "type": "has_property"
+      },
+      {
+        "source": "client_party",
+        "target": "party_name",
+        "label": "has name",
+        "type": "has_property"
+      },
+      {
+        "source": "client_party",
+        "target": "party_address",
+        "label": "has address",
+        "type": "has_property"
+      },
+      {
+        "source": "client_party",
+        "target": "party_contact",
+        "label": "has contact",
+        "type": "has_property"
+      },
+      {
+        "source": "service_provider_party",
+        "target": "authorized_representative",
+        "label": "represented by",
+        "type": "has_property"
+      },
+      {
+        "source": "client_party",
+        "target": "authorized_representative",
+        "label": "represented by",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "services_section",
+        "label": "defines services",
+        "type": "part_of"
+      },
+      {
+        "source": "services_section",
+        "target": "service_type",
+        "label": "categorized as",
+        "type": "has_value"
+      },
+      {
+        "source": "services_section",
+        "target": "deliverable",
+        "label": "produces",
+        "type": "relates_to"
+      },
+      {
+        "source": "deliverable",
+        "target": "deliverable_due_date",
+        "label": "due by",
+        "type": "has_property"
+      },
+      {
+        "source": "deliverable",
+        "target": "deliverable_cost",
+        "label": "priced at",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "contract_term",
+        "label": "valid for",
+        "type": "part_of"
+      },
+      {
+        "source": "contract_term",
+        "target": "start_date",
+        "label": "begins on",
+        "type": "has_property"
+      },
+      {
+        "source": "contract_term",
+        "target": "end_date",
+        "label": "ends on",
+        "type": "has_property"
+      },
+      {
+        "source": "contract_term",
+        "target": "auto_renewal",
+        "label": "subject to",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "fee_structure",
+        "label": "compensated via",
+        "type": "has_property"
+      },
+      {
+        "source": "fee_structure",
+        "target": "hourly_rate",
+        "label": "rate is",
+        "type": "has_value"
+      },
+      {
+        "source": "fee_structure",
+        "target": "total_fee",
+        "label": "total is",
+        "type": "has_value"
+      },
+      {
+        "source": "fee_structure",
+        "target": "payment_schedule",
+        "label": "paid per",
+        "type": "has_property"
+      },
+      {
+        "source": "fee_structure",
+        "target": "currency",
+        "label": "denominated in",
+        "type": "has_value"
+      },
+      {
+        "source": "fee_structure",
+        "target": "hours_cap",
+        "label": "capped at",
+        "type": "constrains"
+      },
+      {
+        "source": "agreement",
+        "target": "ip_ownership",
+        "label": "governs IP via",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "confidentiality_clause",
+        "label": "includes",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "non_solicitation",
+        "label": "includes",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "warranty_clause",
+        "label": "includes",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "termination_clause",
+        "label": "terminated per",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "governing_law",
+        "label": "governed by",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "dispute_resolution",
+        "label": "disputes resolved by",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "exclusivity",
+        "label": "subject to",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "independent_contractor_status",
+        "label": "establishes relationship as",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "amendments_clause",
+        "label": "amended per",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "severability_clause",
+        "label": "subject to",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "entire_agreement_clause",
+        "label": "supersedes prior agreements per",
+        "type": "has_property"
+      },
+      {
+        "source": "agreement",
+        "target": "statement_of_work",
+        "label": "implemented through",
+        "type": "relates_to"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "sow_number",
+        "label": "numbered as",
+        "type": "has_property"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "services_section",
+        "label": "defines",
+        "type": "part_of"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "contract_term",
+        "label": "valid for",
+        "type": "part_of"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "fee_structure",
+        "label": "compensated via",
+        "type": "part_of"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "context_background",
+        "label": "contextualized by",
+        "type": "part_of"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "assumptions_risks",
+        "label": "constrained by",
+        "type": "part_of"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "acceptance_criteria",
+        "label": "accepted per",
+        "type": "part_of"
+      },
+      {
+        "source": "statement_of_work",
+        "target": "communication_plan",
+        "label": "managed via",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "indemnification",
+        "label": "includes",
+        "type": "part_of"
+      },
+      {
+        "source": "agreement",
+        "target": "assignability",
+        "label": "assignable per",
+        "type": "has_property"
+      },
+      {
+        "source": "ip_ownership",
+        "target": "service_provider_party",
+        "label": "assigned from",
+        "type": "relates_to"
+      },
+      {
+        "source": "ip_ownership",
+        "target": "client_party",
+        "label": "vests in",
+        "type": "relates_to"
+      },
+      {
+        "source": "agreement_type",
+        "target": "statement_of_work",
+        "label": "may include",
+        "type": "relates_to"
+      },
+      {
+        "source": "client_party",
+        "target": "party_registration_number",
+        "label": "has registration",
+        "type": "has_property"
+      },
+      {
+        "source": "termination_clause",
+        "target": "contract_term",
+        "label": "terminates",
+        "type": "constrains"
+      },
+      {
+        "source": "dispute_resolution",
+        "target": "governing_law",
+        "label": "applies",
+        "type": "relates_to"
+      }
+    ]
+  },
+  "pipeline": {
+    "classes": [
+      {
+        "id": "agreement",
+        "label": "Agreement / Contract",
+        "description": "The top-level legal document establishing a professional services relationship between parties",
+        "parent": null,
+        "properties": [
+          {
+            "id": "agreement_type",
+            "label": "Agreement Type",
+            "description": "The category of service contract document",
+            "examples": [
+              "Consulting Agreement",
+              "Statement of Work (SOW)",
+              "Contractor Contract",
+              "Company Address Registration Agreement"
+            ]
+          },
+          {
+            "id": "agreement_id",
+            "label": "Agreement Identifier",
+            "description": "Unique alphanumeric identifier or number assigned to the agreement",
+            "examples": [
+              "NORTH4082023",
+              "AM100320251",
+              "BL1601241",
+              "SV0801231"
+            ]
+          },
+          {
+            "id": "effective_date",
+            "label": "Effective Date",
+            "description": "The date on which the agreement becomes legally binding and effective",
+            "examples": [
+              "01.08.2023",
+              "07/17/2023",
+              "24.06.2024"
+            ]
+          },
+          {
+            "id": "fee_structure",
+            "label": "Fee / Compensation Structure",
+            "description": "The model by which the service provider is compensated",
+            "examples": [
+              "Hourly Fee of $30 per hour",
+              "Fixed fee of $20,000",
+              "Hourly fee of 45.00 EUR",
+              "Monthly package 60 EUR VAT included"
+            ]
+          },
+          {
+            "id": "governing_law",
+            "label": "Governing Law / Jurisdiction",
+            "description": "The legal jurisdiction whose laws govern interpretation and enforcement of the agreement",
+            "examples": [
+              "laws of Serbia",
+              "laws of the State of California",
+              "laws of Republic of Serbia"
+            ]
+          },
+          {
+            "id": "exclusivity",
+            "label": "Exclusivity Clause",
+            "description": "Whether the agreement is exclusive or permits parties to work with others",
+            "examples": [
+              "Agreement is not exclusive and Parties entitled to enter other similar agreements",
+              "Consultant may be engaged in other business not conflicting with Company"
+            ]
+          },
+          {
+            "id": "independent_contractor_status",
+            "label": "Independent Contractor Status",
+            "description": "Clause establishing consultant/contractor as independent business, not employee",
+            "examples": [
+              "Consultant is providing services as independent business",
+              "each party shall be and act as independent contractor and not a partner"
+            ]
+          },
+          {
+            "id": "amendments_clause",
+            "label": "Amendments Provision",
+            "description": "How changes to the agreement must be made and documented",
+            "examples": [
+              "amendments must be in writing signed by both Parties",
+              "changes determined by Annex to the Contract signed by both parties"
+            ]
+          },
+          {
+            "id": "severability_clause",
+            "label": "Severability Clause",
+            "description": "Provision that invalid or unenforceable clauses do not invalidate the whole agreement",
+            "examples": [
+              "if any provision found void, remaining provisions remain enforceable"
+            ]
+          },
+          {
+            "id": "entire_agreement_clause",
+            "label": "Entire Agreement / Integration Clause",
+            "description": "Clause stating the document supersedes all prior agreements on the subject matter",
+            "examples": [
+              "constitutes entire agreement superseding all prior agreements and understandings"
+            ]
+          },
+          {
+            "id": "assignability",
+            "label": "Assignability",
+            "description": "Whether and how each party may assign their rights and obligations under the agreement",
+            "examples": [
+              "Consultant will not assign without written consent of Company",
+              "Company may fully assign and transfer this Agreement"
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Service Provider / Executor / Company",
+            "label": "has party"
+          },
+          {
+            "type": "relates_to",
+            "target": "Client / Consultant / Contractor",
+            "label": "has party"
+          },
+          {
+            "type": "part_of",
+            "target": "Services Description",
+            "label": "defines services"
+          },
+          {
+            "type": "part_of",
+            "target": "Contract Term / Duration",
+            "label": "valid for"
+          },
+          {
+            "type": "part_of",
+            "target": "Intellectual Property Ownership",
+            "label": "governs IP via"
+          },
+          {
+            "type": "part_of",
+            "target": "Confidentiality / Non-Disclosure",
+            "label": "includes"
+          },
+          {
+            "type": "part_of",
+            "target": "Non-Solicitation Clause",
+            "label": "includes"
+          },
+          {
+            "type": "part_of",
+            "target": "Representations and Warranties",
+            "label": "includes"
+          },
+          {
+            "type": "part_of",
+            "target": "Termination Provisions",
+            "label": "terminated per"
+          },
+          {
+            "type": "part_of",
+            "target": "Dispute Resolution Mechanism",
+            "label": "disputes resolved by"
+          },
+          {
+            "type": "relates_to",
+            "target": "Statement of Work (SOW) / Exhibit A",
+            "label": "implemented through"
+          },
+          {
+            "type": "part_of",
+            "target": "Indemnification Clause",
+            "label": "includes"
+          }
+        ],
+        "examples": [
+          "Consulting Agreement",
+          "Statement of Work No NORTH4082023",
+          "Contract AM100320251",
+          "Company Address Registration Agreement"
+        ]
+      },
+      {
+        "id": "service_provider_party",
+        "label": "Service Provider / Executor / Company",
+        "description": "The entity providing professional services; typically the company issuing the contract",
+        "parent": null,
+        "properties": [
+          {
+            "id": "party_name",
+            "label": "Party Legal Name",
+            "description": "Full legal name of the party as registered",
+            "examples": [
+              "Westline Doo Beograd",
+              "Brightline Labs Inc",
+              "Aslan Demirci",
+              "Cohort Office d.o.o"
+            ]
+          },
+          {
+            "id": "party_address",
+            "label": "Party Address",
+            "description": "Physical or registered address of the party",
+            "examples": [
+              "Knez Mihailova 12, 11000 Belgrade, Serbia",
+              "150 University Ave, Palo Alto, CA 94301, USA"
+            ]
+          },
+          {
+            "id": "party_registration_number",
+            "label": "Registration / Tax ID Number",
+            "description": "Official company registration number, VAT/TAX ID, or employer identification number",
+            "examples": [
+              "20435189",
+              "107284316",
+              "87-4129055",
+              "20518734"
+            ]
+          },
+          {
+            "id": "party_contact",
+            "label": "Party Contact Information",
+            "description": "Contact details including phone number and email address for notices",
+            "examples": [
+              "contact@westlinedoo.com",
+              "MPETROVIC@WESTLINEDOO.COM",
+              "+381 645 217 904"
+            ]
+          },
+          {
+            "id": "authorized_representative",
+            "label": "Authorized Representative / Signatory",
+            "description": "The individual who signs on behalf of a party, with their name and title",
+            "examples": [
+              "Marko Petrović, CEO",
+              "Daniel Whitcomb, Chief Operating Officer",
+              "Helena Park, CEO/Cofounder"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Westline Doo Beograd",
+          "Cohort Office d.o.o"
+        ]
+      },
+      {
+        "id": "client_party",
+        "label": "Client / Consultant / Contractor",
+        "description": "The counterparty receiving or providing services depending on agreement direction",
+        "parent": null,
+        "properties": [
+          {
+            "id": "party_name",
+            "label": "Party Legal Name",
+            "description": "Full legal name of the party as registered",
+            "examples": [
+              "Westline Doo Beograd",
+              "Brightline Labs Inc",
+              "Aslan Demirci",
+              "Cohort Office d.o.o"
+            ]
+          },
+          {
+            "id": "party_address",
+            "label": "Party Address",
+            "description": "Physical or registered address of the party",
+            "examples": [
+              "Knez Mihailova 12, 11000 Belgrade, Serbia",
+              "150 University Ave, Palo Alto, CA 94301, USA"
+            ]
+          },
+          {
+            "id": "party_contact",
+            "label": "Party Contact Information",
+            "description": "Contact details including phone number and email address for notices",
+            "examples": [
+              "contact@westlinedoo.com",
+              "MPETROVIC@WESTLINEDOO.COM",
+              "+381 645 217 904"
+            ]
+          },
+          {
+            "id": "authorized_representative",
+            "label": "Authorized Representative / Signatory",
+            "description": "The individual who signs on behalf of a party, with their name and title",
+            "examples": [
+              "Marko Petrović, CEO",
+              "Daniel Whitcomb, Chief Operating Officer",
+              "Helena Park, CEO/Cofounder"
+            ]
+          },
+          {
+            "id": "party_registration_number",
+            "label": "Registration / Tax ID Number",
+            "description": "Official company registration number, VAT/TAX ID, or employer identification number",
+            "examples": [
+              "20435189",
+              "107284316",
+              "87-4129055",
+              "20518734"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Mirela Ardelean",
+          "Northcrest AI, Inc.",
+          "Brightline Labs Inc",
+          "Alessio Marconi",
+          "Selvedge AI Inc"
+        ]
+      },
+      {
+        "id": "authorized_representative",
+        "label": "Authorized Representative / Signatory",
+        "description": "The individual who signs on behalf of a party, with their name and title",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Marko Petrović, CEO",
+          "Daniel Whitcomb, Chief Operating Officer",
+          "Helena Park, CEO/Cofounder"
+        ]
+      },
+      {
+        "id": "services_section",
+        "label": "Services Description",
+        "description": "The defined scope of professional services the consultant or contractor will perform",
+        "parent": null,
+        "properties": [],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Deliverable / Milestone",
+            "label": "produces"
+          }
+        ],
+        "examples": [
+          "AlgorithmsforAuto-Labeling, GroundTruthDataModeling, MLProgramming",
+          "machine learning software engineering services",
+          "Android logistics application development"
+        ]
+      },
+      {
+        "id": "deliverable",
+        "label": "Deliverable / Milestone",
+        "description": "A specific output or milestone to be produced and delivered under the agreement",
+        "parent": null,
+        "properties": [
+          {
+            "id": "deliverable_due_date",
+            "label": "Deliverable Due Date",
+            "description": "The date by which a specific deliverable must be completed and submitted",
+            "examples": [
+              "08/17/2023",
+              "10/17/2023",
+              "12/17/2023"
+            ]
+          },
+          {
+            "id": "deliverable_cost",
+            "label": "Deliverable Cost",
+            "description": "The payment amount associated with a specific deliverable or milestone",
+            "examples": [
+              "$4,000",
+              "$1,000",
+              "1000 EUR",
+              "$500"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Orders API",
+          "Tracking on Map",
+          "Youtube Video Scraper Library",
+          "Background removal module"
+        ]
+      },
+      {
+        "id": "contract_term",
+        "label": "Contract Term / Duration",
+        "description": "The time period during which the agreement is in effect",
+        "parent": null,
+        "properties": [
+          {
+            "id": "start_date",
+            "label": "Start Date",
+            "description": "The date on which services commence under the agreement",
+            "examples": [
+              "01.08.2023",
+              "August 1, 2023",
+              "January 16, 2024"
+            ]
+          },
+          {
+            "id": "end_date",
+            "label": "End Date",
+            "description": "The date on which the agreement or services conclude",
+            "examples": [
+              "31 October 2023",
+              "Jan 30, 2024",
+              "March 27, 2026"
+            ]
+          },
+          {
+            "id": "auto_renewal",
+            "label": "Auto-Renewal Clause",
+            "description": "Whether the agreement automatically renews at the end of the term",
+            "examples": [
+              "Agreement will not be automatically renewed",
+              "renewed periodically for additional 6 or 12 months"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "01.08.2023 to 31 October 2023",
+          "6 months starting August 1, 2023 ending Jan 30, 2024",
+          "12 months"
+        ]
+      },
+      {
+        "id": "ip_ownership",
+        "label": "Intellectual Property Ownership",
+        "description": "Clause specifying who owns inventions, work product, and IP created under the agreement",
+        "parent": null,
+        "properties": [],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Service Provider / Executor / Company",
+            "label": "assigned from"
+          },
+          {
+            "type": "relates_to",
+            "target": "Client / Consultant / Contractor",
+            "label": "vests in"
+          }
+        ],
+        "examples": [
+          "Company shall own solely and exclusively in perpetuity all right title and interest",
+          "Client shall own all right title and interest in source code"
+        ]
+      },
+      {
+        "id": "confidentiality_clause",
+        "label": "Confidentiality / Non-Disclosure",
+        "description": "Obligations to keep agreement terms and proprietary information confidential",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "All terms must be kept confidential unless disclosure required by law",
+          "Consultant will hold in confidence and not disclose Proprietary Information"
+        ]
+      },
+      {
+        "id": "non_solicitation",
+        "label": "Non-Solicitation Clause",
+        "description": "Restriction on soliciting or hiring the other party's employees during and after the agreement",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Consultant will not encourage or solicit any employee of Company for 1 year after services"
+        ]
+      },
+      {
+        "id": "warranty_clause",
+        "label": "Representations and Warranties",
+        "description": "Consultant's representations about qualifications, originality of work, and compliance with laws",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Services will be performed in professional workmanlike manner",
+          "Consultant has necessary qualifications and experience"
+        ]
+      },
+      {
+        "id": "termination_clause",
+        "label": "Termination Provisions",
+        "description": "Conditions and procedures under which the agreement may be terminated by either party",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Company may terminate upon 5 days written notice",
+          "Consultant may terminate after 30 days if Company fails to pay",
+          "Client may terminate if not satisfied with service quality"
+        ]
+      },
+      {
+        "id": "dispute_resolution",
+        "label": "Dispute Resolution Mechanism",
+        "description": "Process for resolving disputes, typically arbitration with specific rules and venue",
+        "parent": null,
+        "properties": [],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Governing Law / Jurisdiction",
+            "label": "applies"
+          }
+        ],
+        "examples": [
+          "Commercial Court in Belgrade",
+          "arbitration in State of California per JAMS rules",
+          "relevant Serbian arbitration institution"
+        ]
+      },
+      {
+        "id": "statement_of_work",
+        "label": "Statement of Work (SOW) / Exhibit A",
+        "description": "Attached exhibit defining specific services, term, and fees for a given work order under a master agreement",
+        "parent": null,
+        "properties": [
+          {
+            "id": "sow_number",
+            "label": "SOW Number / Reference",
+            "description": "Sequential number identifying the statement of work within a master agreement",
+            "examples": [
+              "#1",
+              "#2",
+              "#7"
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "type": "part_of",
+            "target": "Services Description",
+            "label": "defines"
+          },
+          {
+            "type": "part_of",
+            "target": "Contract Term / Duration",
+            "label": "valid for"
+          },
+          {
+            "type": "part_of",
+            "target": "Fee / Compensation Structure",
+            "label": "compensated via"
+          },
+          {
+            "type": "part_of",
+            "target": "Context and Background Section",
+            "label": "contextualized by"
+          },
+          {
+            "type": "part_of",
+            "target": "Assumptions, Risks and Constraints",
+            "label": "constrained by"
+          },
+          {
+            "type": "part_of",
+            "target": "Acceptance of Deliverables",
+            "label": "accepted per"
+          },
+          {
+            "type": "part_of",
+            "target": "Communication Plan",
+            "label": "managed via"
+          }
+        ],
+        "examples": [
+          "Statement of Work #1",
+          "Statement of Work #7",
+          "Exhibit A - Statement of Work #2"
+        ]
+      },
+      {
+        "id": "context_background",
+        "label": "Context and Background Section",
+        "description": "Narrative description of the business context and purpose of the project",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Platform connecting neighborhood retailers with last-mile couriers",
+          "Android logistics application for neighborhood retailers"
+        ]
+      },
+      {
+        "id": "assumptions_risks",
+        "label": "Assumptions, Risks and Constraints",
+        "description": "List of project assumptions, out-of-scope items, and risk management procedures",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Payments system integration is out of scope",
+          "Executor responsible for choosing technical stack"
+        ]
+      },
+      {
+        "id": "acceptance_criteria",
+        "label": "Acceptance of Deliverables",
+        "description": "Process by which client evaluates and accepts or rejects completed deliverables",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Client determines in sole discretion if deliverables meet acceptance criteria; executor must remedy failures within 5 days"
+        ]
+      },
+      {
+        "id": "communication_plan",
+        "label": "Communication Plan",
+        "description": "Agreed meeting cadence and communication protocols between parties during project execution",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Weekly meeting, bi-weekly demo session, on-demand meetings for requirement clarification"
+        ]
+      },
+      {
+        "id": "indemnification",
+        "label": "Indemnification Clause",
+        "description": "Obligation of consultant to defend and hold harmless the company from claims by consultant's personnel",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Consultant agrees to defend, indemnify, and hold harmless Company from claims by Consultant's personnel for compensation, tax, insurance"
+        ]
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "agreement_type",
+        "label": "Agreement Type",
+        "description": "The category of service contract document",
+        "values": []
+      },
+      {
+        "id": "service_type",
+        "label": "Service Domain / Type",
+        "description": "The category or domain of services being performed",
+        "values": []
+      },
+      {
+        "id": "fee_structure",
+        "label": "Fee / Compensation Structure",
+        "description": "The model by which the service provider is compensated",
+        "values": [
+          "Hourly Rate",
+          "Total / Fixed Fee",
+          "Currency"
+        ]
+      },
+      {
+        "id": "currency",
+        "label": "Currency",
+        "description": "The monetary currency used for compensation in the agreement",
+        "values": []
+      }
+    ],
+    "constraints": [],
+    "promptReady": "# Professional Services Contract & Statement of Work Ontology\n\nModels consulting agreements, contractor contracts, and statements of work (SOW) used to formalize professional service engagements between a service provider company and a client or consultant, covering services, compensation, IP rights, and legal terms.\n\n**Domain:** legal\n\n## Classes\n\n### Agreement / Contract\nThe top-level legal document establishing a professional services relationship between parties\n\n**Properties:**\n- Agreement Type: The category of service contract document\n  Examples: Consulting Agreement, Statement of Work (SOW), Contractor Contract, Company Address Registration Agreement\n- Agreement Identifier: Unique alphanumeric identifier or number assigned to the agreement\n  Examples: NORTH4082023, AM100320251, BL1601241, SV0801231\n- Effective Date: The date on which the agreement becomes legally binding and effective\n  Examples: 01.08.2023, 07/17/2023, 24.06.2024\n- Fee / Compensation Structure: The model by which the service provider is compensated\n  Examples: Hourly Fee of $30 per hour, Fixed fee of $20,000, Hourly fee of 45.00 EUR, Monthly package 60 EUR VAT included\n- Governing Law / Jurisdiction: The legal jurisdiction whose laws govern interpretation and enforcement of the agreement\n  Examples: laws of Serbia, laws of the State of California, laws of Republic of Serbia\n- Exclusivity Clause: Whether the agreement is exclusive or permits parties to work with others\n  Examples: Agreement is not exclusive and Parties entitled to enter other similar agreements, Consultant may be engaged in other business not conflicting with Company\n- Independent Contractor Status: Clause establishing consultant/contractor as independent business, not employee\n  Examples: Consultant is providing services as independent business, each party shall be and act as independent contractor and not a partner\n- Amendments Provision: How changes to the agreement must be made and documented\n  Examples: amendments must be in writing signed by both Parties, changes determined by Annex to the Contract signed by both parties\n- Severability Clause: Provision that invalid or unenforceable clauses do not invalidate the whole agreement\n  Examples: if any provision found void, remaining provisions remain enforceable\n- Entire Agreement / Integration Clause: Clause stating the document supersedes all prior agreements on the subject matter\n  Examples: constitutes entire agreement superseding all prior agreements and understandings\n- Assignability: Whether and how each party may assign their rights and obligations under the agreement\n  Examples: Consultant will not assign without written consent of Company, Company may fully assign and transfer this Agreement\n\n**Relations:**\n- has party → Service Provider / Executor / Company\n- has party → Client / Consultant / Contractor\n- defines services → Services Description\n- valid for → Contract Term / Duration\n- governs IP via → Intellectual Property Ownership\n- includes → Confidentiality / Non-Disclosure\n- includes → Non-Solicitation Clause\n- includes → Representations and Warranties\n- terminated per → Termination Provisions\n- disputes resolved by → Dispute Resolution Mechanism\n- implemented through → Statement of Work (SOW) / Exhibit A\n- includes → Indemnification Clause\n\n**Examples:**\n- Consulting Agreement\n- Statement of Work No NORTH4082023\n- Contract AM100320251\n- Company Address Registration Agreement\n\n### Service Provider / Executor / Company\nThe entity providing professional services; typically the company issuing the contract\n\n**Properties:**\n- Party Legal Name: Full legal name of the party as registered\n  Examples: Westline Doo Beograd, Brightline Labs Inc, Aslan Demirci, Cohort Office d.o.o\n- Party Address: Physical or registered address of the party\n  Examples: Knez Mihailova 12, 11000 Belgrade, Serbia, 150 University Ave, Palo Alto, CA 94301, USA\n- Registration / Tax ID Number: Official company registration number, VAT/TAX ID, or employer identification number\n  Examples: 20435189, 107284316, 87-4129055, 20518734\n- Party Contact Information: Contact details including phone number and email address for notices\n  Examples: contact@westlinedoo.com, MPETROVIC@WESTLINEDOO.COM, +381 645 217 904\n- Authorized Representative / Signatory: The individual who signs on behalf of a party, with their name and title\n  Examples: Marko Petrović, CEO, Daniel Whitcomb, Chief Operating Officer, Helena Park, CEO/Cofounder\n\n**Examples:**\n- Westline Doo Beograd\n- Cohort Office d.o.o\n\n### Client / Consultant / Contractor\nThe counterparty receiving or providing services depending on agreement direction\n\n**Properties:**\n- Party Legal Name: Full legal name of the party as registered\n  Examples: Westline Doo Beograd, Brightline Labs Inc, Aslan Demirci, Cohort Office d.o.o\n- Party Address: Physical or registered address of the party\n  Examples: Knez Mihailova 12, 11000 Belgrade, Serbia, 150 University Ave, Palo Alto, CA 94301, USA\n- Party Contact Information: Contact details including phone number and email address for notices\n  Examples: contact@westlinedoo.com, MPETROVIC@WESTLINEDOO.COM, +381 645 217 904\n- Authorized Representative / Signatory: The individual who signs on behalf of a party, with their name and title\n  Examples: Marko Petrović, CEO, Daniel Whitcomb, Chief Operating Officer, Helena Park, CEO/Cofounder\n- Registration / Tax ID Number: Official company registration number, VAT/TAX ID, or employer identification number\n  Examples: 20435189, 107284316, 87-4129055, 20518734\n\n**Examples:**\n- Mirela Ardelean\n- Northcrest AI, Inc.\n- Brightline Labs Inc\n- Alessio Marconi\n- Selvedge AI Inc\n\n### Authorized Representative / Signatory\nThe individual who signs on behalf of a party, with their name and title\n\n**Examples:**\n- Marko Petrović, CEO\n- Daniel Whitcomb, Chief Operating Officer\n- Helena Park, CEO/Cofounder\n\n### Services Description\nThe defined scope of professional services the consultant or contractor will perform\n\n**Relations:**\n- produces → Deliverable / Milestone\n\n**Examples:**\n- AlgorithmsforAuto-Labeling, GroundTruthDataModeling, MLProgramming\n- machine learning software engineering services\n- Android logistics application development\n\n### Deliverable / Milestone\nA specific output or milestone to be produced and delivered under the agreement\n\n**Properties:**\n- Deliverable Due Date: The date by which a specific deliverable must be completed and submitted\n  Examples: 08/17/2023, 10/17/2023, 12/17/2023\n- Deliverable Cost: The payment amount associated with a specific deliverable or milestone\n  Examples: $4,000, $1,000, 1000 EUR, $500\n\n**Examples:**\n- Orders API\n- Tracking on Map\n- Youtube Video Scraper Library\n- Background removal module\n\n### Contract Term / Duration\nThe time period during which the agreement is in effect\n\n**Properties:**\n- Start Date: The date on which services commence under the agreement\n  Examples: 01.08.2023, August 1, 2023, January 16, 2024\n- End Date: The date on which the agreement or services conclude\n  Examples: 31 October 2023, Jan 30, 2024, March 27, 2026\n- Auto-Renewal Clause: Whether the agreement automatically renews at the end of the term\n  Examples: Agreement will not be automatically renewed, renewed periodically for additional 6 or 12 months\n\n**Examples:**\n- 01.08.2023 to 31 October 2023\n- 6 months starting August 1, 2023 ending Jan 30, 2024\n- 12 months\n\n### Intellectual Property Ownership\nClause specifying who owns inventions, work product, and IP created under the agreement\n\n**Relations:**\n- assigned from → Service Provider / Executor / Company\n- vests in → Client / Consultant / Contractor\n\n**Examples:**\n- Company shall own solely and exclusively in perpetuity all right title and interest\n- Client shall own all right title and interest in source code\n\n### Confidentiality / Non-Disclosure\nObligations to keep agreement terms and proprietary information confidential\n\n**Examples:**\n- All terms must be kept confidential unless disclosure required by law\n- Consultant will hold in confidence and not disclose Proprietary Information\n\n### Non-Solicitation Clause\nRestriction on soliciting or hiring the other party's employees during and after the agreement\n\n**Examples:**\n- Consultant will not encourage or solicit any employee of Company for 1 year after services\n\n### Representations and Warranties\nConsultant's representations about qualifications, originality of work, and compliance with laws\n\n**Examples:**\n- Services will be performed in professional workmanlike manner\n- Consultant has necessary qualifications and experience\n\n### Termination Provisions\nConditions and procedures under which the agreement may be terminated by either party\n\n**Examples:**\n- Company may terminate upon 5 days written notice\n- Consultant may terminate after 30 days if Company fails to pay\n- Client may terminate if not satisfied with service quality\n\n### Dispute Resolution Mechanism\nProcess for resolving disputes, typically arbitration with specific rules and venue\n\n**Relations:**\n- applies → Governing Law / Jurisdiction\n\n**Examples:**\n- Commercial Court in Belgrade\n- arbitration in State of California per JAMS rules\n- relevant Serbian arbitration institution\n\n### Statement of Work (SOW) / Exhibit A\nAttached exhibit defining specific services, term, and fees for a given work order under a master agreement\n\n**Properties:**\n- SOW Number / Reference: Sequential number identifying the statement of work within a master agreement\n  Examples: #1, #2, #7\n\n**Relations:**\n- defines → Services Description\n- valid for → Contract Term / Duration\n- compensated via → Fee / Compensation Structure\n- contextualized by → Context and Background Section\n- constrained by → Assumptions, Risks and Constraints\n- accepted per → Acceptance of Deliverables\n- managed via → Communication Plan\n\n**Examples:**\n- Statement of Work #1\n- Statement of Work #7\n- Exhibit A - Statement of Work #2\n\n### Context and Background Section\nNarrative description of the business context and purpose of the project\n\n**Examples:**\n- Platform connecting neighborhood retailers with last-mile couriers\n- Android logistics application for neighborhood retailers\n\n### Assumptions, Risks and Constraints\nList of project assumptions, out-of-scope items, and risk management procedures\n\n**Examples:**\n- Payments system integration is out of scope\n- Executor responsible for choosing technical stack\n\n### Acceptance of Deliverables\nProcess by which client evaluates and accepts or rejects completed deliverables\n\n**Examples:**\n- Client determines in sole discretion if deliverables meet acceptance criteria; executor must remedy failures within 5 days\n\n### Communication Plan\nAgreed meeting cadence and communication protocols between parties during project execution\n\n**Examples:**\n- Weekly meeting, bi-weekly demo session, on-demand meetings for requirement clarification\n\n### Indemnification Clause\nObligation of consultant to defend and hold harmless the company from claims by consultant's personnel\n\n**Examples:**\n- Consultant agrees to defend, indemnify, and hold harmless Company from claims by Consultant's personnel for compensation, tax, insurance\n\n## Dimensions\n\n### Agreement Type\nThe category of service contract document\n\n### Service Domain / Type\nThe category or domain of services being performed\n\n### Fee / Compensation Structure\nThe model by which the service provider is compensated\n**Values:** Hourly Rate, Total / Fixed Fee, Currency\n\n### Currency\nThe monetary currency used for compensation in the agreement"
+  }
+}
