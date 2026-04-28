@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   devIndicators: false,
   experimental: {
-    middlewareClientMaxBodySize: '50mb',
+    proxyClientMaxBodySize: '50mb',
   },
   async redirects() {
     return [
