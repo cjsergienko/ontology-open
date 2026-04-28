@@ -545,7 +545,7 @@ any labeled corpus.
 \label{subsec:corpora}
 
 The Software Services Invoice ontology used below was induced from a
-corpus of 20 real cross-border B2B invoices internal to the author's
+corpus of 20 real B2B invoices internal to the author's
 organization; this corpus is withheld from supplementary materials due
 to seller, client, and contractor confidentiality, but a
 structurally-identical anonymized version of the resulting ontology is
@@ -605,12 +605,13 @@ applicable to a single JD instance).}
 \end{table}
 
 \emph{Case~1 (familiar).} On the Software Services Invoice ontology
-(47 nodes), System~A instantiated 46/47 nodes (97.9\%), including all
+(48 nodes), System~A instantiated 47/48 nodes (97.9\%), including all
 six classes, all four dimensions, and all three constraints with
-verified arithmetic (RSD = USD $\times$ NBS rate; VAT exemption with
-article 24 citation; line totals sum to invoice total); the single
-uninstantiated node was \texttt{routing\_number}, legitimately N/A for
-a Serbian seller. System~B instantiated approximately 45/47 nodes
+verified arithmetic (line totals sum to invoice total; sales-tax
+exemption note for out-of-state buyer; foreign-currency conversion
+trivially satisfied for USD-only); the single uninstantiated node was
+a foreign-payment field that is legitimately N/A for the chosen
+US-domestic instance. System~B instantiated approximately 46/48 nodes
 (95.7\%), with all four dimensions appearing as incidental
 \texttt{metadata} keys driven by the model's strong invoice prior. The
 gap is only 2.2~pp because the LLM has seen enough invoices during

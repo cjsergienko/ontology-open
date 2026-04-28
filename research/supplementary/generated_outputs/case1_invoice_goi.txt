@@ -1,41 +1,42 @@
 [NOTE: This is the System A (GOI generation) output for the Software
-Services Invoice ontology. All seller, employee, contractor, client,
-IBAN, SWIFT, tax-ID, phone, and email values have been replaced with
-synthetic placeholders for confidentiality.]
+Services Invoice ontology. This is a synthetic US-domestic invoice;
+all seller, employee, contractor, client, routing/account, EIN,
+phone, and email values have been replaced with synthetic
+placeholders for confidentiality.]
 
 ================================================================================
-                        EXAMPLE SELLER DOO BEOGRAD
+                     EXAMPLE SOFTWARE SERVICES LLC
                   Software & Technology Staffing Services
 ================================================================================
-Example Street 1, 11000 Beograd, Republika Srbija
-PIB: 100000001
-Maticni broj: 20000001
-Tel: +381-11-XXXXXXX
+100 Market St, Suite 500, San Francisco, CA 94105
+EIN: XX-XXXXXXX
+Business Registration No.: 20000001
+Tel: +1-415-XXX-XXXX
 E-mail: invoicing@example.com
 
 ================================================================================
-                        INVOICE / FAKTURA
+                              INVOICE
 ================================================================================
 
-Invoice No. / Broj fakture:    INV-031
-Invoice Date / Datum fakture:  15.03.2026
-Delivery Date / Datum prom.:   15.03.2026
-Billing Period / Period:       February 16, 2026 - March 15, 2026
-Contract Ref. / Ugovor:        SOW-2026-031
-Place of Issue / Mesto izd.:   Beograd
-Payment Method / Placanje:     VIRMANSKI / Bank Transfer
-Payment Terms / Rok placanja:  po ugovoru / by Contract
+Invoice No.:      INV-031
+Invoice Date:     03/15/2026
+Delivery Date:    03/15/2026
+Billing Period:   February 16, 2026 - March 15, 2026
+Contract Ref.:    SOW-2026-031
+Place of Issue:   San Francisco
+Payment Method:   ACH Bank Transfer
+Payment Terms:    Net 30 / by Contract
 
 ================================================================================
-TO / PRIMALAC:
+BILL TO:
 ================================================================================
 ACME SOFTWARE HOLDINGS, INC.
 100 Example Avenue, Suite 500
 Demo City, CA 94000, USA
-Taxpayer Identification Number: XX-XXXXXXX
+EIN: XX-XXXXXXX
 
 ================================================================================
-SERVICES RENDERED / SPECIFIKACIJA USLUGA
+SERVICES RENDERED
 ================================================================================
 
 Service Type:   Software Engineering Services (Staff Augmentation)
@@ -52,54 +53,50 @@ Billing Model:  Hourly Rate x Hours/Day x Working Days
           = $5,760.00
 
 ================================================================================
-TOTALS / UKUPNO
+TOTALS
 ================================================================================
 
-  Invoice Currency / Valuta:      USD
-  Subtotal / Iznos bez PDV:       $18,376.00
-  VAT / PDV (0%):                 $0.00
+  Invoice Currency:               USD
+  Subtotal:                       $18,376.00
+  Sales Tax (0%):                 $0.00
   ---------------------------------------------
-  TOTAL DUE / UKUPNO ZA UPLATU:   $18,376.00
+  TOTAL DUE:                      $18,376.00
 
-  VAT Exemption Note / Napomena o PDV:
-  Izvoz oslobodjen PDV na osnovu clana 24. stav 1., tacka 2. Zakona o PDV.
-  (Export exempt from VAT per Article 24, Paragraph 1, Item 2 of the
-  Republic of Serbia VAT Law.)
-
-  NBS Exchange Rate / Kurs NBS (15.03.2026):
-    1 USD = 109.4517 RSD
-
-  RSD Equivalent / Iznos u RSD:
-    $18,376.00 x 109.4517 = 2,010,335.45 RSD
+  Sales Tax Exemption Note:
+  Sales tax not collected --- out-of-state buyer.
 
 ================================================================================
-BANK DETAILS / PODACI ZA PLACANJE
+BANK DETAILS
 ================================================================================
 
-  Bank / Banka:       Example Bank Beograd
-  Account Holder:     EXAMPLE SELLER DOO BEOGRAD
-  IBAN:               RS35XXXXXXXXXXXXXXXXXX
-  SWIFT / BIC:        XXXXRSBG
-  Currency / Valuta:  USD
+  Bank:               Example Bank, San Francisco, CA
+  Account Holder:     EXAMPLE SOFTWARE SERVICES LLC
+  Routing Number:     121XXXXXX
+  Account Number:     XXXXXXXXX
+  IBAN:               n/a (US domestic transfer)
+  SWIFT / BIC:        n/a (US domestic transfer)
+  Currency:           USD
 
 ================================================================================
 SIGNATURE AND RESPONSIBILITY BLOCK
 ================================================================================
 
-  Responsible Person:      [Director Name], Direktor / Managing Director
-  Issued by / Izdao:       __________________________
-  Received by / Primio:    __________________________
-  [STAMP / PECAT]          [STAMP / PECAT]
+  Responsible Person:      [Authorized Signatory Name], Authorized Signatory
+  Issued by:               __________________________
+  Received by:             __________________________
+  [Stamp/Seal: optional]   [Stamp/Seal: optional]
 
 ================================================================================
-  Document Language:  Serbian / English (Bilingual)
-  Invoice Direction:  Outbound (Example Seller bills Acme Software Holdings)
+  Document Language:  English only
+  Invoice Direction:  Outbound (Example Software Services LLC bills Acme
+                      Software Holdings)
 ================================================================================
 
 ===STRUCTURED===
 
 [Per-node JSON map, with every ontology node id resolved to either
 its instantiated value above, or null where genuinely not applicable
-(e.g. routing_number is null because the seller is in Serbia and
-provides IBAN/SWIFT instead). Coverage: 46 / 47 = 97.9%, with all
-4 dimensions and 3 constraints satisfied.]
+(e.g. iban and swift_bic are null because this is a US domestic
+transfer and the seller provides routing/account numbers instead).
+Coverage: 46 / 47 = 97.9%, with all 4 dimensions and 3 constraints
+satisfied.]
