@@ -72,16 +72,18 @@ blueprint}-entities, dimensions, properties, relationships, and
 constraints-from a corpus of examples and exports it as a typed graph
 (six node types, seven edge types) in YAML/JSON. We introduce the
 \textbf{Node Coverage Score}, a novel evaluation metric that measures
-the percentage of ontology dimension nodes appearing in generated
-outputs.
+the fraction of structural ontology nodes (classes, properties, and
+dimensions) appearing in generated outputs.
 
-A controlled generative validation on two contrasting ontologies-a
-familiar Software Services Invoice schema and a custom Job Description
-Ontology-shows that GOI-prompted generation by construction covers
-100\% of applicable ontology nodes; a generic three-field template
-recovers 95.7\% on the invoice schema but collapses to 65.4\% on the
-Job Description Ontology. The structural coverage holds regardless of
-how familiar the document type is to the model.
+A controlled generative validation on three contrasting ontologies-a
+familiar Software Services Invoice schema, a custom Job Description
+Ontology, and a confidential Pain-Management Clinical Visit Record
+Ontology-shows that GOI-prompted generation covers 95-100\% of the
+structural backbone in every case; a generic three-field template
+holds at 97.8\% on the invoice schema but drops to 52.2\% on the Job
+Description Ontology and 62.2\% on the Pain-Management ontology. The
+structural coverage holds regardless of how familiar the document
+type is to the model.
 
 \keywords{Ontology learning \and Schema induction \and Large language
 models \and Knowledge graphs \and Domain-agnostic methods \and
@@ -156,9 +158,10 @@ allowing direct injection into RAG and agent prompts without graph
 traversal.
 
 \textbf{Third}, we introduce the \textbf{Node Coverage Score}, a novel
-evaluation metric that measures the percentage of dimension nodes in an
-induced ontology that appear in outputs generated from that ontology-a
-direct structural-completeness signal that token-level metrics miss.
+evaluation metric that measures the fraction of structural nodes
+(classes, properties, and dimensions) in an induced ontology that
+appear in outputs generated from that ontology-a direct
+structural-completeness signal that token-level metrics miss.
 
 \textbf{Fourth}, we identify and address a practical
 \textbf{cross-functional team communication gap}: mixed-expertise AI
@@ -167,10 +170,11 @@ visual, interactive, exportable schema serves as precisely this common
 artifact, positioning GOI as both a technical contribution and an
 \textbf{organizational primitive}.
 
-A controlled generative validation on two contrasting ontologies
-demonstrates GOI's structurally-mandated coverage; we also discuss
-limitations including LLM consistency, token-window constraints, the
-lack of formal OWL axioms, and hallucination risks.
+A controlled generative validation on three contrasting ontologies
+spanning B2B billing, talent acquisition, and healthcare clinical
+documentation demonstrates GOI's structurally-mandated coverage; we
+also discuss limitations including LLM consistency, token-window
+constraints, the lack of formal OWL axioms, and hallucination risks.
 
 The remainder of this paper is organized as follows.
 Section~\ref{sec:related} reviews related work.
@@ -524,27 +528,40 @@ purpose, regardless of how well it matches a reference schema.
 
 Let $\mathcal{G} = (V, E, \tau_V, \tau_E)$ be an induced ontology and
 let $o$ be an output generated from $\mathcal{G}$ as a generation
-specification. Let $D \subseteq V$ be the set of \emph{non-context
-dimension nodes}-dimension nodes that represent structural axes
-(section-level organizing principles) rather than contextual metadata.
+specification. Let $S \subseteq V$ be the set of \emph{structural
+nodes}: nodes whose type is \texttt{class}, \texttt{property}, or
+\texttt{dimension}, restricted to those representing visible
+section-level slots (nodes flagged \texttt{generate=context} -
+generation-control levers such as employer-brand voice or document
+tone - are excluded). Value, relation, and constraint nodes are also
+excluded: values are leaves consumed by their parent dimensions,
+relations are realised as edge annotations, and constraints describe
+rules that hold over other nodes rather than discrete content slots.
 
 The \textbf{Node Coverage Score} is defined as:
 \[
-  \text{NCS}(\mathcal{G}, o) = \frac{|\{d \in D : d \text{ is mentioned in } o\}|}{|D|}.
+  \text{NCS}(\mathcal{G}, o) = \frac{|\{s \in S : s \text{ is mentioned in } o\}|}{|S|}.
 \]
 
 In practice, the metric is reported alongside the diagnostic tuple
-$(|D|,\ |\{d \in D : d\text{ is reflected in }o\}|,\ \text{NCS})$, plus
-the per-node verdict for error analysis.
+$(|S|,\ |\{s \in S : s\text{ is reflected in }o\}|,\ \text{NCS})$, plus
+the per-node verdict for error analysis. The original
+dimension-only formulation reported in earlier drafts is recovered as
+the special case of restricting $S$ to dimension nodes.
 
 \subsection{Computation}
 
 The coverage score is computed by serializing the ontology into a
 structured prompt, firing a user prompt through the ontology as a
 generation specification, and then scanning the output for mentions of
-each dimension node. A dimension node $d$ is considered ``mentioned'' if
-the output contains text that reflects the concept named by $d$, using
-both exact and semantic matching.
+each structural node. A node $s$ is considered ``mentioned'' if any of
+six detectors fires: full-label substring match, single-token label
+match, all-token label match, distinctive-token match (a single label
+token of $\geq 5$ characters present in the output, used for
+compositional axis labels), example-value match, or per-case
+synonym match. Detectors are evaluated case-insensitively; the
+synonym table is published with the supplementary materials so the
+score is reproducible.
 
 The metric supports dataset injection for data-driven generation,
 allowing evaluation under realistic conditions where the generation
@@ -552,14 +569,15 @@ prompt includes actual data from the target domain.
 
 \subsection{Limitations of the Metric}
 
-The Node Coverage Score has several limitations. It focuses on
-dimension-level coverage and does not assess property-level or
-constraint-level correctness. Semantic matching introduces ambiguity in
-borderline cases. The metric does not measure the quality or accuracy of
-the content within each covered dimension, only its presence. Despite
-these limitations, the Node Coverage Score provides a novel evaluation
-axis that complements token-level metrics and directly assesses ontology
-utility for generation tasks.
+The Node Coverage Score has several limitations. It measures
+structural completeness (presence of class, property, and dimension
+slots) and does not assess constraint satisfaction or content
+correctness within each slot. Synonym tables and distinctive-token
+matching introduce ambiguity in borderline cases. The metric does not
+measure the quality or accuracy of the content within each covered
+node, only its presence. Despite these limitations, the Node Coverage
+Score provides a novel evaluation axis that complements token-level
+metrics and directly assesses ontology utility for generation tasks.
 
 % -------------------------------------------------------
 \section{Experiments and Evaluation}
@@ -580,9 +598,18 @@ corpus of 20 real B2B invoices internal to the author's
 organization; this corpus is withheld from supplementary materials due
 to seller, client, and contractor confidentiality, but a
 structurally-identical anonymized version of the resulting ontology is
-included. The Job Description Ontology ontology was induced from a
+included. The Job Description Ontology was induced from a
 publicly accessible corpus of senior engineering job postings; three
 anonymized postings are reproduced in the supplementary bundle.
+The Pain-Management Clinical Visit Record Ontology was induced from a
+confidential corpus of pain management and rehabilitation follow-up
+visit records held by a clinical partner of the author's
+organization. The corpus contains protected health information (PHI)
+and is withheld in full; the published ontology JSON has every
+example value, provider name, practice name, address, patient
+identifier, and signature date replaced with synthetic
+clinically-plausible equivalents, so the structural schema is
+reproduced faithfully without any real PHI.
 
 \subsection{Ontology-as-Prompt: Generative Validation}
 \label{sec:ontology-as-prompt}
@@ -600,74 +627,107 @@ emit a JSON map keyed by ontology node id, instantiating every class,
 populating every property, reflecting each dimension, and satisfying
 every constraint. \textbf{System~B} is a generic 3-field template
 (\texttt{title}, \texttt{content}, \texttt{metadata}). Both systems
-run on the same LLM with identical decoding settings; no corpus is
-consumed-generation is from scratch in both cases. We evaluate two
-ontologies of contrasting familiarity: a Software Services Invoice
-ontology (a document type the LLM has seen at scale during
-pretraining) and a Job Description Ontology ontology (a custom
-schema with non-standard dimensions). Full verbatim prompts are
-included in the supplementary bundle.
+run on the same LLM (Anthropic Claude Sonnet, fixed model identifier
+\texttt{claude-sonnet-4-6}) with identical decoding settings; no
+corpus is consumed-generation is from scratch in both cases. We
+evaluate three ontologies of contrasting familiarity: a Software
+Services Invoice ontology (a document type the LLM has seen at scale
+during pretraining), a custom Job Description Ontology (with
+non-standard dimensions and explicit context-vs-content separation),
+and a Pain-Management Clinical Visit Record Ontology (workers'
+compensation and musculoskeletal pain documentation, with a highly
+specialised structural backbone covering claim type, body region,
+exam-by-region modules, ICD-10 assessment, and treatment
+justification). Full verbatim prompts are included in the
+supplementary bundle.
 
 \paragraph{Results.} Table~\ref{tab:generative_validation} summarises
-the two cases.
+the three cases.
 
 \begin{table}[t]
 \centering
-\caption{Generative validation: node coverage of LLM-generated
+\caption{Generative validation: structural-node coverage (classes,
+properties, and dimensions; non-context only) of LLM-generated
 documents when prompted with the full ontology (System~A) versus a
 generic three-field template (System~B). Familiar document types
 yield small coverage gaps because the model's pretraining prior fills
-in expected fields; custom ontologies with non-standard dimensions
-widen the gap dramatically.}
+in expected fields; custom and specialised ontologies with
+non-standard dimensions widen the gap dramatically. All three cases
+re-scored under the broadened metric described in
+\S\ref{sec:metric}.}
 \label{tab:generative_validation}
 \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}X >{\raggedright\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X@{}}
 \toprule
 \textbf{Case} & \textbf{Ontology} & \textbf{Nodes} & \textbf{GOI (A)} & \textbf{GST (B)} & \textbf{Gap} \\
 \midrule
-1 & Software Services Invoice & 48 & \textbf{97.9\%} & 95.7\% & 2.2~pp \\
-2 & Job Description Ontology & 26\textsuperscript{*} & \textbf{100.0\%} & 65.4\% & 34.6~pp \\
+1 & Software Services Invoice & 45 & \textbf{97.8\%} & 97.8\% & 0.0~pp \\
+2 & Job Description Ontology & 23\textsuperscript{*} & \textbf{100.0\%} & 52.2\% & 47.8~pp \\
+3 & Pain-Mgmt Clinical Visit & 45 & \textbf{95.6\%} & 62.2\% & 33.4~pp \\
 \bottomrule
 \end{tabularx}
 \\[2pt]
-{\footnotesize \textsuperscript{*}Applicable non-context nodes per the
-ontology's own coverage contract (38 non-context of 63 total; 26 are
-applicable to a single JD instance).}
+{\footnotesize \textsuperscript{*}Applicable non-context structural
+nodes per the ontology's own coverage contract (47 structural nodes
+total; 24 flagged \texttt{generate=context}; 23 applicable to a
+single JD instance).}
 \end{table}
 
 \emph{Case~1 (familiar).} On the Software Services Invoice ontology
-(48 nodes), System~A instantiated 47/48 nodes (97.9\%), including all
-six classes, all four dimensions, and all three constraints with
-verified arithmetic (line totals sum to invoice total; sales-tax
-exemption note for out-of-state buyer; foreign-currency conversion
-trivially satisfied for USD-only); the single uninstantiated node was
-a foreign-payment field that is legitimately N/A for the chosen
-US-domestic instance. System~B instantiated approximately 46/48 nodes
-(95.7\%), with all four dimensions appearing as incidental
-\texttt{metadata} keys driven by the model's strong invoice prior. The
-gap is only 2.2~pp because the LLM has seen enough invoices during
-pretraining to recover most ontology nodes incidentally even from a
-generic template.
+(45 structural nodes), System~A instantiated 44/45 nodes (97.8\%),
+including all six classes, all four dimensions, and all three
+constraints with verified arithmetic (line totals sum to invoice
+total; sales-tax exemption note for out-of-state buyer;
+foreign-currency conversion trivially satisfied for USD-only); the
+single uninstantiated node was an exchange-rate field that is
+legitimately N/A for the chosen US-domestic instance. System~B
+instantiated 44/45 nodes (97.8\%), with all four dimensions appearing
+as incidental \texttt{metadata} keys driven by the model's strong
+invoice prior. The gap closes to zero because the LLM has seen enough
+invoices during pretraining to recover essentially the entire
+structural backbone incidentally even from a generic template.
 
-{\sloppy\emph{Case~2 (custom).} On the Job Description Ontology ontology
-(63 nodes total; 38 non-context applicable; 26 applicable to a single
-JD instance per the ontology's own coverage contract), System~A
-instantiated 26/26 applicable non-context nodes (100\%). System~B
-instantiated only 17/26 (65.4\%): it omitted the \texttt{cat\_org\_context}
-class entirely (no About-the-Company section was emitted) and missed
-eight custom properties-\texttt{company\_stage}, \texttt{company\_size},
-\texttt{employer\_brand}, \texttt{education\_req},
-\texttt{career\_trajectory}, \texttt{cert\_profile}, and
-\texttt{candidate\_market}. The gap explodes to 34.6~pp because the
-LLM has no prior for taxonomy-specific dimensions like
-employer-brand voice, candidate-market targeting,
+{\sloppy\emph{Case~2 (custom).} On the Job Description Ontology
+(63 nodes total; 47 structural; 24 flagged \texttt{generate=context};
+23 applicable structural nodes per the ontology's own coverage
+contract), System~A instantiated 23/23 applicable non-context nodes
+(100\%). System~B instantiated only 12/23 (52.2\%): it omitted the
+\texttt{cat\_org\_context} class entirely (no About-the-Company
+section was emitted) and missed many custom
+properties-\texttt{company\_stage}, \texttt{employer\_brand},
+\texttt{career\_trajectory}, and
+\texttt{certification\_profile} among them. The gap widens to
+47.8~pp because the LLM has no prior for taxonomy-specific dimensions
+like employer-brand voice, candidate-market targeting,
 career-trajectory pattern, or certification-profile expectations;
 without an explicit schema, these axes simply do not surface.\par}
+
+\emph{Case~3 (specialised, anonymized).} On the Pain-Management
+Clinical Visit Record Ontology (45 structural nodes), System~A
+instantiated 43/45 nodes (95.6\%); the two uninstantiated nodes
+(\texttt{Signature Block} and \texttt{Radiologist}) were lost to
+output-token truncation at the end of an unusually long generation,
+not to a structural omission. System~B emitted a primary-care
+follow-up note for hypertension and type 2 diabetes-it correctly
+inferred a clinical visit document but missed the workers'
+compensation and pain-management specialisation entirely-and
+covered only 28/45 structural nodes (62.2\%). System~B omitted the
+entire claim-information sub-graph (\texttt{Claim Type},
+\texttt{Causal Relationship}, \texttt{Work Status},
+\texttt{Temporary Impairment Percentage}), the regional physical-exam
+modules (\texttt{Range of Motion}, \texttt{Special Orthopedic Tests},
+\texttt{Sensation Testing}, \texttt{Muscle Stretch Reflexes}), and
+the recommendations apparatus (\texttt{Treatment Justification},
+\texttt{Functional Goals}, \texttt{ADL Impact},
+\texttt{Radiology Report}). The 33.4~pp gap reflects how much
+structural specialisation the ontology contributes in a
+healthcare-documentation context where the LLM's prior reverts to
+the generic primary-care template.
 
 The by-construction vs incidental framing now lands harder: GOI
 provides a structural contract that holds \emph{regardless of how
 familiar the document type is to the model}, whereas the generic
 template's coverage is contingent on the training-data prior and
-collapses on novel structure.
+collapses on novel or specialised structure.
 
 \paragraph{Implication.} For industrial deployment, the headline
 metric is not raw coverage on familiar document types but
@@ -711,8 +771,10 @@ OWL axioms:} GOI produces typed JSON rather than OWL/RDF and does
 not infer description-logic constraints. \textbf{Limited
 relationship discovery:} cardinalities, inverse properties, and
 transitive closure are not automatically derived. \textbf{Metric
-scope:} Node Coverage measures dimension-level completeness but not
-property correctness or content quality.
+scope:} Node Coverage measures structural completeness over class,
+property, and dimension nodes but does not assess constraint
+satisfaction, property-value correctness, or content quality within
+each covered slot.
 
 % -------------------------------------------------------
 \section{Conclusion}
@@ -721,11 +783,16 @@ property correctness or content quality.
 
 \textbf{Generative Ontology Induction (GOI)} reverse-engineers the
 structural schema of a document class into a six-node, seven-edge
-typed graph with YAML/JSON export. Our controlled generative
-validation shows GOI-prompted generation by construction covers
-100\% of applicable nodes on the custom Job Description Ontology
-versus 65.4\% for a generic three-field template-a structural
-guarantee generic prompting cannot offer.
+typed graph with YAML/JSON export. Across three contrasting
+ontologies in three distinct domains-B2B billing, talent acquisition,
+and healthcare clinical documentation-our controlled generative
+validation shows GOI-prompted generation covers 95-100\% of the
+structural backbone in every case. A generic three-field template
+matches GOI on the familiar invoice schema (97.8\%) but collapses to
+52.2\% on the custom Job Description Ontology and 62.2\% on the
+Pain-Management Clinical Visit Record Ontology-a structural
+guarantee generic prompting cannot offer once the document type
+leaves the LLM's pretraining prior.
 
 % -------------------------------------------------------
 % Acknowledgments / Funding / Data Availability
@@ -740,11 +807,14 @@ demonstration of the reference implementation are available at
 \texttt{research/supplementary/} contains the Job Description
 Ontology JSON (63 nodes), an anonymized structural version of
 the Software Services Invoice ontology JSON (48 nodes; example
-values replaced with synthetic placeholders), the four
-LLM-generated documents used in \S\ref{sec:ontology-as-prompt}, and
-the two prompt templates (System~A and~B; see
-Appendix~\ref{app:prompts}). Three publicly-listed
-job postings used to induce the JD ontology are at
+values replaced with synthetic placeholders), an anonymized
+Pain-Management Clinical Visit Record Ontology JSON (45 nodes;
+provider, practice, address, patient, and date values replaced with
+synthetic clinically-plausible equivalents), the six LLM-generated
+documents used in \S\ref{sec:ontology-as-prompt}, the two prompt
+templates (System~A and~B; see Appendix~\ref{app:prompts}), and the
+broadened-NCS scoring protocol with per-case detection log. Three
+publicly-listed job postings used to induce the JD ontology are at
 \texttt{research/job\_descriptions/}.\par
 
 % -------------------------------------------------------
