@@ -149,8 +149,11 @@ constraints that govern the class.
 comprising a universal typed graph representation (six node types, seven
 edge types), a multi-document prompt that elicits generative schemas
 rather than per-document entities, an automatic type-based layout
-algorithm, multi-format import (OWL, RDF, YAML, JSON, Markdown), and
-YAML/JSON export for pipeline integration.
+algorithm, multi-format import (OWL, RDF, YAML, JSON, Markdown), and a
+dual-view YAML/JSON export whose \texttt{promptReady} markdown
+rendering realizes the ``ontology drives AI pipelines'' thesis by
+allowing direct injection into RAG and agent prompts without graph
+traversal.
 
 \textbf{Third}, we introduce the \textbf{Node Coverage Score}, a novel
 evaluation metric that measures the percentage of dimension nodes in an
@@ -451,11 +454,20 @@ knowledge engineering workflows. The system converts imported
 representations into the six-node, seven-edge typed graph format for
 visualization and editing.
 
-Export is available in YAML and JSON formats, producing
-pipeline-ready schemas suitable for direct injection into RAG systems,
-LLM agent prompts, data validation pipelines, and API contract
-generation. The exported schema includes all node types, edge
-relationships, and constraint definitions.
+Export is available in YAML and JSON. The exported document contains
+three top-level views. The first is ontology metadata (name,
+description, domain). The second is a raw \emph{graph view} that
+preserves the typed-node and typed-edge structure for round-trip
+editing. The third is a denormalized \emph{pipeline view} in which
+each class is paired with its resolved properties, relations, parent,
+and examples; each dimension with its enumerated values; and each
+constraint with the classes it applies to. A \texttt{promptReady}
+field renders the ontology as a markdown system-prompt block, allowing
+direct injection into RAG and agent pipelines without any graph
+traversal on the consumer side. This dual-view design separates the
+round-trip representation from the consumer-facing representation:
+graph editors and re-import paths read the graph view, while LLM
+prompts and data-validation pipelines read the pipeline view.
 
 \subsection{Interactive Visualization and Editing}
 

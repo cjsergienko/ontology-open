@@ -9,7 +9,7 @@ This is an academic research paper project for **Generative Ontology Induction (
 ## Author Info
 - **Author:** Sergei Sergienko
 - **Affiliation:** Pivots Global
-- **Email:** ssergienko@pivotsglobal.com
+- **Email:** ssergienko@ontology.live
 - **Code repo:** https://github.com/cjsergienko/ontology (public)
 - **Live demo:** https://ontology.live
 
