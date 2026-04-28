@@ -1,8 +1,10 @@
-% ISWC 2026 Submission — Springer LNCS format (llncs v2.26)
+% arXiv-friendly preprint — LNCS structure with widened text block
 \documentclass[runningheads,a4paper]{llncs}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+% Override LNCS narrow text block with arXiv-typical single-column geometry
+\usepackage[a4paper,margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
@@ -22,6 +24,19 @@
   citecolor=blue!60!black,
   urlcolor=blue!60!black
 }
+
+% Override LNCS's inset abstract with a full-width version
+\makeatletter
+\renewenvironment{abstract}{%
+  \list{}{\advance\topsep by0.35cm\relax\small
+    \leftmargin=0pt
+    \labelwidth=\z@
+    \listparindent=\z@
+    \itemindent\listparindent
+    \rightmargin=0pt}%
+  \item[\hskip\labelsep\bfseries\abstractname\textbf{.}]}
+{\endlist}
+\makeatother
 
 % -------------------------------------------------------
 \begin{document}
@@ -446,7 +461,7 @@ pan, and node search. All edits are persisted in a SQLite database via
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\textwidth]{ontology_graph.png}
+  \includegraphics[width=\textwidth]{ontology_graph.png}
   \caption{The \emph{Software Services Invoice Ontology} rendered in the
     \texttt{ontology.live} editor (48 nodes, 54 edges). The left
     palette enumerates GOI's typed vocabulary --- class, property,
