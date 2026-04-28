@@ -31,6 +31,21 @@ supplementary/
 └── README.md
 ```
 
+## Export shape
+
+Each ontology JSON has three top-level views, matching the
+dual-view export shipped by the live tool (paper §3.4):
+
+- `ontology` — name, description, domain.
+- `graph` — the raw typed graph (`nodes` and `edges`); node `id`s
+  are the stable identifiers referenced by `generated_outputs/`.
+- `pipeline` — a denormalized view with `classes`, `dimensions`,
+  `constraints`, and a `promptReady` markdown block ready for direct
+  injection into an LLM system prompt.
+
+The graph view is sufficient to reload the ontology into the tool;
+the pipeline view is what runtime agents consume.
+
 ## Anonymization note
 
 The Software Services Invoice ontology was induced from a real
