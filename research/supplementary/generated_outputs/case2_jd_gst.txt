@@ -1,0 +1,49 @@
+title: Senior Backend Engineer
+
+content:
+We're hiring a Senior Backend Engineer to join our growing engineering
+team and help build the next generation of our platform. In this role,
+you'll design and ship scalable API services, mentor junior engineers,
+and collaborate closely with product and design to deliver features
+that customers rely on every day.
+
+What you'll do:
+- Design, build, and maintain RESTful APIs and event-driven services in
+  Python and Go
+- Lead architecture discussions and contribute to long-term technical
+  direction
+- Partner with product managers to scope features and break work into
+  shippable increments
+- Mentor mid-level engineers through code review and pair programming
+- Improve observability, performance, and reliability of production
+  systems
+
+What we're looking for:
+- 5+ years of professional backend engineering experience
+- Strong proficiency in Python, Go, Java, or Rust
+- Deep experience with relational databases (PostgreSQL preferred) and
+  message queues
+- Comfort with cloud infrastructure (AWS, GCP, or Azure) and
+  containerization
+- A track record of shipping production software at scale
+- Excellent written and verbal communication
+
+What we offer:
+- Competitive salary and meaningful equity
+- Comprehensive health, dental, and vision insurance
+- Flexible remote-first work environment
+- 20 days PTO plus company-wide winter break
+- $2,000 annual learning and development budget
+
+Location: Remote (US time zones preferred) | Full-time
+
+metadata:
+  posted_date:          2026-04-28
+  department:           Engineering
+  employment_type:      Full-time
+  level:                Senior
+  salary_range:         $160,000 - $200,000 USD
+  equity:               Yes -- early-stage option grant
+  visa_sponsorship:     Available for exceptional candidates
+  application_deadline: Open until filled
+  reference_code:       ENG-BE-2026-04

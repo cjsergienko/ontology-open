@@ -1,0 +1,89 @@
+SENIOR DATA ANALYTICS ENGINEER
+Meridian Health Intelligence | Remote-First | Full-Time
+
+ABOUT THE COMPANY
+
+Meridian Health Intelligence is a Series B healthcare technology
+company building the data infrastructure that powers value-based
+care decisions across regional health systems and payer networks.
+With a team of just over 200 people distributed across North
+America, we sit at the intersection of clinical operations and
+modern data engineering --- helping our partners move from reactive
+reporting to proactive, population-level insight. Our culture
+rewards curiosity, direct communication, and the kind of rigorous
+thinking that turns messy clinical data into decisions that actually
+improve patient outcomes.
+
+ABOUT THE ROLE
+
+We are hiring a Senior Data Analytics Engineer to own the design,
+development, and reliability of the analytical pipelines and data
+models that sit at the core of our clinical intelligence platform.
+This is a hands-on, high-ownership role for someone who thrives at
+the boundary between raw data and business-critical insight.
+
+WHO WE'RE LOOKING FOR
+
+We are looking for a data professional with 5 to 8 years of
+experience working in complex, production-grade analytics
+environments, ideally within healthcare, life sciences, or adjacent
+regulated industries, who holds or is actively pursuing a relevant
+certification such as dbt Certified Developer or a cloud data
+platform credential. You bring a bachelor's degree or higher in a
+quantitative field --- statistics, computer science, information
+systems, or equivalent --- and you have built a career by moving
+progressively deeper into data modeling and analytical engineering
+rather than hopping broadly across domains. You are someone who
+draws from an active talent pool of senior individual contributors
+ready to step into a role that carries genuine cross-functional
+impact, and you work best when given a clear problem, appropriate
+autonomy, and a team that challenges your assumptions.
+
+WHAT YOU'LL BE DOING
+
+- Design and maintain dimensional data models in dbt that serve
+  clinical quality, utilization, and financial reporting use cases
+  across multiple health system clients
+- Partner with product managers, clinical informaticists, and data
+  scientists to translate raw EHR and claims data into well-
+  documented, trustworthy analytical assets
+- Build and monitor data quality frameworks including automated
+  testing, anomaly detection, and SLA alerting within the Snowflake
+  and Airflow ecosystem
+- Contribute to the internal analytics engineering standards by
+  authoring documentation, conducting code reviews, and mentoring
+  mid-level engineers on modeling patterns
+- Identify and drive improvements to pipeline performance, data
+  freshness, and cost efficiency in our cloud data platform
+  environment
+
+REQUIREMENTS
+
+You will need the following to be successful in this role:
+
+- 5 or more years of hands-on experience in analytics engineering,
+  data warehousing, or a closely related data discipline
+- Advanced proficiency in SQL and at least one scripting language
+  such as Python for pipeline logic and data transformation
+- Production-level experience with dbt Core or dbt Cloud, including
+  modular modeling, testing, and documentation practices
+- Experience with a cloud data warehouse platform --- Snowflake
+  strongly preferred --- and familiarity with orchestration tools
+  such as Apache Airflow or Prefect
+- Demonstrated ability to work with healthcare data sets including
+  claims, EHR exports, or HL7/FHIR-formatted sources
+- Strong communication skills, with a track record of translating
+  complex data concepts for clinical or operational stakeholders
+  without a technical background
+
+COMPENSATION AND BENEFITS
+
+$145,000 - $175,000 base salary, commensurate with experience
+
+- Equity participation through a standard Series B employee option
+  pool, with a four-year vest and one-year cliff
+- Comprehensive medical, dental, and vision coverage with the
+  company contributing 90 percent of employee premiums
+- Flexible PTO policy, fully remote work arrangement, and a $1,500
+  annual learning and development stipend to support ongoing
+  certification and skills growth

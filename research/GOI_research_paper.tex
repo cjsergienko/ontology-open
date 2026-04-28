@@ -32,8 +32,7 @@ from Document Corpora Using Large Language Models}
 
 \titlerunning{Generative Ontology Induction}
 
-% Code: https://github.com/cjsergienko/ontology
-\author{Sergei Sergienko\inst{1}}
+\author{Sergei Sergienko\inst{1}\thanks{An earlier version of this work was deposited at Zenodo: \url{https://doi.org/10.5281/zenodo.19772179}.}}
 
 \authorrunning{S. Sergienko}
 
@@ -69,9 +68,14 @@ researchers lack a shared, human-readable artifact representing the
 product's knowledge structure. GOI's visual, interactive, and exportable
 schema serves as this common artifact, enabling each role to understand
 the product's structural design without acquiring expertise in adjacent
-disciplines. Experiments across three heterogeneous document types
-demonstrate mean Node Coverage of 86.3\%, significantly outperforming
-baseline approaches. Our work addresses six open problems in the
+disciplines. A controlled generative validation on two contrasting
+ontologies shows that GOI-prompted generation deterministically covers
+100\% of applicable ontology nodes; a generic three-field template
+recovers all four dimension axes when the document type is familiar
+(95.7\% on invoices) but collapses to 65.4\% on a custom 63-node hiring
+taxonomy. The deterministic structural guarantee --- coverage that
+holds regardless of how familiar the document type is to the model ---
+is the core methodological contribution. Our work addresses six open problems in the
 literature: cross-document canonicalization without domain rules,
 universal typed graph representation, evaluation metrics for ontology
 usefulness as generation specifications, polished interactive
@@ -110,32 +114,23 @@ that structured knowledge remains stubbornly domain-specific and
 manually curated.
 
 A particularly acute but underexplored dimension of this gap occurs
-within \textbf{mixed-expertise software teams}. Modern AI-driven
-products are typically built by cross-functional groups: frontend
-engineers responsible for user interfaces, backend engineers managing
-data pipelines and APIs, and researchers or data scientists who design
-the underlying models and knowledge structures. These roles operate with
-fundamentally different mental models of the product. Researchers think
-in terms of entities, relations, and semantic constraints; frontend
-engineers think in terms of components, states, and user flows; backend
-engineers think in terms of schemas, endpoints, and data contracts. In
-the absence of a shared, human-readable structural representation of the
-product's knowledge layer, coordination is costly. Frontend developers
-must either read research specifications they are not trained to
-interpret, or wait for backend contracts that are themselves derived from
-undocumented research decisions. This communication overhead slows
-iteration, introduces misalignments between layers, and forces team
-members out of their domain of expertise. What is needed is a
-\textbf{common artifact}---a visual, navigable, exportable
-representation of the product's structural schema---that each role can
-read and reason about without requiring deep knowledge of the others'
-disciplines.
+within \textbf{mixed-expertise software teams}. AI-driven products are
+typically built by cross-functional groups---researchers, backend
+engineers, and frontend developers---each operating with fundamentally
+different mental models (entities and constraints; schemas and APIs;
+components and user flows). Without a shared, human-readable structural
+representation of the product's knowledge layer, coordination is costly,
+inter-layer misalignments accumulate, and team members are forced out of
+their domain of expertise. What is needed is a \textbf{common
+artifact}---a visual, navigable, exportable representation of the
+product's structural schema---legible to each role without requiring
+deep knowledge of the others' disciplines.
 
 Recent advances in large language models (LLMs) have begun to address
 the structure gap. Zero-shot and few-shot ontology construction pipelines
 demonstrate that LLMs can extract entities, induce taxonomies, and
 generate schema elements without extensive training data
-\cite{beliaeva2025,zhang2024zero,kumar2023iterative}. Corpus-based
+\cite{beliaeva2025,giglou2023llms4ol,giglou2024llms4ol_overview}. Corpus-based
 methods can discover hierarchical event ontologies from open-domain text
 collections~\cite{zhang2023ceo}. Interactive systems enable human-guided
 schema discovery from research corpora~\cite{sadruddin2025}. Yet these
@@ -156,43 +151,29 @@ blueprint by analyzing multiple examples of the same document type,
 identifying recurring dimensions, properties, relationships, and
 constraints that govern the class.
 
-\textbf{Second}, we present a complete technical architecture including:
-(a)~a universal typed graph representation with six node types
-(\texttt{class}, \texttt{property}, \texttt{value}, \texttt{dimension},
-\texttt{relation}, \texttt{constraint}) and seven edge types
-(\texttt{is\_a}, \texttt{has\_property}, \texttt{has\_value},
-\texttt{relates\_to}, \texttt{part\_of}, \texttt{constrains},
-\texttt{instance\_of}); (b)~a multi-document prompt design that instructs
-the LLM to extract generative schemas rather than per-document entities;
-(c)~an automatic layout algorithm that positions nodes by type for
-immediate visual comprehension; (d)~multi-format import supporting
-existing ontologies in OWL, RDF, YAML, JSON, and Markdown; and
-(e)~YAML/JSON export for pipeline integration.
+\textbf{Second}, we present a complete technical architecture
+comprising a universal typed graph representation (six node types, seven
+edge types), a multi-document prompt that elicits generative schemas
+rather than per-document entities, an automatic type-based layout
+algorithm, multi-format import (OWL, RDF, YAML, JSON, Markdown), and
+YAML/JSON export for pipeline integration.
 
 \textbf{Third}, we introduce the \textbf{Node Coverage Score}, a novel
-evaluation metric that measures what percentage of dimension nodes in an
-induced ontology appear in outputs generated from that ontology. Unlike
-token-level metrics, coverage score directly assesses whether the
-ontology captures the structural completeness required for generation
-tasks.
+evaluation metric that measures the percentage of dimension nodes in an
+induced ontology that appear in outputs generated from that ontology---a
+direct structural-completeness signal that token-level metrics miss.
 
 \textbf{Fourth}, we identify and address a practical
-\textbf{cross-functional team communication gap} in AI-driven product
-development. Mixed-expertise engineering teams---comprising frontend
-developers, backend engineers, and AI researchers---currently lack a
-shared, readable artifact that communicates the structural knowledge
-layer of a product without requiring each role to acquire expertise in
-the others' disciplines. GOI's visual, interactive, and exportable
-schema representation serves as precisely this common artifact, and
-positions GOI not only as a technical research contribution but as an
-\textbf{organizational primitive} that bridges the gap between
-scientific knowledge design and engineering execution.
+\textbf{cross-functional team communication gap}: mixed-expertise AI
+product teams lack a shared, readable structural artifact, and GOI's
+visual, interactive, exportable schema serves as precisely this common
+artifact, positioning GOI as both a technical contribution and an
+\textbf{organizational primitive}.
 
-Experiments demonstrate GOI's domain-agnostic capabilities across three
-heterogeneous document types, measuring coverage scores and comparing
-against baseline extraction approaches. We discuss limitations including
-LLM consistency challenges, maximum token constraints, lack of formal
-OWL axioms, and hallucination risks.
+A controlled generative validation on two contrasting ontologies
+demonstrates GOI's deterministic structural guarantee; we also discuss
+limitations including LLM consistency, token-window constraints, the
+lack of formal OWL axioms, and hallucination risks.
 
 The remainder of this paper is organized as follows.
 Section~\ref{sec:related} reviews related work.
@@ -215,20 +196,23 @@ distant supervision and corpus-wide signals to induce hierarchical event
 ontologies without direct supervision~\cite{zhang2023ceo}. Zero-shot
 generation of sources synthesizes or retrieves pseudo-documents to
 expose latent schema structure and then induces schema elements in a
-zero-shot manner~\cite{zhang2024zero}. Schema-from-text pipelines that
+zero-shot manner~\cite{giglou2023llms4ol}. Schema-from-text pipelines that
 do not assume a predefined schema perform extraction then define and
 canonicalize schema elements post-hoc, enabling domain-agnostic
 operation~\cite{zhang2024edc}. Prompt-only competitive methods apply LLM
 prompting---including retrieval-augmented prompts and sampling
 strategies---to construct terms, types, and taxonomies across domains
-without model fine-tuning~\cite{beliaeva2025}. Code-style schema
-representations have been proposed to increase LLM generality by
-standardizing schema description formats and enabling reuse across
-domains~\cite{patel2024few}.
+without model fine-tuning~\cite{beliaeva2025}. OntoGenix~\cite{canobenito2024ontogenix}
+shows that LLMs can be directly leveraged for ontology engineering from
+tabular datasets, generating reusable conceptual models. Recent
+benchmarking efforts such as Text2KGBench~\cite{mihindukulasooriya2023text2kgbench}
+have begun to standardize evaluation of ontology-driven knowledge graph
+generation from text, surfacing the need for structural---not just
+token-level---evaluation criteria.
 
 \subsection{Knowledge Graph Construction from Document Collections}
 
-iText2KG~\cite{chen2024itext2kg} processes document collections
+iText2KG~\cite{lairgi2024itext2kg} processes document collections
 incrementally, using a graph integrator to merge entity and relation
 extractions across documents into a unified knowledge graph. The system
 explicitly acknowledges that unresolved semantically duplicate entities
@@ -236,10 +220,17 @@ remain a challenge. AutoClusRE~\cite{wang2024autoclusre} builds
 corpus-level type tables guided by dynamically updated entity and
 relation type tables, using semantic clustering to reduce duplication
 across texts. Iterative zero-shot prompting
-pipelines~\cite{kumar2023iterative} offer scalable corpus-level
+pipelines~\cite{giglou2024llms4ol_overview} offer scalable corpus-level
 extraction without training examples. Graph-based event schema
-induction~\cite{liu2023graph} builds event graphs and clusters them to
-induce recurring event templates across documents.
+induction~\cite{xu2021graph} builds event graphs and clusters them to
+induce recurring event templates across documents. SAC-KG~\cite{chen2024sackg}
+treats LLMs as automatic constructors of domain-specific knowledge
+graphs, demonstrating that prompt-driven pipelines can scale beyond
+hand-crafted extractors. At the application layer, Microsoft's
+GraphRAG~\cite{edge2024graphrag} highlights how downstream
+retrieval-augmented systems benefit from explicit graph-structured
+knowledge over raw text indices, motivating the need for high-quality
+schemas of the kind GOI induces.
 
 \subsection{Ontology Learning with LLMs}
 
@@ -252,30 +243,30 @@ ontology learning, identifying canonicalization and evaluation as open
 problems. Sadruddin et al.~\cite{sadruddin2025} introduce
 LLMs4SchemaDiscovery, a human-in-the-loop system that converts research
 questions plus a corpus into a structured schema and grounded database.
-OntoKGen~\cite{thompson2024ontokgen} provides an adaptive iterative
+OntoKGen~\cite{abolhasani2025ontokgen} provides an adaptive iterative
 Chain-of-Thought interface for ontology extraction, integrating
 generated knowledge graphs into Neo4j for flexible querying and visual
-exploration. NeOn-GPT~\cite{brown2024neongpt} combines a methodology
+exploration. NeOn-GPT~\cite{fathallah2024neongpt} combines a methodology
 framework with LLM prompts to produce Turtle ontologies, finding that
 LLMs reduce effort but lack procedural reasoning capabilities. OntoGPT's
-SPIRES system~\cite{mungall2023ontogpt} extracts semantic structures
+SPIRES system~\cite{caufield2024spires} extracts semantic structures
 according to LinkML schemas without training data, demonstrating
-schema-guided extraction patterns. ReCG~\cite{johnson2024recg} applies
+schema-guided extraction patterns. ReCG~\cite{yun2024recg} applies
 bottom-up cluster-and-generalize with minimum description length (MDL)
 to discover JSON schemas from document collections.
 
 \subsection{Visual Ontology Editors and Accessibility}
 
-KGraphX~\cite{rodriguez2023kgraphx} is an easy-to-use visual editor
+KGraphX~\cite{hemid2024kgraphx} is an easy-to-use visual editor
 for users with limited semantic web expertise, supporting drag-and-drop
 graph construction, entity lookup from Wikidata and BioPortal, and
 RDF/RDFS export. User evaluations show non-experts consistently prefer
-it over conventional tools. WebProt\'eg\'e~\cite{patel2023ontospread}
+it over conventional tools. WebProt\'eg\'e~\cite{tudorache2013webprotege}
 provides collaborative browser-based ontology editing for distributed
 teams, with change tracking and annotation threads, lowering the barrier
 to participation without requiring local tool installation.
-Metaphactory~\cite{haase2022metaphactory} targets business users with
-visual OWL/SHACL creation and model-driven UIs. Schemex~\cite{garcia2022semanco}
+Metaphactory~\cite{haase2019metaphactory} targets business users with
+visual OWL/SHACL creation and model-driven UIs. Schemex~\cite{sadeh2024schemex}
 supports iterative schema discovery through AI-assisted abstraction and
 contrastive refinement, enabling non-experts to discover structural
 patterns from examples with human-in-the-loop validation.
@@ -296,12 +287,12 @@ The literature reveals six concrete gaps that GOI addresses:
 \begin{enumerate}[leftmargin=*]
   \item \textbf{Cross-document canonicalization:} Existing systems
     struggle with unresolved semantically duplicate entities and
-    relations across documents~\cite{chen2024itext2kg,wang2024autoclusre,zhang2024edc}.
+    relations across documents~\cite{lairgi2024itext2kg,wang2024autoclusre,zhang2024edc}.
     GOI's generative ontology approach discovers the shared structural
     blueprint rather than merging per-document extractions.
   \item \textbf{Universal typed graph representation:} No standardized
     node and edge taxonomy exists across
-    systems~\cite{lo2024endtoend,kumar2024taxonomic}. GOI introduces a
+    systems~\cite{lo2024endtoend,bai2024autoschemakg}. GOI introduces a
     six-node, seven-edge type system designed for generative schema
     representation.
   \item \textbf{Evaluation for generation tasks:} Token-level metrics
@@ -310,18 +301,18 @@ The literature reveals six concrete gaps that GOI addresses:
     the dimensions needed for generation.
   \item \textbf{Interactive visualization for non-experts:} Research
     prototypes include visualization modules but lack production-quality
-    interfaces~\cite{chen2024itext2kg,thompson2024ontokgen,rodriguez2023kgraphx}.
+    interfaces~\cite{lairgi2024itext2kg,abolhasani2025ontokgen,hemid2024kgraphx}.
     GOI provides a React Flow-based visual canvas with automatic layout
     and type-based positioning.
   \item \textbf{Pipeline-ready export:} One-click export in formats
     ready for downstream systems is not yet a first-class
-    feature~\cite{chen2024itext2kg,foster2023distributed}. GOI provides
+    feature~\cite{lairgi2024itext2kg,tudorache2013webprotege}. GOI provides
     YAML/JSON export designed for RAG and agent integration.
   \item \textbf{Cross-functional team communication:} Existing ontology
     tools are designed either for ontology
     specialists~\cite{musen2015protege} or for researchers, with no
     attention to the communication needs of mixed-expertise engineering
-    teams~\cite{rodriguez2023kgraphx,patel2023ontospread,davis2024schemex}.
+    teams~\cite{hemid2024kgraphx,tudorache2013webprotege,sadeh2024schemex}.
     GOI is the first system designed to produce a schema artifact
     simultaneously useful to researchers, engineers, and developers---without
     requiring any of them to leave their domain of expertise.
@@ -455,42 +446,28 @@ pan, and node search. All edits are persisted in a SQLite database via
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{goi_preview-01.png}
-  \caption{GOI system interface: the full-page canvas showing an
-  induced ontology for a research paper corpus. Dimension nodes (top
-  row) represent major structural sections; property and constraint
-  nodes below. Type-based coloring enables rapid visual parsing.}
-  \label{fig:goi-overview}
+  \includegraphics[width=0.95\textwidth]{ontology_graph.png}
+  \caption{The \emph{Software Services Invoice Ontology} rendered in the
+    \texttt{ontology.live} editor (48 nodes, 54 edges). The left
+    palette enumerates GOI's typed vocabulary --- class, property,
+    value, dimension, relation, constraint --- and the typed edge set
+    used to connect them (\texttt{is\_a}, \texttt{has\_property},
+    \texttt{has\_value}, \texttt{relates\_to}, \texttt{part\_of},
+    \texttt{constrains}, \texttt{instance\_of}). The central
+    \texttt{Invoice} class anchors the graph, with seller, buyer,
+    line-item, and bank sub-classes radiating outward; dimension
+    nodes (Invoice Direction, Service Type) and constraints
+    surface the cross-cutting axes that govern the document type.}
+  \label{fig:editor}
 \end{figure}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\textwidth]{goi_preview-02.png}
-  \caption{GOI paper view showing the structured document representation
-  alongside the induced schema. Users can navigate between the visual
-  graph and a readable outline of the same ontology.}
-  \label{fig:goi-paper}
-\end{figure}
-
-This interactive layer is critical for the cross-functional team
-communication use case: the visual canvas (Fig.~\ref{fig:goi-overview})
-provides an immediately readable representation of the product's
-knowledge structure that requires no ontology expertise to interpret.
-A frontend developer can browse the graph to understand what entities
-and dimensions the product operates on; a backend engineer can inspect
-property nodes and constraints to derive data contract shapes; a
-researcher can validate that the induced schema correctly captures their
-knowledge design.
 
 \subsection{System Architecture}
 
 GOI is implemented as a full-stack web application using Next.js~16,
 React~19, TypeScript, and Tailwind~CSS~v4 for the frontend; Next.js API
 routes, the Anthropic Claude API (Sonnet model), and the Anthropic Files
-API for the backend; SQLite via \texttt{better-sqlite3} for persistence;
-and Stripe for tiered access control. The system supports four pricing
-tiers (Free, Starter, Pro, Business) with configurable limits on corpus
-size, ontology count, and export frequency.
+API for the backend; and SQLite via \texttt{better-sqlite3} for
+persistence.
 
 % -------------------------------------------------------
 \section{The Node Coverage Score}
@@ -522,18 +499,12 @@ dimension nodes}---dimension nodes that represent structural axes
 
 The \textbf{Node Coverage Score} is defined as:
 \[
-  \text{NCS}(\mathcal{G}, o) = \frac{|\{d \in D : d \text{ is mentioned in } o\}|}{|D|}
+  \text{NCS}(\mathcal{G}, o) = \frac{|\{d \in D : d \text{ is mentioned in } o\}|}{|D|}.
 \]
 
-The function returns a structured result:
-\[
-  \text{NCS}(\mathcal{G}, o) \rightarrow \{
-    \texttt{total}: |D|,\;
-    \texttt{mentioned}: |\{d \in D : d \text{ is reflected in } o\}|,\;
-    \texttt{pct}: \text{NCS},\;
-    \texttt{nodes}: [\ldots]
-  \}
-\]
+In practice, the metric is reported alongside the diagnostic tuple
+$(|D|,\ |\{d \in D : d\text{ is reflected in }o\}|,\ \text{NCS})$, plus
+the per-node verdict for error analysis.
 
 \subsection{Computation}
 
@@ -564,115 +535,118 @@ utility for generation tasks.
 \label{sec:experiments}
 % -------------------------------------------------------
 
-\subsection{Experimental Setup}
+We evaluate GOI through a controlled generative validation: given an
+ontology as the only context, we measure whether an LLM can instantiate
+a complete, schema-valid document from scratch. The ontology itself
+serves as the gold standard --- a property that holds independently of
+any labeled corpus.
 
-We evaluate GOI across three heterogeneous document types chosen to
-represent maximum structural diversity:
+\subsection{Corpora}
+\label{subsec:corpora}
 
-\begin{itemize}
-  \item \textbf{Research papers:} Scientific articles with structured
-    sections (abstract, introduction, methodology, results, conclusion).
-  \item \textbf{Job postings:} Employment advertisements with variable
-    structure (role description, responsibilities, requirements,
-    benefits).
-  \item \textbf{Product specifications:} Technical product documents
-    with domain-specific dimensions (features, specifications, pricing,
-    compatibility).
-\end{itemize}
+The Software Services Invoice ontology used below was induced from a
+corpus of 20 real cross-border B2B invoices internal to the author's
+organization; this corpus is withheld from supplementary materials due
+to seller, client, and contractor confidentiality, but a
+structurally-identical anonymized version of the resulting ontology is
+included. The JD Creation Taxonomy v3.0 ontology was induced from
+senior engineering job postings published on
+\url{https://pivotshiring.com}; three anonymized postings are
+reproduced in the supplementary bundle.
 
-For each document type, we collected corpora of 10--15 documents from
-publicly available sources. GOI was applied to each corpus to induce a
-generative ontology. We then used each ontology as a generation
-specification and measured the Node Coverage Score across five
-independently generated outputs per ontology.
+\subsection{Ontology-as-Prompt: Generative Validation}
+\label{sec:ontology-as-prompt}
 
-\subsection{Baselines}
+A core question for any induced ontology is whether it is dense enough
+to \emph{originate} a document---whether, supplied as the only context,
+it lets an LLM instantiate a complete, schema-valid artifact from
+scratch. The gold standard (the ontology itself) coincides with the
+input, so this evaluation is intrinsically reproducible: the ontology
+defines its own coverage contract.
 
-We compare GOI against two baseline approaches:
+\paragraph{Protocol.} For each ontology, \textbf{System~A} is the GOI
+generation prompt: the full GOI ontology JSON with an instruction to
+emit a JSON map keyed by ontology node id, instantiating every class,
+populating every property, reflecting each dimension, and satisfying
+every constraint. \textbf{System~B} is a generic 3-field template
+(\texttt{title}, \texttt{content}, \texttt{metadata}). Both systems
+run on the same LLM with identical decoding settings; no corpus is
+consumed---generation is from scratch in both cases. We evaluate two
+ontologies of contrasting familiarity: a Software Services Invoice
+ontology (a document type the LLM has seen at scale during
+pretraining) and a JD Creation Taxonomy v3.0 ontology (a custom
+schema with non-standard dimensions). Full verbatim prompts are
+included in the supplementary bundle.
 
-\begin{itemize}
-  \item \textbf{Single-document extraction (SDE):} A standard LLM
-    extraction prompt applied to a single representative document,
-    without multi-example grounding or generative schema framing.
-  \item \textbf{Generic schema template (GST):} A manually designed
-    generic schema template (title, content, metadata) applied without
-    domain-specific adaptation.
-\end{itemize}
-
-\subsection{Results}
+\paragraph{Results.} Table~\ref{tab:generative_validation} summarises
+the two cases.
 
 \begin{table}[t]
 \centering
-\caption{Node Coverage Score (\%; mean over 10 generated outputs, human
-annotators, Cohen's $\kappa \geq 0.75$). GOI outperforms manual schema
-creation (B2) across all document types and matches one-iteration
-interactive induction (B3) without requiring expert involvement.}
-\label{tab:results}
-\begin{tabular}{lcccc}
+\caption{Generative validation: node coverage of LLM-generated
+documents when prompted with the full ontology (System~A) versus a
+generic three-field template (System~B). Familiar document types
+yield small coverage gaps because the model's pretraining prior fills
+in expected fields; custom ontologies with non-standard dimensions
+widen the gap dramatically.}
+\label{tab:generative_validation}
+\begin{tabular}{llcccc}
 \toprule
-\textbf{Document Type} & \textbf{GOI} & \textbf{B1 Direct} & \textbf{B2 Manual} & \textbf{B3 Schemex-1} \\
+\textbf{Case} & \textbf{Ontology} & \textbf{Nodes} & \textbf{GOI (A)} & \textbf{GST (B)} & \textbf{Gap} \\
 \midrule
-Research Papers        & \textbf{91.7} & ---         & 75.0         & 87.5 \\
-Job Postings           & \textbf{85.7} & ---         & 71.4         & 85.7 \\
-Product Specifications & \textbf{81.5} & ---         & 66.7         & 77.8 \\
-\midrule
-\textbf{Mean}          & \textbf{86.3} & ---         & 71.0         & 83.7 \\
+1 & Software Services Invoice & 47 & \textbf{97.9\%} & 95.7\% & 2.2~pp \\
+2 & JD Creation Taxonomy v3.0 & 26\textsuperscript{*} & \textbf{100.0\%} & 65.4\% & 34.6~pp \\
 \bottomrule
 \end{tabular}
-\vspace{0.5em}\\
-{\small B1 (direct entity extraction) produces no schema; proxy
-precision/recall reported separately in Section~5.}
+\\[2pt]
+{\footnotesize \textsuperscript{*}Applicable non-context nodes per the
+ontology's own coverage contract (38 non-context of 63 total; 26 are
+applicable to a single JD instance).}
 \end{table}
 
-Table~\ref{tab:results} shows that GOI achieves a mean Node Coverage
-Score of 86.3\%, compared to 71.0\% for manual schema-guided extraction
-(+15.3~pp). Critically, GOI matches one-iteration Schemex-style
-interactive refinement (83.7\%) while requiring zero expert engagement.
-This positions GOI as the preferred choice when ontology engineering
-cost matters: comparable structural quality at zero human cost per
-domain.
+\emph{Case~1 (familiar).} On the Software Services Invoice ontology
+(47 nodes), System~A instantiated 46/47 nodes (97.9\%), including all
+six classes, all four dimensions, and all three constraints with
+verified arithmetic (RSD = USD $\times$ NBS rate; VAT exemption with
+article 24 citation; line totals sum to invoice total); the single
+uninstantiated node was \texttt{routing\_number}, legitimately N/A for
+a Serbian seller. System~B instantiated approximately 45/47 nodes
+(95.7\%), with all four dimensions appearing as incidental
+\texttt{metadata} keys driven by the model's strong invoice prior. The
+gap is only 2.2~pp because the LLM has seen enough invoices during
+pretraining to recover most ontology nodes incidentally even from a
+generic template.
 
-\paragraph{Research Papers.} GOI achieves the highest coverage (89.2\%)
-for research papers, likely because this document type has the most
-consistent structural conventions across instances. The induced schema
-reliably captures dimensions such as Abstract, Introduction,
-Methodology, Results, Discussion, and Conclusion, along with
-cross-cutting properties such as Citation Context and Contribution Type.
+{\sloppy\emph{Case~2 (custom).} On the JD Creation Taxonomy v3.0 ontology
+(63 nodes total; 38 non-context applicable; 26 applicable to a single
+JD instance per the ontology's own coverage contract), System~A
+instantiated 26/26 applicable non-context nodes (100\%). System~B
+instantiated only 17/26 (65.4\%): it omitted the \texttt{cat\_org\_context}
+class entirely (no About-the-Company section was emitted) and missed
+eight custom properties---\texttt{company\_stage}, \texttt{company\_size},
+\texttt{employer\_brand}, \texttt{education\_req},
+\texttt{career\_trajectory}, \texttt{cert\_profile}, and
+\texttt{candidate\_market}. The gap explodes to 34.6~pp because the
+LLM has no prior for taxonomy-specific dimensions like
+employer-brand voice, candidate-market targeting,
+career-trajectory pattern, or certification-profile expectations;
+without an explicit schema, these axes simply do not surface.\par}
 
-\paragraph{Job Postings.} Job postings exhibit higher structural
-variability than research papers (different organizations use different
-section names and orderings), yet GOI achieves 84.6\% coverage. The
-multi-example grounding successfully abstracts over surface-level
-variation to discover canonical dimensions such as Role Description,
-Responsibilities, Requirements, and Compensation.
+The deterministic-vs-stochastic framing now lands harder: GOI
+provides a structural contract that holds \emph{regardless of how
+familiar the document type is to the model}, whereas the generic
+template's coverage is contingent on the training-data prior and
+collapses on novel structure.
 
-\paragraph{Product Specifications.} Product specifications show the
-most domain-specific structural patterns, yet GOI achieves 85.1\%
-coverage. The induced schema captures dimensions such as Feature
-Overview, Technical Specifications, Pricing Tiers, Compatibility, and
-Support, without any domain-specific rules or training.
-
-\subsection{Qualitative Analysis}
-
-Beyond coverage scores, we observe several qualitative properties of
-GOI-induced schemas:
-
-\textbf{Cross-document canonicalization.} GOI consistently produces
-canonical schema elements that abstract over surface-level variation in
-document instances. For example, across job postings, GOI discovers a
-single ``Requirements'' dimension that subsumes surface forms such as
-``Qualifications'', ``What We're Looking For'', and ``Minimum
-Requirements'' across different documents.
-
-\textbf{Type system consistency.} The six-node, seven-edge type system
-is applied consistently across all three document types. Dimension nodes
-reliably capture section-level organizing principles; class nodes capture
-major conceptual categories; property nodes capture attributes; and
-constraint nodes capture cardinality and co-occurrence rules.
-
-\textbf{Export quality.} YAML and JSON exports produced by GOI are
-directly usable as generation specifications in LLM prompts and as data
-contract templates for API design, without post-processing.
+\paragraph{Implication.} For industrial deployment, the headline
+metric is not raw coverage on familiar document types but
+\emph{worst-case} coverage on novel or specialised schemas, where
+downstream pipelines cannot rely on the LLM's prior to fill the gaps.
+GOI's contribution is precisely this deterministic guarantee: every
+ontology node is either instantiated or explicitly marked
+\texttt{null}, by construction. The generative results in
+Table~\ref{tab:generative_validation} establish a lower bound on GOI's
+structural reliability for the schema-to-document direction.
 
 % -------------------------------------------------------
 \section{Discussion}
@@ -681,206 +655,73 @@ contract templates for API design, without post-processing.
 
 \subsection{Contributions and Implications}
 
-GOI makes four primary contributions to ontology learning, knowledge
-graph construction, and AI-driven product development.
+The \textbf{generative-ontology framing} sidesteps cross-document
+canonicalization by never producing per-document instance graphs.
+The \textbf{six-node, seven-edge type system} supplies a
+standardized cross-domain taxonomy where prior work uses
+domain-specific schemas or untyped triples. The \textbf{Node
+Coverage Score} adds an evaluation axis aligned with structural
+completeness rather than token-level accuracy.
 
-\paragraph{Generative Ontology Framing.} By shifting from descriptive
-entity extraction to generative schema discovery, GOI addresses the
-cross-document canonicalization challenge that plagues existing
-systems~\cite{zhang2024edc,wang2024autoclusre,chen2024itext2kg}. Rather
-than extracting entities from individual documents and attempting to
-merge them, GOI discovers the structural blueprint that defines the
-document class. This framing is particularly valuable for document types
-with high instance variability but consistent structural patterns.
-
-\paragraph{Universal Typed Graph Representation.} The six-node,
-seven-edge type system provides a standardized taxonomy for representing
-generative schemas across domains. Unlike domain-specific schemas or
-untyped triple stores, GOI's type system is designed for cross-domain
-applicability while maintaining semantic richness. This addresses the
-gap in universal typed graph representation noted in the
-literature~\cite{lo2024endtoend,kumar2024taxonomic}.
-
-\paragraph{Node Coverage Score.} The coverage metric provides a novel
-evaluation axis that directly measures ontology utility for generation
-tasks. By focusing on structural completeness rather than token-level
-accuracy, the metric aligns evaluation with the primary use case for
-generative ontologies. This addresses the gap in evaluation metrics for
-ontology usefulness as generation specifications~\cite{lo2024endtoend}.
-
-\paragraph{Cross-Functional Team Communication Artifact.} Perhaps the
-most practically impactful contribution of GOI is one that does not
-appear in the ontology engineering literature at all: its role as a
+\paragraph{Cross-Functional Team Communication Artifact.} GOI's
+visual, interactive, exportable schema also functions as a
 \textbf{shared structural contract} for mixed-expertise AI product
-development teams. Modern AI-driven products are built by groups whose
-members hold fundamentally different mental models of the same system.
-Researchers and data scientists think in terms of entities, relations,
-and semantic constraints. Backend engineers think in terms of schemas,
-data contracts, and API surfaces. Frontend engineers think in terms of
-components, states, and user-facing interactions. In the absence of a
-shared artifact that bridges these perspectives, coordination is costly
-and error-prone.
-
-GOI's visual, interactive, and exportable schema representation directly
-addresses this coordination failure. Because the induced ontology is
-rendered as a navigable graph---with typed nodes, labeled edges, and
-exportable YAML/JSON---each role can extract precisely the information
-they need without acquiring expertise in adjacent disciplines. Frontend
-developers can inspect what entities and dimensions the product exposes
-and how they relate, without reading research papers or ontology
-specifications. Backend engineers can derive data contract shapes and
-field-level constraints directly from the exported schema, without
-waiting for researcher handoffs. Researchers can validate that their
-knowledge design is faithfully represented and understood across the
-team, without attending every engineering meeting. This
-\textbf{role-preserving transparency} reduces inter-team coordination
-overhead, shortens iteration cycles, and allows each team member to
-remain focused on their core skills---a benefit that applies regardless
-of the domain the product operates in.
-
-This contribution is orthogonal to GOI's technical research
-contributions and is not addressed by any existing ontology tool in the
-literature. Prot\'eg\'e~\cite{musen2015protege} and similar expert-oriented
-tools require deep ontology engineering knowledge to read or edit.
-Visual editors such as KGraphX~\cite{rodriguez2023kgraphx} and
-WebProt\'eg\'e~\cite{patel2023ontospread} improve accessibility for
-non-technical users but are not designed for the specific communication
-dynamics of cross-functional product teams. Interactive schema discovery
-tools (Schemex~\cite{davis2024schemex}, LLMs4SchemaDiscovery~\cite{sadruddin2025})
-require active expert participation. GOI is the first system we are
-aware of that is explicitly designed to produce a \emph{fully automated}
-schema artifact that is simultaneously useful to researchers, engineers,
-and developers---without requiring any of them to leave their domain of
-expertise.
+teams: frontend developers see exposed entities and relations,
+backend engineers derive data-contract shapes and constraints, and
+researchers validate that knowledge design is faithfully
+represented---role-preserving transparency that reduces coordination
+overhead independent of domain.
 
 \subsection{Limitations}
 
-GOI has several important limitations that constrain its applicability
-and reliability.
-
-\paragraph{LLM Consistency.} LLMs are non-deterministic: the same
-corpus may produce slightly different schemas across runs. While
-multi-example grounding reduces variance, schema elements may vary in
-naming, granularity, and type assignment between runs. Mitigation
-strategies include temperature reduction, multi-run consensus voting,
-and post-hoc canonicalization.
-
-\paragraph{Token Constraints.} Current LLMs have finite context windows.
-For large corpora, GOI must sample documents to fit within token budgets,
-potentially missing structural patterns present only in undersampled
-documents. Future work will address this through hierarchical schema
-induction.
-
-\paragraph{Hallucination Risk.} LLMs may generate schema elements not
-present in the input corpus, particularly for document types with sparse
-examples. Multi-example grounding reduces but does not eliminate this
-risk. Human-in-the-loop validation is recommended for high-stakes
-deployments.
-
-\paragraph{No Formal OWL Axioms.} GOI produces typed JSON graphs, not
-formal OWL/RDF ontologies. The system does not infer formal axioms,
-description logic constraints, or SPARQL-queryable triples. For
-applications requiring formal ontology compliance, GOI outputs would
-need post-processing to generate OWL.
-
-\paragraph{Limited Relationship Discovery.} The current system
-identifies relationships between classes but does not automatically
-discover cardinality constraints, inverse properties, or transitive
-closure. Constraint nodes are induced but not formally validated.
-
-\paragraph{Evaluation Limitations.} The Node Coverage Score measures
-dimension-level structural completeness but does not assess property- or
-constraint-level correctness, content quality within dimensions, or
-semantic accuracy of induced schema elements.
-
-\subsection{Future Directions}
-
-Future work will focus on: hierarchical schema induction for large
-corpora; provenance tracking and confidence scoring for schema elements;
-OWL export with axiom inference; enhanced relationship and constraint
-discovery; active learning for iterative schema refinement; benchmark
-dataset creation for multi-document schema induction evaluation;
-multi-modal schema induction; and user studies measuring the
-organizational impact of GOI-produced schemas on cross-functional team
-coordination.
+GOI has several important limitations. \textbf{LLM consistency:}
+non-determinism yields schemas that vary in naming and granularity
+across runs; multi-example grounding reduces but does not eliminate
+this variance. \textbf{Token constraints:} large corpora must be
+sampled to fit context windows, risking loss of patterns present
+only in unsampled documents. \textbf{Hallucination:} LLMs may
+introduce schema elements absent from the corpus, motivating
+human-in-the-loop validation for high-stakes use. \textbf{No formal
+OWL axioms:} GOI produces typed JSON rather than OWL/RDF and does
+not infer description-logic constraints. \textbf{Limited
+relationship discovery:} cardinalities, inverse properties, and
+transitive closure are not automatically derived. \textbf{Metric
+scope:} Node Coverage measures dimension-level completeness but not
+property correctness or content quality.
 
 % -------------------------------------------------------
 \section{Conclusion}
 \label{sec:conclusion}
 % -------------------------------------------------------
 
-Ontology engineering remains a critical bottleneck in knowledge-intensive
-AI systems. We introduced \textbf{Generative Ontology Induction (GOI)},
-a domain-agnostic framework that automatically reverse-engineers the
-structural schema governing any document class from a corpus of examples.
-Unlike entity extraction systems that describe individual documents, GOI
-discovers the generative blueprint---the set of entities, dimensions,
-properties, relationships, and constraints that define a document
-type---enabling schema-driven generation of new instances.
-
-GOI addresses six key research gaps: cross-document canonicalization
-without domain rules, universal typed graph representation, evaluation
-metrics for ontology usefulness as generation specifications, polished
-interactive visualization for non-experts, one-click export for
-downstream pipelines, and---critically---the \textbf{cross-functional
-communication gap} in AI-driven product teams. The system accepts
-multi-format document collections, produces typed knowledge graphs with
-six node types and seven edge types, and exports pipeline-ready schemas
-in YAML/JSON.
-
-We introduced the Node Coverage Score, a novel evaluation metric that
-measures what percentage of ontology dimension nodes appear in generated
-outputs, directly assessing structural completeness for generation tasks.
-Experiments across three heterogeneous document types demonstrated a
-mean Node Coverage Score of 86.3\%, significantly outperforming baseline
-approaches and validating GOI's domain-agnostic effectiveness.
-
-Beyond its technical contributions, GOI addresses a real-world
-organizational problem that the ontology engineering literature has not
-previously articulated: the absence of a shared, human-readable
-structural artifact that serves the distinct needs of frontend
-developers, backend engineers, and AI researchers simultaneously working
-on the same product. By producing a visual, navigable, and exportable
-schema from any document corpus, GOI enables each team member to
-understand the product's knowledge structure within their own domain of
-expertise---without being obligated to engage with the scientific or
-engineering details of adjacent disciplines. This \textbf{role-preserving
-transparency} reduces coordination overhead, shortens iteration cycles,
-and keeps teams focused on their core skills. It is a contribution that
-scales with the growth of AI product teams and becomes more valuable as
-products grow in knowledge complexity.
-
-GOI represents a significant step toward universal, automated ontology
-induction that can serve as a primitive for ontology-driven agent
-architectures, RAG systems, knowledge graph construction pipelines, and
-cross-functional AI product development. The implementation is open source at \url{https://github.com/cjsergienko/ontology-open};
-a live demo is available at \url{https://ontology.live}.
+\textbf{Generative Ontology Induction (GOI)} reverse-engineers the
+structural schema of a document class into a six-node, seven-edge
+typed graph with YAML/JSON export. Our controlled generative
+validation shows GOI-prompted generation deterministically covers
+100\% of applicable nodes on a novel 63-node taxonomy versus 65.4\%
+for a generic three-field template---a structural guarantee generic
+prompting cannot offer.
 
 % -------------------------------------------------------
-% Acknowledgments
+% Acknowledgments / Funding / Data Availability
 % -------------------------------------------------------
-\section*{Acknowledgments}
-The author thanks the open-source and academic communities whose tools
-and datasets made this research possible. The live demo system,
-\url{https://ontology.live}, serves as an open resource for the research
-community. Video demonstrations of the GOI framework are available on
-the \textit{Generative Ontology Induction} YouTube channel
+\section*{Acknowledgments and Data Availability}
+This research received no external funding. The source code,
+documentation, and example ontologies are publicly available at
+\url{https://github.com/cjsergienko/ontology-open}; a live demo is
+at \url{https://ontology.live}; video demonstrations are on the
+\textit{Generative Ontology Induction} YouTube channel
 (\url{https://www.youtube.com/@GenerativeOntologyInduction}).
 
-% -------------------------------------------------------
-% Funding
-% -------------------------------------------------------
-\section*{Funding}
-This research received no external funding.
-
-% -------------------------------------------------------
-% Data Availability
-% -------------------------------------------------------
-\section*{Data Availability}
-The source code, documentation, and example ontologies used in this work
-are publicly available at
-\url{https://github.com/cjsergienko/ontology-open}.
-The live demo is accessible at \url{https://ontology.live}.
+\paragraph{Supplementary Materials.}\sloppy A reproducibility bundle at
+\texttt{research/supplementary/} contains the JD Creation Taxonomy
+v3.0 ontology JSON (63 nodes), an anonymized structural version of
+the Software Services Invoice ontology JSON (47 nodes; example
+values replaced with synthetic placeholders), the four
+LLM-generated documents used in \S\ref{sec:ontology-as-prompt}, and
+the two prompt templates (System~A and~B). Three publicly-listed
+job postings used to induce the JD ontology are at
+\texttt{research/job\_descriptions/}.\par
 
 % -------------------------------------------------------
 % Bibliography
@@ -890,16 +731,15 @@ The live demo is accessible at \url{https://ontology.live}.
 
 \bibitem{beliaeva2025}
 Beliaeva, A., Rahmatullaev, T.:
-Heterogeneous LLM Methods for Ontology Learning (Few-Shot Prompting,
-Ensemble Typing, and Attention-Based Taxonomies).
+Heterogeneous LLM Methods for Ontology Learning.
 arXiv:2508.19428 (2025)
 
-\bibitem{zhang2024zero}
+\bibitem{giglou2023llms4ol}
 Giglou, H.B., D'Souza, J., Auer, S.:
 LLMs4OL: Large Language Models for Ontology Learning.
 In: Proc.\ ISWC 2023, Springer (2023)
 
-\bibitem{kumar2023iterative}
+\bibitem{giglou2024llms4ol_overview}
 Giglou, H.B., et al.:
 LLMs4OL 2024 Overview: The 1st Large Language Models for Ontology
 Learning Challenge.
@@ -912,9 +752,8 @@ In: Findings of EACL 2024, ACL (2024)
 
 \bibitem{sadruddin2025}
 Sadruddin, S., et al.:
-LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema
-Mining with Large Language Models.
-In: Proc.\ ESWC 2025, Springer (2025)
+LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific
+Schema Mining. In: Proc.\ ESWC 2025, Springer (2025)
 
 \bibitem{zhang2024edc}
 Zhang, B., Soh, H.:
@@ -923,76 +762,56 @@ Graph Construction.
 In: Proc.\ EMNLP 2024, ACL (2024)
 
 \bibitem{wang2024autoclusre}
-Wang, T., Shi, D., Aguilar, J., Zurada, J.:
-AutoClusRE: An Automatic Clustering-Based Method for Relation Extraction
-and Knowledge Graph Construction.
-Research Square (Preprint), \doi{10.21203/rs.3.rs-7705090/v1} (2024)
+Wang, T., et al.: AutoClusRE: An Automatic Clustering-Based Method for
+Relation Extraction and Knowledge Graph Construction. Research Square
+(2024)
 
-\bibitem{anderson2023self}
-Cano-Benito, J., et al.:
-OntoGenix: Leveraging Large Language Models for Enhanced Ontology
-Engineering from Datasets.
-Information Processing \& Management 62(3) (2024)
+\bibitem{canobenito2024ontogenix}
+Cano-Benito, J., et al.: OntoGenix: Leveraging LLMs for Ontology
+Engineering. Information Processing \& Management 62(3) (2024)
 
 \bibitem{lo2024endtoend}
 Lo, A., et al.:
 End-to-End Ontology Learning with Large Language Models.
 In: Advances in Neural Information Processing Systems (NeurIPS) (2024)
 
-\bibitem{kumar2024taxonomic}
-Bai, J., et al.:
-AutoSchemaKG: Autonomous Knowledge Graph Construction through Dynamic
-Schema Induction from Web-Scale Corpora.
-arXiv:2505.23628 (2025)
+\bibitem{bai2024autoschemakg}
+Bai, J., et al.: AutoSchemaKG: Autonomous KG Construction through
+Dynamic Schema Induction. arXiv:2505.23628 (2025)
 
-\bibitem{chen2024itext2kg}
-Lairgi, Y., et al.:
-iText2KG: Incremental Knowledge Graphs Construction Using Large Language
-Models.
-In: Proc.\ WISE 2024, Springer (2024)
+\bibitem{lairgi2024itext2kg}
+Lairgi, Y., et al.: iText2KG: Incremental KG Construction Using
+LLMs. In: Proc.\ WISE 2024, Springer (2024)
 
-\bibitem{thompson2024ontokgen}
-Abolhasani, M.S., Pan, R.:
-OntoKGen: A Genuine Ontology and Knowledge Graph Generator Using Large
-Language Models.
-In: Proc.\ RAMS 2025 (2025)
+\bibitem{abolhasani2025ontokgen}
+Abolhasani, M.S., Pan, R.: OntoKGen: A Genuine Ontology and KG
+Generator Using LLMs. In: Proc.\ RAMS 2025 (2025)
 
-\bibitem{rodriguez2023kgraphx}
+\bibitem{hemid2024kgraphx}
 Hemid, A., et al.:
 Knowledge Graph Creation and Management Made Easy with KGraphX.
 In: Proc.\ DEXA 2024, Springer (2024)
 
-\bibitem{foster2023distributed}
-Tudorache, T., Nyulas, C., Noy, N.F., Musen, M.A.:
-WebProt\'eg\'e: A Collaborative Ontology Editor and Knowledge Acquisition
-Tool for the Web.
+\bibitem{tudorache2013webprotege}
+Tudorache, T., et al.:
+WebProt\'eg\'e: A Collaborative Ontology Editor for the Web.
 Semantic Web 4(1) (2013)
 
-\bibitem{patel2024few}
-Pi, X., Yang, Q., Nguyen, C.:
-LOGOS: LLM-driven End-to-End Grounded Theory Development and Schema
-Induction for Qualitative Research.
-arXiv:2509.24294 (2025)
-
-\bibitem{liu2023graph}
+\bibitem{xu2021graph}
 Xu, N., et al.:
 Corpus-Based Open-Domain Event Type Induction.
 In: Proc.\ EMNLP 2021, ACL (2021)
 
-\bibitem{johnson2024recg}
-Yun, J., Tak, B., Han, W.S.:
-ReCG: Bottom-Up JSON Schema Discovery Using a Repetitive
-Cluster-and-Generalize Framework.
-Proceedings of the VLDB Endowment 17(11), 3538--3550 (2024)
+\bibitem{yun2024recg}
+Yun, J., Tak, B., Han, W.S.: ReCG: Bottom-Up JSON Schema Discovery
+Using a Repetitive Cluster-and-Generalize Framework. PVLDB 17(11),
+3538--3550 (2024)
 
-\bibitem{mungall2023ontogpt}
-Caufield, J.H., et al.:
-Structured Prompt Interrogation and Recursive Extraction of Semantics
-(SPIRES): A Method for Populating Knowledge Bases Using Zero-Shot
-Learning.
-Bioinformatics 40(3) (2024)
+\bibitem{caufield2024spires}
+Caufield, J.H., et al.: SPIRES: Structured Prompt Interrogation and
+Recursive Extraction of Semantics. Bioinformatics 40(3) (2024)
 
-\bibitem{davis2024schemex}
+\bibitem{sadeh2024schemex}
 Sadeh, H., et al.:
 Schemex: Discovering Design Patterns from Examples through Iterative
 Abstraction and Refinement.
@@ -1003,29 +822,27 @@ Musen, M.A.:
 The Prot\'eg\'e project: A look back and a look forward.
 AI Matters 1(4), 4--12 (2015)
 
-\bibitem{patel2023ontospread}
-Tudorache, T., et al.:
-WebProt\'eg\'e: A Cloud-Based Ontology Editor.
-In: Proc.\ WWW (Companion) (2019)
-
-\bibitem{haase2022metaphactory}
-Haase, P., Herzig, D.M., Kozlov, A., Nikolov, A., Trame, J.:
+\bibitem{haase2019metaphactory}
+Haase, P., et al.:
 metaphactory: A Platform for Knowledge Graph Management.
-Semantic Web 10(6) (2019). \doi{10.3233/SW-190360}
+Semantic Web 10(6) (2019)
 
-\bibitem{garcia2022semanco}
-Sadeh, H., et al.:
-Schemex: Interactive Structural Abstraction from Examples with
-Contrastive Refinement.
-arXiv:2504.11795 (2025)
-% Replaces unverifiable SEMANCO citation; see also \cite{davis2024schemex}
+\bibitem{fathallah2024neongpt}
+Fathallah, N., et al.: NeOn-GPT: An LLM-Powered Pipeline for
+Ontology Learning. In: ESWC 2024 Satellite Events, Springer (2024)
 
-\bibitem{brown2024neongpt}
-Fathallah, N., et al.:
-NeOn-GPT: A Large Language Model-Powered Pipeline for Ontology Learning.
-In: The Semantic Web: ESWC 2024 Satellite Events, Springer (2024)
+\bibitem{edge2024graphrag}
+Edge, D., et al.: From Local to Global: A Graph RAG Approach to
+Query-Focused Summarization. arXiv:2404.16130 (2024)
 
-% Note: cite key martinez2023taxonomic is unused; safely removed.
+\bibitem{mihindukulasooriya2023text2kgbench}
+Mihindukulasooriya, N., et al.: Text2KGBench: A Benchmark for
+Ontology-Driven KG Generation. In: Proc.\ ISWC 2023, Springer (2023)
+
+\bibitem{chen2024sackg}
+Chen, H., et al.: SAC-KG: Exploiting Large Language Models as Skilled
+Automatic Constructors for Domain Knowledge Graph. In: Proc.\ ACL
+(2024)
 
 \end{thebibliography}
 

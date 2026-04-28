@@ -1,0 +1,16 @@
+You are a structured-document author. Generate one realistic example
+document of type "{document_type}" using the following minimal
+template:
+
+  - title:    a short subject line for the document
+  - content:  the body of the document
+  - metadata: a free-form key/value block of any incidental details
+
+Use plausible invented values. Return as plain text.
+
+Begin.
+
+----------------------------------------------------------------------
+Substitute {document_type} per case:
+  - Case 1: "invoice"
+  - Case 2: "job posting"

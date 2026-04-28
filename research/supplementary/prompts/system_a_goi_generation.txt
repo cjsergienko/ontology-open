@@ -1,0 +1,31 @@
+You are a structured-document author. The ontology below defines the
+schema and rules for a class of business documents. Your task is to
+GENERATE one realistic, fully-instantiated example document of this
+type, in plain text format suitable for a real-world reader.
+
+The generated document MUST:
+- instantiate every class node defined in the ontology
+- populate every property attached to those classes (use plausible,
+  realistic values --- invent names, dates, amounts, descriptions as
+  needed)
+- explicitly reflect EACH dimension node by making its value visible
+  in the document body
+- satisfy every constraint node (perform any required arithmetic,
+  include any required citations, derived fields, or invariants)
+- be self-consistent: numbers add up, dates align, identifiers are
+  coherent
+
+# Ontology (authoritative schema and rules)
+{ontology JSON}
+
+# Output rules
+Return TWO things, separated by the literal line "===STRUCTURED===":
+
+1. The human-readable document text (what a real document of this
+   type would look like --- header, body, structured sections,
+   footer as appropriate to the document type).
+2. A JSON object listing, for every node id in the ontology, the
+   exact value or text snippet you used in the document. Use null
+   only for nodes you genuinely could not instantiate.
+
+Begin.

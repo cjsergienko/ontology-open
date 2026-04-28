@@ -1,0 +1,122 @@
+[NOTE: This is the System B (GST baseline -- title/content/metadata
+template) output for the "invoice" document type. All names, IBANs,
+contractor identifiers, and client references have been replaced
+with synthetic placeholders. Note that despite no schema being
+provided, the model's strong invoice prior surfaces approximately
+95% of the ontology nodes incidentally.]
+
+title: Invoice #031 -- Software Engineering Services -- February 2026
+
+content:
+
+------------------------------------------------------------------------
+                        EXAMPLE SELLER DOO BEOGRAD
+                  Example Street 1, 11000 Beograd, Serbia
+                       PIB: 100000001 | MB: 20000001
+                  Tel: +381-XX-XXXXXXX | example.com
+------------------------------------------------------------------------
+
+                         I N V O I C E
+                         No. 031
+
+  Issue Date     :  15.02.2026
+  Delivery Date  :  15.02.2026
+  Place of Issue :  Beograd
+  Billing Period :  January 16, 2026 - February 15, 2026
+
+------------------------------------------------------------------------
+  BILLED TO:
+  ACME CORP, INC.
+  123 Example Street, Demo City, CA 94000, USA
+------------------------------------------------------------------------
+  CONTRACT REFERENCE: SOW-2026-A1
+
+------------------------------------------------------------------------
+  SERVICES RENDERED
+------------------------------------------------------------------------
+
+  No.  Description                              Qty   Unit Price   Amount
+  ---  ---------------------------------------  ----  -----------  ------
+
+   1   Software Engineering Services            21    $38.00/hr    $6,384.00
+       Engineer A (SOW-A)                       days  x 8 hrs/day
+       Days Off: 0
+
+   2   Software Engineering Services            21    $42.00/hr    $7,056.00
+       Engineer B (SOW-B)                       days  x 8 hrs/day
+       Days Off: 0
+
+   3   Software Engineering Services            20    $35.00/hr    $5,600.00
+       Engineer C (SOW-C)                       days  x 8 hrs/day
+       Days Off: 1 (vacation)
+
+------------------------------------------------------------------------
+
+  Subtotal                                                     $19,040.00
+  Rebate / Discount                                                 $0.00
+  VAT (0%)                                                          $0.00
+                                              ----------------------------
+  TOTAL DUE                                                    $19,040.00
+
+------------------------------------------------------------------------
+  VAT EXEMPTION NOTE:
+  Izvoz oslobodjen PDV na osnovu clana 24. stav 1., tacka 2. Zakona o PDV.
+  (Export exempt from VAT per Article 24, paragraph 1, item 2 of the
+  VAT Law.)
+
+------------------------------------------------------------------------
+  NBS EXCHANGE RATE (15.02.2026):  1 USD = 107.4333 RSD
+  TOTAL IN RSD:                    19,040.00 x 107.4333 = 2,045,530.03 RSD
+
+------------------------------------------------------------------------
+  PAYMENT DETAILS
+------------------------------------------------------------------------
+
+  Bank:          Example Bank Beograd
+  Account Name:  EXAMPLE SELLER DOO BEOGRAD
+  IBAN:          RS35XXXXXXXXXXXXXXXXXX
+  SWIFT/BIC:     XXXXRSBG
+  Payment Method: Bank Transfer
+  Payment Terms:  By Contract (po ugovoru)
+
+------------------------------------------------------------------------
+  AUTHORIZED SIGNATORY
+
+  Name:   [Director Name]
+  Title:  Managing Director, Example Seller DOO Beograd
+
+  Signature: ___________________   Stamp: [___________]
+------------------------------------------------------------------------
+
+metadata:
+
+  invoice_number        : 031
+  invoice_date          : 2026-02-15
+  delivery_date         : 2026-02-15
+  billing_period        : 2026-01-16 to 2026-02-15
+  contract_reference    : SOW-2026-A1
+  seller                : Example Seller DOO Beograd
+  seller_pib            : 100000001
+  seller_mb             : 20000001
+  buyer                 : Acme Corp, Inc.
+  buyer_country         : USA
+  currency              : USD
+  total_usd             : 19040.00
+  total_rsd             : 2045530.03
+  nbs_exchange_rate     : 1 USD = 107.4333 RSD
+  vat_rate              : 0%
+  vat_exemption_article : Article 24, paragraph 1, item 2, VAT Law (Serbia)
+  payment_method        : Bank Transfer
+  payment_terms         : By Contract
+  bank                  : Example Bank Beograd
+  iban                  : RS35XXXXXXXXXXXXXXXXXX
+  swift_bic             : XXXXRSBG
+  line_items            :
+    - sow: SOW-A | engineer: Engineer A | days: 21 | day_off: 0 | rate: $38/hr | amount: $6,384.00
+    - sow: SOW-B | engineer: Engineer B | days: 21 | day_off: 0 | rate: $42/hr | amount: $7,056.00
+    - sow: SOW-C | engineer: Engineer C | days: 20 | day_off: 1 | rate: $35/hr | amount: $5,600.00
+  service_type          : Software Engineering Services (staff augmentation)
+  billing_model         : Hourly rate x 8 hrs/day x working days
+  invoice_direction     : Outbound (Example Seller bills Acme Corp)
+  document_language     : English / Serbian (bilingual)
+  authorized_signatory  : [Director Name], Managing Director

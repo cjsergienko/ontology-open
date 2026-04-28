@@ -1,0 +1,105 @@
+[NOTE: This is the System A (GOI generation) output for the Software
+Services Invoice ontology. All seller, employee, contractor, client,
+IBAN, SWIFT, tax-ID, phone, and email values have been replaced with
+synthetic placeholders for confidentiality.]
+
+================================================================================
+                        EXAMPLE SELLER DOO BEOGRAD
+                  Software & Technology Staffing Services
+================================================================================
+Example Street 1, 11000 Beograd, Republika Srbija
+PIB: 100000001
+Maticni broj: 20000001
+Tel: +381-11-XXXXXXX
+E-mail: invoicing@example.com
+
+================================================================================
+                        INVOICE / FAKTURA
+================================================================================
+
+Invoice No. / Broj fakture:    INV-031
+Invoice Date / Datum fakture:  15.03.2026
+Delivery Date / Datum prom.:   15.03.2026
+Billing Period / Period:       February 16, 2026 - March 15, 2026
+Contract Ref. / Ugovor:        SOW-2026-031
+Place of Issue / Mesto izd.:   Beograd
+Payment Method / Placanje:     VIRMANSKI / Bank Transfer
+Payment Terms / Rok placanja:  po ugovoru / by Contract
+
+================================================================================
+TO / PRIMALAC:
+================================================================================
+ACME SOFTWARE HOLDINGS, INC.
+100 Example Avenue, Suite 500
+Demo City, CA 94000, USA
+Taxpayer Identification Number: XX-XXXXXXX
+
+================================================================================
+SERVICES RENDERED / SPECIFIKACIJA USLUGA
+================================================================================
+
+Service Type:   Software Engineering Services (Staff Augmentation)
+Billing Model:  Hourly Rate x Hours/Day x Working Days
+
+  Line 1  Software Engineering Services - Engineer A (SOW-A)
+          19 days x 8 hrs/day x $38.00/hr = $5,776.00
+
+  Line 2  Software Engineering Services - Engineer B (SOW-B)
+          19 days x 8 hrs/day x $45.00/hr = $6,840.00
+
+  Line 3  Software Engineering Services - Engineer C (SOW-C)
+          18 billable days (19 working - 1 day off) x 8 hrs/day x $40.00/hr
+          = $5,760.00
+
+================================================================================
+TOTALS / UKUPNO
+================================================================================
+
+  Invoice Currency / Valuta:      USD
+  Subtotal / Iznos bez PDV:       $18,376.00
+  VAT / PDV (0%):                 $0.00
+  ---------------------------------------------
+  TOTAL DUE / UKUPNO ZA UPLATU:   $18,376.00
+
+  VAT Exemption Note / Napomena o PDV:
+  Izvoz oslobodjen PDV na osnovu clana 24. stav 1., tacka 2. Zakona o PDV.
+  (Export exempt from VAT per Article 24, Paragraph 1, Item 2 of the
+  Republic of Serbia VAT Law.)
+
+  NBS Exchange Rate / Kurs NBS (15.03.2026):
+    1 USD = 109.4517 RSD
+
+  RSD Equivalent / Iznos u RSD:
+    $18,376.00 x 109.4517 = 2,010,335.45 RSD
+
+================================================================================
+BANK DETAILS / PODACI ZA PLACANJE
+================================================================================
+
+  Bank / Banka:       Example Bank Beograd
+  Account Holder:     EXAMPLE SELLER DOO BEOGRAD
+  IBAN:               RS35XXXXXXXXXXXXXXXXXX
+  SWIFT / BIC:        XXXXRSBG
+  Currency / Valuta:  USD
+
+================================================================================
+SIGNATURE AND RESPONSIBILITY BLOCK
+================================================================================
+
+  Responsible Person:      [Director Name], Direktor / Managing Director
+  Issued by / Izdao:       __________________________
+  Received by / Primio:    __________________________
+  [STAMP / PECAT]          [STAMP / PECAT]
+
+================================================================================
+  Document Language:  Serbian / English (Bilingual)
+  Invoice Direction:  Outbound (Example Seller bills Acme Software Holdings)
+================================================================================
+
+===STRUCTURED===
+
+[Per-node JSON map, with every ontology node id resolved to either
+its instantiated value above, or null where genuinely not applicable
+(e.g. routing_number is null because the seller is in Serbia and
+provides IBAN/SWIFT instead). Coverage: 46 / 47 = 97.9%, with all
+4 dimensions and 3 constraints satisfied.]
