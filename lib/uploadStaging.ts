@@ -2,10 +2,13 @@
  * In-memory staging store for sequential per-file uploads.
  *
  * Why: the multi-file upload endpoint can hit per-request body-size limits
- * (Cloudflare 100MB, Next 50MB, etc.) when N large PDFs are sent in one POST.
- * Instead, we let the client stage each file independently via /upload/stage,
- * then call /upload with a JSON list of stagingIds to run a single LLM call
- * over all of them.
+ * (Cloudflare 100MB, Next 50MB, Anthropic ~32MB) when N large PDFs are sent
+ * in one POST. Instead, we let the client stage each file independently via
+ * /upload/stage; binary docs (PDFs, images) are forwarded to the Anthropic
+ * Files API at stage time and only the resulting file_id is held here.
+ * Text-ish payloads (JSON/YAML/Markdown/plain text) are kept inline because
+ * we already truncate them to 80k chars in the message and they don't blow
+ * up the request size.
  *
  * Storage: module-level Map. PM2 single-process — no IPC/Redis needed.
  * TTL: 1 hour. Cleaned lazily on each stage write.
@@ -16,7 +19,18 @@ export interface StagedFile {
   ownerEmail: string
   name: string
   mime: string
-  bytes: Buffer
+  /**
+   * For binary docs uploaded to the Anthropic Files API: the returned file_id.
+   * For inline text-ish docs: undefined.
+   */
+  anthropicFileId?: string
+  /**
+   * For text-ish docs kept inline: the raw bytes. We hold these only for
+   * small text payloads, so memory pressure is bounded.
+   * For binary docs uploaded to Files API: undefined (bytes are released
+   * once Anthropic has accepted them).
+   */
+  bytes?: Buffer
   createdAt: number
 }
 
