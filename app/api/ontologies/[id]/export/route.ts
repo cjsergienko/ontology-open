@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { stringify as yamlStringify } from 'yaml'
 import { getOntology } from '@/lib/storage'
+import { toExportShape } from '@/lib/exportFormat'
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { getSessionUser } = await import('@/lib/authHelper')
 
@@ -14,7 +15,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   if (!ontology) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
   const slug = ontology.name.replace(/\s+/g, '_').toLowerCase()
-  const yaml = yamlStringify(ontology)
+  const yaml = yamlStringify(toExportShape(ontology))
 
   return new Response(yaml, {
     headers: {
