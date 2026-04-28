@@ -49,7 +49,7 @@ from Document Corpora Using Large Language Models}
 
 \titlerunning{Generative Ontology Induction}
 
-\author{Sergei Sergienko\inst{1}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19772179}{10.5281/zenodo.19772179}).}}
+\author{Sergei Sergienko\orcidID{0009-0009-5180-7115}\inst{1}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19772179}{10.5281/zenodo.19772179}).}}
 
 \authorrunning{S. Sergienko}
 
@@ -483,11 +483,8 @@ pan, and node search. All edits are persisted in a SQLite database via
 
 \subsection{System Architecture}
 
-GOI is implemented as a full-stack web application using Next.js~16,
-React~19, TypeScript, and Tailwind~CSS~v4 for the frontend; Next.js API
-routes, the Anthropic Claude API (Sonnet model), and the Anthropic Files
-API for the backend; and SQLite via \texttt{better-sqlite3} for
-persistence.
+The reference implementation is a TypeScript web application backed
+by a relational store, with Anthropic's Claude as the LLM backend.
 
 % -------------------------------------------------------
 \section{The Node Coverage Score}
@@ -569,10 +566,9 @@ corpus of 20 real B2B invoices internal to the author's
 organization; this corpus is withheld from supplementary materials due
 to seller, client, and contractor confidentiality, but a
 structurally-identical anonymized version of the resulting ontology is
-included. The Job Description Ontology ontology was induced from
-senior engineering job postings published on
-\url{https://pivotshiring.com}; three anonymized postings are
-reproduced in the supplementary bundle.
+included. The Job Description Ontology ontology was induced from a
+publicly accessible corpus of senior engineering job postings; three
+anonymized postings are reproduced in the supplementary bundle.
 
 \subsection{Ontology-as-Prompt: Generative Validation}
 \label{sec:ontology-as-prompt}
@@ -713,22 +709,18 @@ property correctness or content quality.
 structural schema of a document class into a six-node, seven-edge
 typed graph with YAML/JSON export. Our controlled generative
 validation shows GOI-prompted generation by construction covers
-100\% of applicable nodes on a novel 63-node taxonomy versus 65.4\%
-for a generic three-field template-a structural guarantee generic
-prompting cannot offer.
+100\% of applicable nodes on the custom Job Description Ontology
+versus 65.4\% for a generic three-field template-a structural
+guarantee generic prompting cannot offer.
 
 % -------------------------------------------------------
 % Acknowledgments / Funding / Data Availability
 % -------------------------------------------------------
 \section*{Acknowledgments and Data Availability}
-This research received no external funding. The source code,
-documentation, and example ontologies are publicly available:
-
-\begin{itemize}[leftmargin=*,nosep]
-  \item \textbf{Source repository:} \url{https://github.com/cjsergienko/ontology-open}
-  \item \textbf{Live demo:} \url{https://ontology.live}
-  \item \textbf{Video demonstrations:} \url{https://www.youtube.com/@GenerativeOntologyInduction}
-\end{itemize}
+This research received no external funding. Source code and a live
+demonstration of the reference implementation are available at
+\url{https://ontology.live} (repository:
+\url{https://github.com/cjsergienko/ontology-open}).
 
 \paragraph{Supplementary Materials.}\sloppy A reproducibility bundle at
 \texttt{research/supplementary/} contains the Job Description
