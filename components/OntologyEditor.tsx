@@ -40,7 +40,7 @@ import {
 import Link from 'next/link'
 import { JDPreviewPanel } from './JDPreviewPanel'
 import { applyLayout, mainNode, NODE_WIDTH, NODE_HEIGHT, LAYOUT_OPTIONS, type LayoutKind } from '@/lib/layout'
-import { toExportShape } from '@/lib/exportFormat'
+import { toFullExportShape } from '@/lib/exportFormat'
 
 const nodeTypes: NodeTypes = {
   ontology: OntologyNodeComponent,
@@ -353,7 +353,7 @@ function OntologyEditorInner({ initialOntology, readOnly = false }: Props) {
       label: (e.data as { label: string })?.label ?? String(e.label ?? ''),
       type: ((e.data as { type: EdgeType })?.type) ?? 'relates_to',
     }))
-    return toExportShape({ ...ontology, nodes: currentNodes, edges: currentEdges })
+    return toFullExportShape({ ...ontology, nodes: currentNodes, edges: currentEdges })
   }, [nodes, edges, ontology])
 
   const downloadFile = useCallback((content: string, filename: string, mime: string) => {
