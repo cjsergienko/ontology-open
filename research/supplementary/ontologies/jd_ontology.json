@@ -1,6 +1,6 @@
 {
   "id": "ccec7699-4b05-4c61-8834-6c8a08888794",
-  "name": "JD Creation Taxonomy v3.0",
+  "name": "Job Description Ontology",
   "description": "Ontology-driven job description generation — 8 categories, 42 dimensions, 42 role families. O*NET-aligned.",
   "domain": "hiring",
   "nodes": [

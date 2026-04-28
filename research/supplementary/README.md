@@ -13,7 +13,7 @@ supplementary/
 │   ├── invoice_ontology.json              # Case 1: Software Services Invoice
 │   │                                        (48 nodes; example values
 │   │                                        anonymized — see note below)
-│   └── jd_ontology.json                   # Case 2: JD Creation Taxonomy v3.0
+│   └── jd_ontology.json                   # Case 2: Job Description Ontology
 │                                            (63 nodes; published verbatim)
 ├── generated_outputs/
 │   ├── case1_invoice_goi.txt              # System A on Invoice ontology
@@ -71,7 +71,7 @@ For each of the two ontologies:
 The two cases differ in what source corpus is published, reflecting
 the original sources:
 
-- **Case 2 (JD).** The JD Creation Taxonomy v3.0 ontology was
+- **Case 2 (JD).** The Job Description Ontology was
   induced from publicly-listed job postings on
   `pivotshiring.com`. Three of those listings, lightly anonymized
   (applicant counts and platform-specific labels removed), are
