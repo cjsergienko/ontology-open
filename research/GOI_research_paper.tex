@@ -60,45 +60,26 @@ from Document Corpora Using Large Language Models}
 
 % -------------------------------------------------------
 \begin{abstract}
-Ontology engineering remains a critical bottleneck in
-knowledge-intensive AI systems, requiring domain expertise, manual
-curation, and task-specific rules. Existing automated approaches either
-depend on predefined schemas, operate within narrow domains, or produce
-unstructured outputs unsuitable for downstream pipelines. We introduce
-\textbf{Generative Ontology Induction (GOI)}, a domain-agnostic
-framework that automatically reverse-engineers the structural schema
-governing any document class from a corpus of examples. Unlike entity
-extraction systems that describe individual documents, GOI discovers the
-generative blueprint---the set of entities, dimensions, properties,
-relationships, and constraints that define a document \emph{type}---enabling
-schema-driven generation of new instances. The system accepts
-multi-format document collections (PDF, images, text, JSON, YAML),
-produces typed knowledge graphs with six node types and seven edge types,
-and exports pipeline-ready schemas in YAML/JSON. We introduce the
+Ontology engineering remains a critical bottleneck in knowledge-intensive
+AI systems. Existing automated approaches either depend on predefined
+schemas, operate within narrow domains, or produce unstructured outputs
+unsuitable for downstream pipelines.
+
+We introduce \textbf{Generative Ontology Induction (GOI)}, a
+domain-agnostic framework that induces a \emph{generative
+blueprint}---entities, dimensions, properties, relationships, and
+constraints---from a corpus of examples and exports it as a typed graph
+(six node types, seven edge types) in YAML/JSON. We introduce the
 \textbf{Node Coverage Score}, a novel evaluation metric that measures
-what percentage of ontology dimension nodes appear in generated outputs,
-addressing the gap between token-level metrics and structural
-correctness. Beyond its technical contributions, GOI addresses a
-practical \textbf{cross-functional team communication gap}: in
-AI-driven product teams, frontend developers, backend engineers, and AI
-researchers lack a shared, human-readable artifact representing the
-product's knowledge structure. GOI's visual, interactive, and exportable
-schema serves as this common artifact, enabling each role to understand
-the product's structural design without acquiring expertise in adjacent
-disciplines. A controlled generative validation on two contrasting
-ontologies shows that GOI-prompted generation deterministically covers
-100\% of applicable ontology nodes; a generic three-field template
-recovers all four dimension axes when the document type is familiar
-(95.7\% on invoices) but collapses to 65.4\% on a custom 63-node hiring
-taxonomy. The deterministic structural guarantee --- coverage that
-holds regardless of how familiar the document type is to the model ---
-is the core methodological contribution. Our work addresses six open problems in the
-literature: cross-document canonicalization without domain rules,
-universal typed graph representation, evaluation metrics for ontology
-usefulness as generation specifications, polished interactive
-visualization for non-experts, one-click export for downstream
-pipelines, and cross-functional team communication in AI product
-development.
+the percentage of ontology dimension nodes appearing in generated
+outputs.
+
+A controlled generative validation on two contrasting ontologies shows
+that GOI-prompted generation by construction covers 100\% of applicable
+ontology nodes; a generic three-field template recovers 95.7\% on
+familiar invoices but collapses to 65.4\% on a custom 63-node hiring
+taxonomy. The structural coverage holds regardless of how familiar the
+document type is to the model.
 
 \keywords{Ontology learning \and Schema induction \and Large language
 models \and Knowledge graphs \and Domain-agnostic methods \and
@@ -130,18 +111,11 @@ reasoning. The promise of general-purpose AI collides with the reality
 that structured knowledge remains stubbornly domain-specific and
 manually curated.
 
-A particularly acute but underexplored dimension of this gap occurs
-within \textbf{mixed-expertise software teams}. AI-driven products are
-typically built by cross-functional groups---researchers, backend
-engineers, and frontend developers---each operating with fundamentally
-different mental models (entities and constraints; schemas and APIs;
-components and user flows). Without a shared, human-readable structural
-representation of the product's knowledge layer, coordination is costly,
-inter-layer misalignments accumulate, and team members are forced out of
-their domain of expertise. What is needed is a \textbf{common
-artifact}---a visual, navigable, exportable representation of the
-product's structural schema---legible to each role without requiring
-deep knowledge of the others' disciplines.
+A particularly underexplored dimension of this gap occurs within
+mixed-expertise teams: researchers, backend engineers, and frontend
+developers operate with fundamentally different mental models, and lack
+a shared, human-readable structural representation of the product's
+knowledge layer.
 
 Recent advances in large language models (LLMs) have begun to address
 the structure gap. Zero-shot and few-shot ontology construction pipelines
@@ -188,7 +162,7 @@ artifact, positioning GOI as both a technical contribution and an
 \textbf{organizational primitive}.
 
 A controlled generative validation on two contrasting ontologies
-demonstrates GOI's deterministic structural guarantee; we also discuss
+demonstrates GOI's structurally-mandated coverage; we also discuss
 limitations including LLM consistency, token-window constraints, the
 lack of formal OWL axioms, and hallucination risks.
 
@@ -635,14 +609,14 @@ yield small coverage gaps because the model's pretraining prior fills
 in expected fields; custom ontologies with non-standard dimensions
 widen the gap dramatically.}
 \label{tab:generative_validation}
-\begin{tabular}{llcccc}
+\begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}X >{\raggedright\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X@{}}
 \toprule
 \textbf{Case} & \textbf{Ontology} & \textbf{Nodes} & \textbf{GOI (A)} & \textbf{GST (B)} & \textbf{Gap} \\
 \midrule
-1 & Software Services Invoice & 47 & \textbf{97.9\%} & 95.7\% & 2.2~pp \\
+1 & Software Services Invoice & 48 & \textbf{97.9\%} & 95.7\% & 2.2~pp \\
 2 & Job Description Ontology & 26\textsuperscript{*} & \textbf{100.0\%} & 65.4\% & 34.6~pp \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \\[2pt]
 {\footnotesize \textsuperscript{*}Applicable non-context nodes per the
 ontology's own coverage contract (38 non-context of 63 total; 26 are
@@ -678,7 +652,7 @@ employer-brand voice, candidate-market targeting,
 career-trajectory pattern, or certification-profile expectations;
 without an explicit schema, these axes simply do not surface.\par}
 
-The deterministic-vs-stochastic framing now lands harder: GOI
+The by-construction vs incidental framing now lands harder: GOI
 provides a structural contract that holds \emph{regardless of how
 familiar the document type is to the model}, whereas the generic
 template's coverage is contingent on the training-data prior and
@@ -688,7 +662,7 @@ collapses on novel structure.
 metric is not raw coverage on familiar document types but
 \emph{worst-case} coverage on novel or specialised schemas, where
 downstream pipelines cannot rely on the LLM's prior to fill the gaps.
-GOI's contribution is precisely this deterministic guarantee: every
+GOI's contribution is precisely this structurally-mandated coverage: every
 ontology node is either instantiated or explicitly marked
 \texttt{null}, by construction. The generative results in
 Table~\ref{tab:generative_validation} establish a lower bound on GOI's
@@ -707,16 +681,10 @@ The \textbf{six-node, seven-edge type system} supplies a
 standardized cross-domain taxonomy where prior work uses
 domain-specific schemas or untyped triples. The \textbf{Node
 Coverage Score} adds an evaluation axis aligned with structural
-completeness rather than token-level accuracy.
-
-\paragraph{Cross-Functional Team Communication Artifact.} GOI's
-visual, interactive, exportable schema also functions as a
-\textbf{shared structural contract} for mixed-expertise AI product
-teams: frontend developers see exposed entities and relations,
-backend engineers derive data-contract shapes and constraints, and
-researchers validate that knowledge design is faithfully
-represented---role-preserving transparency that reduces coordination
-overhead independent of domain.
+completeness rather than token-level accuracy. As a side-effect of
+producing a typed graph artifact, GOI's induced ontologies serve as a
+shared structural reference across mixed-expertise teams without
+privileging any single discipline's vocabulary.
 
 \subsection{Limitations}
 
@@ -743,7 +711,7 @@ property correctness or content quality.
 \textbf{Generative Ontology Induction (GOI)} reverse-engineers the
 structural schema of a document class into a six-node, seven-edge
 typed graph with YAML/JSON export. Our controlled generative
-validation shows GOI-prompted generation deterministically covers
+validation shows GOI-prompted generation by construction covers
 100\% of applicable nodes on a novel 63-node taxonomy versus 65.4\%
 for a generic three-field template---a structural guarantee generic
 prompting cannot offer.
