@@ -6,6 +6,7 @@ import type { OntologyNode, OntologyEdge, NodeType } from '@/lib/types'
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY!
 const CLAUDE_MODEL = 'claude-sonnet-4-6'
+const ANTHROPIC_FILES_BETA = 'files-api-2025-04-14'
 
 const SYSTEM_PROMPT = `You are an ontology engineering expert. You will receive one or more example documents of the same type (e.g. several job descriptions, medical records, contracts, research papers, etc.).
 
@@ -71,43 +72,114 @@ function layoutNodes(nodes: Omit<OntologyNode, 'position'>[]): OntologyNode[] {
   })
 }
 
-function fileToContentBlock(name: string, mime: string, bytes: ArrayBuffer | Buffer, index: number): object[] {
-  const buf: Buffer = Buffer.isBuffer(bytes) ? bytes : Buffer.from(new Uint8Array(bytes))
-  const base64 = buf.toString('base64')
+/**
+ * Build content blocks for one file.
+ *
+ * For PDFs/images we reference the Anthropic Files API file_id (uploaded
+ * either at staging time or inline below in the legacy multipart path).
+ * For text-ish files we inline the (truncated) UTF-8 contents — far smaller
+ * than base64-binary and still well under any per-request cap.
+ */
+function fileContentBlocks(args: {
+  name: string
+  mime: string
+  index: number
+  anthropicFileId?: string
+  bytes?: Buffer
+}): object[] {
+  const { name, mime, index, anthropicFileId, bytes } = args
   const isImage = mime.startsWith('image/')
   const isPdf = mime === 'application/pdf'
-  const isText = mime.startsWith('text/') || ['application/json', 'application/yaml', 'application/xml'].some(t => mime.includes(t))
+  const isText =
+    mime.startsWith('text/') ||
+    mime === 'application/json' ||
+    mime === 'application/yaml' ||
+    mime === 'application/x-yaml' ||
+    mime === 'application/xml'
   const label = `<example_${index + 1} filename="${name}">`
   const endLabel = `</example_${index + 1}>`
 
-  if (isPdf) {
+  if (anthropicFileId && isPdf) {
     return [
       { type: 'text', text: label },
-      { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+      { type: 'document', source: { type: 'file', file_id: anthropicFileId } },
       { type: 'text', text: endLabel },
     ]
-  } else if (isImage) {
-    return [
-      { type: 'text', text: label },
-      { type: 'image', source: { type: 'base64', media_type: mime, data: base64 } },
-      { type: 'text', text: endLabel },
-    ]
-  } else {
-    let text: string
-    if (isText) {
-      text = buf.toString('utf-8').slice(0, 80_000)
-    } else {
-      try { text = buf.toString('utf-8').slice(0, 80_000) }
-      catch { text = `[Binary file: ${name}, ${buf.byteLength} bytes]` }
-    }
-    return [{ type: 'text', text: `${label}\n${text}\n${endLabel}` }]
   }
+  if (anthropicFileId && isImage) {
+    return [
+      { type: 'text', text: label },
+      { type: 'image', source: { type: 'file', file_id: anthropicFileId } },
+      { type: 'text', text: endLabel },
+    ]
+  }
+  if (anthropicFileId) {
+    // Unknown binary that nonetheless got uploaded — reference as a document.
+    return [
+      { type: 'text', text: label },
+      { type: 'document', source: { type: 'file', file_id: anthropicFileId } },
+      { type: 'text', text: endLabel },
+    ]
+  }
+
+  // No file_id: inline the bytes as text. Truncate to bound prompt size.
+  let text: string
+  if (bytes) {
+    if (isText) {
+      text = bytes.toString('utf-8').slice(0, 80_000)
+    } else {
+      try {
+        text = bytes.toString('utf-8').slice(0, 80_000)
+      } catch {
+        text = `[Binary file: ${name}, ${bytes.byteLength} bytes]`
+      }
+    }
+  } else {
+    text = `[File: ${name} — no content available]`
+  }
+  return [{ type: 'text', text: `${label}\n${text}\n${endLabel}` }]
 }
 
-interface FileInput {
+interface FileRef {
   name: string
   mime: string
-  bytes: ArrayBuffer | Buffer
+  anthropicFileId?: string
+  bytes?: Buffer
+}
+
+/**
+ * Upload a single file's bytes to the Anthropic Files API and return its file_id.
+ * Used by the legacy multipart finalize path (staging path uploads at stage time).
+ */
+async function uploadToAnthropic(name: string, mime: string, bytes: Buffer): Promise<string> {
+  const form = new FormData()
+  const blob = new Blob([new Uint8Array(bytes)], { type: mime })
+  form.append('file', blob, name)
+  const resp = await fetch('https://api.anthropic.com/v1/files', {
+    method: 'POST',
+    headers: {
+      'x-api-key': ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+      'anthropic-beta': ANTHROPIC_FILES_BETA,
+    },
+    body: form,
+  })
+  if (!resp.ok) {
+    const errText = await resp.text().catch(() => '')
+    throw new Error(`Anthropic Files API rejected ${name}: ${errText || resp.statusText}`)
+  }
+  const { id } = (await resp.json()) as { id: string }
+  return id
+}
+
+function isInlineTextMime(mime: string): boolean {
+  return (
+    mime.startsWith('text/') ||
+    mime === 'application/json' ||
+    mime === 'application/yaml' ||
+    mime === 'application/x-yaml' ||
+    mime === 'application/xml'
+  )
 }
 
 export async function POST(req: Request) {
@@ -128,9 +200,11 @@ export async function POST(req: Request) {
   // Resolve input source: JSON { stagingIds } (sequential staging path) or
   // legacy multipart formData (single-shot small uploads).
   const contentType = req.headers.get('content-type') ?? ''
-  const fileInputs: FileInput[] = []
+  const fileRefs: FileRef[] = []
   // Track stagingIds used so we can clear them only on success.
   const consumedStagingIds: string[] = []
+  // file_ids we uploaded inline (legacy path) — we own them and should clean up.
+  const ownedFileIds: string[] = []
 
   if (contentType.includes('application/json')) {
     let body: { stagingIds?: unknown }
@@ -157,41 +231,65 @@ export async function POST(req: Request) {
     for (const id of ids) {
       const entry = getStagedFile(id)
       if (!entry) continue
-      fileInputs.push({ name: entry.name, mime: entry.mime, bytes: entry.bytes })
+      fileRefs.push({
+        name: entry.name,
+        mime: entry.mime,
+        anthropicFileId: entry.anthropicFileId,
+        bytes: entry.bytes,
+      })
       consumedStagingIds.push(id)
     }
   } else {
     const formData = await req.formData()
     const files = formData.getAll('file') as File[]
     if (files.length === 0) return NextResponse.json({ error: 'No files provided' }, { status: 400 })
+    // Legacy path: upload binary files to Anthropic Files API on the fly so
+    // the eventual Messages call stays small. Inline text-ish files keep
+    // their bytes for the truncate-then-inline branch.
     for (const file of files) {
-      const bytes = await file.arrayBuffer()
-      fileInputs.push({
-        name: file.name,
-        mime: file.type || 'application/octet-stream',
-        bytes,
-      })
+      const mime = file.type || 'application/octet-stream'
+      const bytes = Buffer.from(await file.arrayBuffer())
+      if (isInlineTextMime(mime)) {
+        fileRefs.push({ name: file.name, mime, bytes })
+      } else {
+        try {
+          const fileId = await uploadToAnthropic(file.name, mime, bytes)
+          ownedFileIds.push(fileId)
+          fileRefs.push({ name: file.name, mime, anthropicFileId: fileId })
+        } catch (err) {
+          return NextResponse.json(
+            { error: err instanceof Error ? err.message : String(err) },
+            { status: 502 },
+          )
+        }
+      }
     }
   }
 
-  if (fileInputs.length === 0) {
+  if (fileRefs.length === 0) {
     return NextResponse.json({ error: 'No files provided' }, { status: 400 })
   }
 
   // Build content blocks for all files
   const contentBlocks: object[] = []
-  for (let i = 0; i < fileInputs.length; i++) {
-    const f = fileInputs[i]
-    contentBlocks.push(...fileToContentBlock(f.name, f.mime, f.bytes, i))
+  for (let i = 0; i < fileRefs.length; i++) {
+    const f = fileRefs[i]
+    contentBlocks.push(...fileContentBlocks({
+      name: f.name,
+      mime: f.mime,
+      index: i,
+      anthropicFileId: f.anthropicFileId,
+      bytes: f.bytes,
+    }))
   }
 
-  const instruction = fileInputs.length === 1
+  const instruction = fileRefs.length === 1
     ? `Analyze this example document and extract the generative ontology for this document type.`
-    : `Analyze these ${fileInputs.length} example documents of the same type. Identify the common entities, dimensions, properties, and relationships that define this document class. Extract the generative ontology.`
+    : `Analyze these ${fileRefs.length} example documents of the same type. Identify the common entities, dimensions, properties, and relationships that define this document class. Extract the generative ontology.`
 
   contentBlocks.push({ type: 'text', text: instruction })
 
-  const defaultName = fileInputs.length === 1 ? fileInputs[0].name : `${fileInputs.length} examples`
+  const defaultName = fileRefs.length === 1 ? fileRefs[0].name : `${fileRefs.length} examples`
 
   return sseStream(async () => {
     const anthropicResp = await fetch('https://api.anthropic.com/v1/messages', {
@@ -199,6 +297,7 @@ export async function POST(req: Request) {
       headers: {
         'x-api-key': ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01',
+        'anthropic-beta': ANTHROPIC_FILES_BETA,
         'content-type': 'application/json',
       },
       body: JSON.stringify({
@@ -242,7 +341,30 @@ export async function POST(req: Request) {
 
     // Drop staged entries only after the LLM call + save succeed, so the user
     // can retry the finalize step without re-uploading on transient failures.
-    for (const id of consumedStagingIds) consumeStagedFile(id)
+    for (const stagedId of consumedStagingIds) {
+      const entry = consumeStagedFile(stagedId)
+      // Best-effort cleanup of any Anthropic-side file_ids we no longer need.
+      if (entry?.anthropicFileId) {
+        fetch(`https://api.anthropic.com/v1/files/${entry.anthropicFileId}`, {
+          method: 'DELETE',
+          headers: {
+            'x-api-key': ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'anthropic-beta': ANTHROPIC_FILES_BETA,
+          },
+        }).catch(() => {})
+      }
+    }
+    for (const fileId of ownedFileIds) {
+      fetch(`https://api.anthropic.com/v1/files/${fileId}`, {
+        method: 'DELETE',
+        headers: {
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-beta': ANTHROPIC_FILES_BETA,
+        },
+      }).catch(() => {})
+    }
 
     return ontology
   })
