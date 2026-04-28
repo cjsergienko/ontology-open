@@ -59,7 +59,7 @@ export function TokenLimitModal({ onClose }: Props) {
               </h2>
             </div>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              You&apos;ve used your free 3,000 output token allowance. Send us a message and we&apos;ll extend your access.
+              You&apos;ve used your free 100,000 output token allowance. Send us a message and we&apos;ll extend your access.
             </p>
           </div>
           <button onClick={onClose} className="ml-4 shrink-0" style={{ color: 'var(--text-dim)' }}>
