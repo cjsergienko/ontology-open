@@ -75,13 +75,15 @@ constraints-from a corpus of examples and exports it as a typed graph
 the fraction of structural ontology nodes (classes, properties, and
 dimensions) appearing in generated outputs.
 
-A controlled generative validation on three contrasting ontologies-a
+A controlled generative validation on four contrasting ontologies-a
 familiar Software Services Invoice schema, a custom Job Description
-Ontology, and a confidential Pain-Management Clinical Visit Record
+Ontology, a confidential Pain-Management Clinical Visit Record
+Ontology, and a Professional Services Contract \& Statement of Work
 Ontology-shows that GOI-prompted generation covers 95-100\% of the
 structural backbone in every case; a generic three-field template
 holds at 97.8\% on the invoice schema but drops to 52.2\% on the Job
-Description Ontology and 62.2\% on the Pain-Management ontology. The
+Description Ontology, 62.2\% on the Pain-Management ontology, and
+78.3\% on the Professional Services Contract ontology. The
 structural coverage holds regardless of how familiar the document
 type is to the model.
 
@@ -170,11 +172,12 @@ visual, interactive, exportable schema serves as precisely this common
 artifact, positioning GOI as both a technical contribution and an
 \textbf{organizational primitive}.
 
-A controlled generative validation on three contrasting ontologies
-spanning B2B billing, talent acquisition, and healthcare clinical
-documentation demonstrates GOI's structurally-mandated coverage; we
-also discuss limitations including LLM consistency, token-window
-constraints, the lack of formal OWL axioms, and hallucination risks.
+A controlled generative validation on four contrasting ontologies
+spanning B2B billing, talent acquisition, healthcare clinical
+documentation, and professional services contracting demonstrates
+GOI's structurally-mandated coverage; we also discuss limitations
+including LLM consistency, token-window constraints, the lack of
+formal OWL axioms, and hallucination risks.
 
 The remainder of this paper is organized as follows.
 Section~\ref{sec:related} reviews related work.
@@ -610,6 +613,21 @@ example value, provider name, practice name, address, patient
 identifier, and signature date replaced with synthetic
 clinically-plausible equivalents, so the structural schema is
 reproduced faithfully without any real PHI.
+The Professional Services Contract \& Statement of Work Ontology was
+induced from a confidential corpus of 20 consulting agreements,
+contractor contracts, and statements of work internal to the author's
+organization. The corpus carries party-identifying information
+(client and provider legal names, registered addresses, tax IDs,
+contact details, agreement identifiers, and authorized signatories)
+and is withheld in full; the published ontology JSON has every such
+example value replaced with synthetic legally-plausible equivalents
+(synthetic Serbian and Western corporate names, plausible-but-fictional
+addresses, synthetic registration / tax-ID numbers of similar
+format, synthetic contact information under the new corporate domain,
+synthetic agreement identifiers preserving the original
+project-code-plus-date pattern, and synthetic signatory names with
+matching role/title structure), so the structural schema is reproduced
+faithfully without any real party-identifying data.
 
 \subsection{Ontology-as-Prompt: Generative Validation}
 \label{sec:ontology-as-prompt}
@@ -630,19 +648,25 @@ every constraint. \textbf{System~B} is a generic 3-field template
 run on the same LLM (Anthropic Claude Sonnet, fixed model identifier
 \texttt{claude-sonnet-4-6}) with identical decoding settings; no
 corpus is consumed-generation is from scratch in both cases. We
-evaluate three ontologies of contrasting familiarity: a Software
+evaluate four ontologies of contrasting familiarity: a Software
 Services Invoice ontology (a document type the LLM has seen at scale
 during pretraining), a custom Job Description Ontology (with
 non-standard dimensions and explicit context-vs-content separation),
-and a Pain-Management Clinical Visit Record Ontology (workers'
+a Pain-Management Clinical Visit Record Ontology (workers'
 compensation and musculoskeletal pain documentation, with a highly
 specialised structural backbone covering claim type, body region,
 exam-by-region modules, ICD-10 assessment, and treatment
-justification). Full verbatim prompts are included in the
-supplementary bundle.
+justification), and a Professional Services Contract \& Statement
+of Work Ontology (consulting agreements and SOWs, with structural
+slots for parties and signatories, hourly-vs-fixed fee structures
+with weekly hours caps, milestone tables, IP assignment direction,
+non-solicitation, exclusivity, indemnification, and SOW-specific
+sections such as context/background, assumptions and risks,
+acceptance criteria, and communication plan). Full verbatim prompts
+are included in the supplementary bundle.
 
 \paragraph{Results.} Table~\ref{tab:generative_validation} summarises
-the three cases.
+the four cases.
 
 \begin{table}[t]
 \centering
@@ -652,8 +676,8 @@ documents when prompted with the full ontology (System~A) versus a
 generic three-field template (System~B). Familiar document types
 yield small coverage gaps because the model's pretraining prior fills
 in expected fields; custom and specialised ontologies with
-non-standard dimensions widen the gap dramatically. All three cases
-re-scored under the broadened metric described in
+non-standard dimensions widen the gap dramatically. All four cases
+scored under the broadened metric described in
 \S\ref{sec:metric}.}
 \label{tab:generative_validation}
 \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}X >{\raggedright\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X@{}}
@@ -663,6 +687,7 @@ re-scored under the broadened metric described in
 1 & Software Services Invoice & 45 & \textbf{97.8\%} & 97.8\% & 0.0~pp \\
 2 & Job Description Ontology & 23\textsuperscript{*} & \textbf{100.0\%} & 52.2\% & 47.8~pp \\
 3 & Pain-Mgmt Clinical Visit & 45 & \textbf{95.6\%} & 62.2\% & 33.4~pp \\
+4 & Prof.\ Services Contract \& SOW & 46 & \textbf{100.0\%} & 78.3\% & 21.7~pp \\
 \bottomrule
 \end{tabularx}
 \\[2pt]
@@ -722,6 +747,33 @@ the recommendations apparatus (\texttt{Treatment Justification},
 structural specialisation the ontology contributes in a
 healthcare-documentation context where the LLM's prior reverts to
 the generic primary-care template.
+
+\emph{Case~4 (legal, anonymized).} On the Professional Services
+Contract \& Statement of Work Ontology (46 structural nodes),
+System~A instantiated 46/46 nodes (100\%), including all subclasses
+and relations across the parties block, the milestone table, the IP,
+confidentiality, non-solicitation, warranties, termination,
+indemnification, and assignability clauses, the SOW-specific sections
+(context/background, assumptions and risks, acceptance of
+deliverables, communication plan), the hourly-rate fee structure
+with weekly hours cap, and the dispute-resolution mechanism with
+explicit JAMS arbitration. System~B emitted a generic fixed-fee UX
+design contract and covered 36/46 structural nodes (78.3\%); the gap
+is narrower than Cases~2 and~3 because professional-services
+contracts share substantial universal vocabulary with the LLM's
+training prior (governing law, termination, IP assignment,
+confidentiality, entire-agreement). The 10 missed nodes are
+precisely the SOW-specific structural backbone the LLM's prior does
+not surface unprompted: the \texttt{Auto-Renewal Clause},
+\texttt{Hourly Rate} (the baseline reverted to a fixed-fee model),
+\texttt{Non-Solicitation Clause}, \texttt{Exclusivity Clause},
+\texttt{Severability Clause}, \texttt{SOW Number / Reference},
+\texttt{Assumptions, Risks and Constraints}, \texttt{Communication
+Plan}, \texttt{Weekly Hours Cap}, and \texttt{Indemnification
+Clause}. The 21.7~pp gap quantifies the structural specialisation
+GOI contributes once a contract goes beyond a boilerplate
+fixed-fee engagement and into a milestone-driven SOW with
+hours-capped hourly billing and detailed clause-level provisions.
 
 The by-construction vs incidental framing now lands harder: GOI
 provides a structural contract that holds \emph{regardless of how
@@ -783,16 +835,18 @@ each covered slot.
 
 \textbf{Generative Ontology Induction (GOI)} reverse-engineers the
 structural schema of a document class into a six-node, seven-edge
-typed graph with YAML/JSON export. Across three contrasting
-ontologies in three distinct domains-B2B billing, talent acquisition,
-and healthcare clinical documentation-our controlled generative
-validation shows GOI-prompted generation covers 95-100\% of the
-structural backbone in every case. A generic three-field template
-matches GOI on the familiar invoice schema (97.8\%) but collapses to
-52.2\% on the custom Job Description Ontology and 62.2\% on the
-Pain-Management Clinical Visit Record Ontology-a structural
-guarantee generic prompting cannot offer once the document type
-leaves the LLM's pretraining prior.
+typed graph with YAML/JSON export. Across four contrasting
+ontologies in four distinct domains-B2B billing, talent acquisition,
+healthcare clinical documentation, and professional services
+contracting-our controlled generative validation shows GOI-prompted
+generation covers 95-100\% of the structural backbone in every case.
+A generic three-field template matches GOI on the familiar invoice
+schema (97.8\%) but collapses to 52.2\% on the custom Job Description
+Ontology, 62.2\% on the Pain-Management Clinical Visit Record
+Ontology, and 78.3\% on the Professional Services Contract \&
+Statement of Work Ontology-a structural guarantee generic prompting
+cannot offer once the document type leaves the LLM's pretraining
+prior.
 
 % -------------------------------------------------------
 % Acknowledgments / Funding / Data Availability
@@ -810,11 +864,16 @@ the Software Services Invoice ontology JSON (48 nodes; example
 values replaced with synthetic placeholders), an anonymized
 Pain-Management Clinical Visit Record Ontology JSON (45 nodes;
 provider, practice, address, patient, and date values replaced with
-synthetic clinically-plausible equivalents), the six LLM-generated
-documents used in \S\ref{sec:ontology-as-prompt}, the two prompt
-templates (System~A and~B; see Appendix~\ref{app:prompts}), and the
-broadened-NCS scoring protocol with per-case detection log. Three
-publicly-listed job postings used to induce the JD ontology are at
+synthetic clinically-plausible equivalents), an anonymized
+Professional Services Contract \& Statement of Work Ontology JSON
+(46 nodes; party legal names, addresses, registration / tax-ID
+numbers, contact information, agreement identifiers, and signatory
+names replaced with synthetic legally-plausible equivalents), the
+eight LLM-generated documents used in
+\S\ref{sec:ontology-as-prompt}, the two prompt templates (System~A
+and~B; see Appendix~\ref{app:prompts}), and the broadened-NCS
+scoring protocol with per-case detection log. Three publicly-listed
+job postings used to induce the JD ontology are at
 \texttt{research/job\_descriptions/}.\par
 
 % -------------------------------------------------------
