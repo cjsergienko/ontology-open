@@ -57,14 +57,14 @@ components/
   OntologyNode.tsx            # React Flow node
   NodePanel.tsx               # Node/edge property panel
   LandingPage.tsx             # Marketing page
-  TokenLimitModal.tsx         # Popup when AI quota (3000 tokens) is hit
+  TokenLimitModal.tsx         # Popup when AI quota (100k tokens) is hit
   SiteHeader.tsx / SiteFooter.tsx
 lib/
   types.ts                    # NodeType, EdgeType, Ontology interfaces
   storage.ts                  # SQLite read/write
   layout.ts                   # Graph layout algorithms
   sse.ts                      # SSE streaming helper
-  users.ts                    # canUseAI(), TOKEN_LIMIT=3000, incrementTokensUsed()
+  users.ts                    # canUseAI(), TOKEN_LIMIT=100000, incrementTokensUsed()
   notify.ts                   # sendRegistrationEmail, sendContactEmail (Gmail OAuth)
 e2e/                          # Playwright tests (run on pre-push hook)
 ```
@@ -82,7 +82,7 @@ Full rules also at: `/Users/sserg/infrastructure/GIT_FLOW.md`
 ---
 
 ## AI Quota (open edition)
-- All authenticated users share a **3,000 output token** monthly budget (`TOKEN_LIMIT` in `lib/users.ts`)
+- Each authenticated user gets a **100,000 output token** budget (`TOKEN_LIMIT` in `lib/users.ts`)
 - Tracked in `users.tokens_used` (SQLite column, incremented after each preview/import call)
 - When limit is hit: API returns HTTP 402 → `TokenLimitModal` opens → user submits contact form → email sent to contact@ontology.live via Gmail OAuth
 

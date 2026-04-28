@@ -94,7 +94,7 @@ interface Ontology {
 
 ## Users & AI quota (`lib/users.ts`)
 - No paid plans — all registered users have equal open access
-- **AI quota:** `TOKEN_LIMIT = 3000` output tokens per user (lifetime, not monthly)
+- **AI quota:** `TOKEN_LIMIT = 100000` output tokens per user (lifetime, not monthly)
 - `lib/users.ts` — `getOrCreateUser`, `canUseAI`, `incrementTokensUsed`, `countUserOntologies`, `seedDemoOntology`
 - Quota enforced server-side in `/preview` and `/import` routes — returns **HTTP 402** when limit hit
 - `users.tokens_used` column tracks cumulative output tokens consumed
