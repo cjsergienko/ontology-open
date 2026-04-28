@@ -1,0 +1,1528 @@
+{
+  "ontology": {
+    "name": "Pain Management Clinical Visit Record Ontology",
+    "description": "Models the structure of pain management and rehabilitation follow-up visit records, including patient demographics, injury/claim context, clinical findings, diagnostics, and treatment recommendations. Used to generate structured clinical documentation for workers' compensation and musculoskeletal pain cases.",
+    "domain": "healthcare"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "clinical_visit_record",
+        "type": "class",
+        "label": "Clinical Visit Record",
+        "description": "The top-level document representing a single patient encounter at a pain care facility",
+        "semantics": "Each instance is tied to a specific patient, provider, date, and visit type",
+        "examples": [
+          "Follow-Up Exam",
+          "Initial Consultation",
+          "Post-Procedure Visit"
+        ]
+      },
+      {
+        "id": "practice",
+        "type": "class",
+        "label": "Medical Practice",
+        "description": "The clinical facility or practice where the visit occurs, including name, locations, and contact information",
+        "semantics": "Varies by practice name, number of locations, and specialty focus",
+        "examples": [
+          "Northshore Pain & Rehabilitation",
+          "Orthopedic Associates"
+        ]
+      },
+      {
+        "id": "practice_name",
+        "type": "property",
+        "label": "Practice Name",
+        "description": "The formal name of the medical practice or rehabilitation center",
+        "semantics": "Fixed per document instance, appears in header of every page",
+        "examples": [
+          "Northshore Pain & Rehabilitation",
+          "Tristate Spine Center"
+        ]
+      },
+      {
+        "id": "practice_location",
+        "type": "property",
+        "label": "Practice Location",
+        "description": "Physical address and telephone number of the practice; may include multiple locations",
+        "semantics": "One or more address/phone pairs; varies per practice",
+        "examples": [
+          "200 Madison Avenue, Suite 401, Hempstead, NY 11550",
+          "450 Garden Boulevard, Riverside, NY 11420"
+        ]
+      },
+      {
+        "id": "provider",
+        "type": "class",
+        "label": "Provider",
+        "description": "The licensed physician or clinician authoring or signing the visit record",
+        "semantics": "Name, credentials, and signature vary; may include attending and co-signing providers",
+        "examples": [
+          "James Carter, M.D.",
+          "Marcus Reid, D.O."
+        ]
+      },
+      {
+        "id": "provider_credentials",
+        "type": "property",
+        "label": "Provider Credentials",
+        "description": "Professional degree and specialty designation of the provider",
+        "semantics": "Varies by provider; drives authority and scope of recommendations",
+        "examples": [
+          "M.D.",
+          "D.O.",
+          "D.C."
+        ]
+      },
+      {
+        "id": "patient",
+        "type": "class",
+        "label": "Patient",
+        "description": "The individual receiving care, characterized by demographics and identifying information",
+        "semantics": "Demographics (name, DOB, age, gender, ID) vary per document instance",
+        "examples": [
+          "Maria Rivera, DOB 04/22/1988",
+          "Daniel Ortiz, DOB 11/05/1972"
+        ]
+      },
+      {
+        "id": "patient_demographics",
+        "type": "property",
+        "label": "Patient Demographics",
+        "description": "Core identifying attributes of the patient including name, date of birth, age, gender, and patient ID",
+        "semantics": "All vary per patient; gender drives pronoun use throughout narrative",
+        "examples": [
+          "Age: 34, Gender: Female",
+          "Age: 52, Gender: Male"
+        ]
+      },
+      {
+        "id": "visit_metadata",
+        "type": "class",
+        "label": "Visit Metadata",
+        "description": "Administrative details about the specific clinical encounter including date and visit type",
+        "semantics": "Date and visit type vary per encounter; visit type shapes which sections are included",
+        "examples": [
+          "Date of Visit: 5/14/2024, Follow-Up Exam",
+          "Date of Visit: 3/10/2023, Initial Evaluation"
+        ]
+      },
+      {
+        "id": "visit_type",
+        "type": "dimension",
+        "label": "Visit Type",
+        "description": "Classification of the encounter that drives the scope and structure of the clinical note",
+        "semantics": "Determines which exam sections are required and the depth of history taking",
+        "examples": [
+          "Follow-Up Exam",
+          "Initial Consultation",
+          "Post-Procedure Check",
+          "IME"
+        ]
+      },
+      {
+        "id": "claim_information",
+        "type": "class",
+        "label": "Claim Information",
+        "description": "Legal and administrative information about the injury claim context",
+        "semantics": "Claim type and causal relationship vary; shapes work status and impairment sections",
+        "examples": [
+          "Type of Claim: WC",
+          "Type of Claim: No-Fault",
+          "Type of Claim: General Liability"
+        ]
+      },
+      {
+        "id": "claim_type",
+        "type": "dimension",
+        "label": "Claim Type",
+        "description": "The legal classification of the injury or illness claim",
+        "semantics": "Drives causal relationship language, impairment ratings, and work status documentation",
+        "examples": [
+          "WC (Workers' Compensation)",
+          "No-Fault",
+          "General Liability",
+          "Personal Injury"
+        ]
+      },
+      {
+        "id": "causal_relationship",
+        "type": "property",
+        "label": "Causal Relationship",
+        "description": "Attribution of the injury or condition to a specific cause",
+        "semantics": "Varies based on claim type and accident details",
+        "examples": [
+          "Work related accident",
+          "Motor vehicle accident",
+          "Slip and fall"
+        ]
+      },
+      {
+        "id": "work_status",
+        "type": "class",
+        "label": "Work Status",
+        "description": "Documentation of the patient's current and historical ability to work due to the injury",
+        "semantics": "Includes missed work dates, current work capacity, and return-to-work assessment",
+        "examples": [
+          "Patient currently not working, first missed work 7/8/2021",
+          "Full Work, Limited Work, No Work"
+        ]
+      },
+      {
+        "id": "impairment_percentage",
+        "type": "property",
+        "label": "Temporary Impairment Percentage",
+        "description": "Clinician-assigned percentage of functional impairment due to the injury",
+        "semantics": "Varies from 0-100%; used for workers' compensation documentation",
+        "examples": [
+          "100%",
+          "75%",
+          "50%"
+        ]
+      },
+      {
+        "id": "chief_complaint",
+        "type": "class",
+        "label": "Chief Complaint",
+        "description": "The primary symptoms or pain regions reported by the patient at the visit",
+        "semantics": "Body region(s) and pain type vary; drives which physical exam sections are performed",
+        "examples": [
+          "neck pain, low back pain, bilateral knee pain, bilateral shoulder pain",
+          "lower back pain with radiculopathy"
+        ]
+      },
+      {
+        "id": "body_region",
+        "type": "dimension",
+        "label": "Body Region",
+        "description": "Anatomical area of complaint or examination; drives the structure of the physical exam",
+        "semantics": "One or more regions per visit; each region has its own exam subsection",
+        "examples": [
+          "Lumbar Spine",
+          "Cervical Spine",
+          "Knee (Bilateral)",
+          "Shoulder (Bilateral)"
+        ]
+      },
+      {
+        "id": "history_of_present_illness",
+        "type": "class",
+        "label": "History of Present Illness (HPI)",
+        "description": "Narrative description of the patient's symptoms, progression, prior treatments, and functional limitations",
+        "semantics": "Length and detail vary with case complexity; includes pain ratings, prior interventions, and ADL impact",
+        "examples": [
+          "Patient continues to have back pain, grades pain 9/10, denies radiating pain",
+          "Patient reports neck pain 5/10 with dull to sharp quality"
+        ]
+      },
+      {
+        "id": "pain_rating",
+        "type": "property",
+        "label": "Pain Rating",
+        "description": "Numeric pain scale score reported by the patient, typically 0-10",
+        "semantics": "Varies per body region and visit; used to track progress over time",
+        "examples": [
+          "9/10",
+          "7/10",
+          "4/10",
+          "5/10"
+        ]
+      },
+      {
+        "id": "prior_treatment",
+        "type": "property",
+        "label": "Prior Treatment",
+        "description": "Treatments the patient has previously received or is currently undergoing",
+        "semantics": "Varies by case; includes procedures, therapies, medications, and surgeries",
+        "examples": [
+          "epidural steroid injection",
+          "left total knee replacement",
+          "acupuncture",
+          "physical therapy"
+        ]
+      },
+      {
+        "id": "allergies",
+        "type": "class",
+        "label": "Allergies",
+        "description": "Documented drug or substance allergies including reaction type",
+        "semantics": "Varies per patient; presence or absence must be documented",
+        "examples": [
+          "Ceclor: itching",
+          "gabapentin: itching",
+          "NKDA"
+        ]
+      },
+      {
+        "id": "medications",
+        "type": "class",
+        "label": "Medications",
+        "description": "All medications prescribed or currently taken by the patient, including dosage, frequency, and duration",
+        "semantics": "Divided into today's prescriptions and current ongoing medications; varies by case complexity",
+        "examples": [
+          "Percocet 5-325mg twice daily",
+          "cyclobenzaprine ER 15mg daily",
+          "diclofenac topical gel 3%"
+        ]
+      },
+      {
+        "id": "medication_details",
+        "type": "property",
+        "label": "Medication Details",
+        "description": "Specific attributes of each prescribed medication: name, formulation, dose, route, frequency, and duration",
+        "semantics": "Each medication entry must include all sub-attributes; duration typically in days",
+        "examples": [
+          "1 tablet twice daily for 30 days",
+          "1 application every 8 hours for 30 days"
+        ]
+      },
+      {
+        "id": "past_medical_history",
+        "type": "class",
+        "label": "Past Medical History",
+        "description": "Documented pre-existing medical conditions organized by body system",
+        "semantics": "Categorized by system (cardiovascular, musculoskeletal, neurological, endocrine, oncological); varies by patient",
+        "examples": [
+          "Hypertension",
+          "Osteoporosis",
+          "Stroke",
+          "Kidney problems",
+          "Cancer"
+        ]
+      },
+      {
+        "id": "surgical_history",
+        "type": "class",
+        "label": "Surgical History",
+        "description": "Prior surgical procedures undergone by the patient",
+        "semantics": "Varies per patient; relevant surgeries may be referenced in HPI and recommendations",
+        "examples": [
+          "appendectomy",
+          "bariatric sleeve surgery",
+          "left total knee replacement"
+        ]
+      },
+      {
+        "id": "social_history",
+        "type": "class",
+        "label": "Social History",
+        "description": "Patient lifestyle factors including tobacco and alcohol use",
+        "semantics": "Tobacco and alcohol status vary; may include occupation and activity level",
+        "examples": [
+          "current smoker, every day",
+          "social drinking",
+          "non-smoker"
+        ]
+      },
+      {
+        "id": "vital_signs",
+        "type": "class",
+        "label": "Vital Signs",
+        "description": "Objective biometric measurements recorded at the visit",
+        "semantics": "Height, weight, BMI, BSA, and blood pressure vary per visit; date/time and laterality of BP documented",
+        "examples": [
+          "Height: 67 in, Weight: 217 lbs, BMI: 34.0",
+          "BP: 128/72 Left Arm Sitting"
+        ]
+      },
+      {
+        "id": "review_of_systems",
+        "type": "class",
+        "label": "Review of Systems (ROS)",
+        "description": "Systematic patient-reported symptom review across all major body systems",
+        "semantics": "Each system listed with admits/denies for each symptom; systems covered vary by visit",
+        "examples": [
+          "Constitutional: Denies fever, chills",
+          "Musculoskeletal: Admits to neck pain, low back pain"
+        ]
+      },
+      {
+        "id": "physical_exam",
+        "type": "class",
+        "label": "Physical Examination",
+        "description": "Objective clinical findings organized by body region and exam component",
+        "semantics": "Modular structure with one subsection per body region; components include inspection, palpation, ROM, strength, sensation, reflexes, special tests",
+        "examples": [
+          "Exam Lumbar Spine",
+          "Exam Cervical Spine",
+          "Examination Knee Bilateral",
+          "Examination Shoulder Bilateral"
+        ]
+      },
+      {
+        "id": "range_of_motion",
+        "type": "property",
+        "label": "Range of Motion",
+        "description": "Measured degrees of movement in each direction for a given body region, compared to previous visit and normal range",
+        "semantics": "Tabular format with flexion, extension, rotation, side-bending; previous vs. current vs. normal columns",
+        "examples": [
+          "Lumbar Flexion: 55° (Normal 90°)",
+          "Cervical Rotation Left: 65°, Right: 55°"
+        ]
+      },
+      {
+        "id": "muscle_strength",
+        "type": "property",
+        "label": "Muscle Strength",
+        "description": "Graded muscle strength testing (0-5 scale) for specific muscle groups in a body region",
+        "semantics": "Tabular with previous, current, and normal columns; laterality specified",
+        "examples": [
+          "Hip Flexion: 4/5 (Normal 5/5)",
+          "Shoulder Abduction: 4/5"
+        ]
+      },
+      {
+        "id": "special_tests",
+        "type": "property",
+        "label": "Special Orthopedic Tests",
+        "description": "Named orthopedic or neurological provocation tests with positive/negative/equivocal results and laterality",
+        "semantics": "Set of tests varies by body region; results drive diagnostic and treatment decisions",
+        "examples": [
+          "SLR positive bilateral",
+          "McMurray's test positive",
+          "Neer's test positive",
+          "Spurling's test equivocal"
+        ]
+      },
+      {
+        "id": "sensation_testing",
+        "type": "property",
+        "label": "Sensation Testing",
+        "description": "Assessment of sensory function at specified anatomical landmarks",
+        "semantics": "Varies by body region; typically normal or abnormal with specific dermatomal locations",
+        "examples": [
+          "Dorsal foot (1st Web): Normal",
+          "Medial forearm/elbow: Normal",
+          "Digit 3 (Middle Finger): Normal"
+        ]
+      },
+      {
+        "id": "reflexes",
+        "type": "property",
+        "label": "Muscle Stretch Reflexes",
+        "description": "Deep tendon reflex findings at specific anatomical locations, graded on standard scale",
+        "semantics": "Varies by body region examined; graded 0-4+ with laterality noted",
+        "examples": [
+          "Biceps 2+",
+          "Patellar reflex 2+ symmetrical",
+          "Brachioradialis 2+"
+        ]
+      },
+      {
+        "id": "diagnostic_tests",
+        "type": "class",
+        "label": "Diagnostic Tests",
+        "description": "Imaging studies, laboratory tests, or other diagnostic evaluations with dates, technique, findings, and impressions",
+        "semantics": "Varies by test type (MRI, X-ray, CT, EMG); includes comparison to prior studies",
+        "examples": [
+          "MRI Lumbar Spine Non-Contrast 2/9/2024",
+          "X-ray bilateral knees",
+          "EMG/NCS"
+        ]
+      },
+      {
+        "id": "imaging_findings",
+        "type": "property",
+        "label": "Imaging Findings",
+        "description": "Detailed radiologic observations at each spinal level or anatomical region with impression summary",
+        "semantics": "Level-by-level findings for spine; includes severity grading and comparison to prior",
+        "examples": [
+          "L4-5: Anterolisthesis, severe bilateral facet arthropathy, moderate to severe canal stenosis",
+          "Grade 1 anterolisthesis of L4 on L5"
+        ]
+      },
+      {
+        "id": "assessment",
+        "type": "class",
+        "label": "Assessment / Diagnoses",
+        "description": "Formal diagnostic codes and labels representing the clinician's conclusions from the visit",
+        "semantics": "ICD-10 coded diagnoses; multiple diagnoses per visit organized by body region",
+        "examples": [
+          "M54.59 Other Low Back Pain",
+          "M17.2 Bilateral Post-Traumatic Osteoarthritis of Knee",
+          "M75.41 Impingement Syndrome Right Shoulder"
+        ]
+      },
+      {
+        "id": "icd_code",
+        "type": "property",
+        "label": "ICD-10 Diagnosis Code",
+        "description": "Standardized alphanumeric code classifying each diagnosed condition",
+        "semantics": "Each diagnosis carries a code and description; drives billing and treatment justification",
+        "examples": [
+          "M54.59",
+          "M54.12",
+          "M23.8X2",
+          "M75.42"
+        ]
+      },
+      {
+        "id": "recommendations",
+        "type": "class",
+        "label": "Recommendations / Treatment Plan",
+        "description": "Ordered list of clinical recommendations including therapies, procedures, medications, and justifications",
+        "semantics": "Numbered items; each recommendation includes clinical rationale referencing exam findings and failed prior treatments",
+        "examples": [
+          "Physical Therapy",
+          "Acupuncture",
+          "Medial Branch Block L4-L5/L5-S1",
+          "Bilateral Knee Viscosupplementation"
+        ]
+      },
+      {
+        "id": "treatment_justification",
+        "type": "property",
+        "label": "Treatment Justification",
+        "description": "Clinical rationale documenting why a recommended treatment is medically necessary, referencing failed conservative treatments and objective findings",
+        "semantics": "Required for procedures and injections; references duration of prior treatment, percent pain relief achieved, and diagnostic findings",
+        "examples": [
+          "Patient underwent 3 months of PT with less than 15% pain relief",
+          "Intra-articular injection with less than 20% relief, step-therapy failed"
+        ]
+      },
+      {
+        "id": "functional_goals",
+        "type": "property",
+        "label": "Functional Goals",
+        "description": "Short-term and long-term measurable goals for the patient's recovery and functional improvement",
+        "semantics": "Quantified where possible (blocks walked, degrees of ROM, ADL performance); short-term vs. long-term framing",
+        "examples": [
+          "Walk 1 additional block",
+          "Increase ROM by 5-10 degrees",
+          "Improve ADL performance including dressing and bathing"
+        ]
+      },
+      {
+        "id": "adl_impact",
+        "type": "property",
+        "label": "ADL Impact",
+        "description": "Assessment of how the patient's condition affects their ability to perform activities of daily living",
+        "semantics": "Specific ADLs named; severity of limitation documented in HPI and recommendations",
+        "examples": [
+          "difficulty bathing, dressing, grooming",
+          "unable to cook",
+          "difficulty walking more than 2 blocks"
+        ]
+      },
+      {
+        "id": "signature_block",
+        "type": "class",
+        "label": "Signature Block",
+        "description": "Attestation section including provider signature, date, and co-signing provider if applicable",
+        "semantics": "Required at end of document; may include multiple providers",
+        "examples": [
+          "James Carter, M.D. (signature)",
+          "Marcus Reid, D.O. (co-signer)"
+        ]
+      },
+      {
+        "id": "radiology_report",
+        "type": "class",
+        "label": "Radiology Report",
+        "description": "Appended or referenced formal imaging report including technique, clinical history, findings, impression, and radiologist signature",
+        "semantics": "Separate sub-document appended to visit record; includes ordering and reading provider information",
+        "examples": [
+          "MRI Lumbar Spine Non-Contrast",
+          "MRI Cervical Spine Non-Contrast"
+        ]
+      },
+      {
+        "id": "radiologist",
+        "type": "property",
+        "label": "Radiologist",
+        "description": "The physician who interpreted the imaging study, including name, credentials, and signature date",
+        "semantics": "Varies per study; distinct from treating provider",
+        "examples": [
+          "Eliana Tan, M.D., Signed 2/12/2024"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "clinical_visit_record",
+        "target": "practice",
+        "label": "occurs at",
+        "type": "relates_to"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "provider",
+        "label": "authored by",
+        "type": "relates_to"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "patient",
+        "label": "documents encounter with",
+        "type": "relates_to"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "visit_metadata",
+        "label": "has visit metadata",
+        "type": "has_property"
+      },
+      {
+        "source": "visit_metadata",
+        "target": "visit_type",
+        "label": "classified as",
+        "type": "has_value"
+      },
+      {
+        "source": "practice",
+        "target": "practice_name",
+        "label": "has name",
+        "type": "has_property"
+      },
+      {
+        "source": "practice",
+        "target": "practice_location",
+        "label": "has location",
+        "type": "has_property"
+      },
+      {
+        "source": "provider",
+        "target": "provider_credentials",
+        "label": "holds credentials",
+        "type": "has_property"
+      },
+      {
+        "source": "patient",
+        "target": "patient_demographics",
+        "label": "described by",
+        "type": "has_property"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "claim_information",
+        "label": "filed under",
+        "type": "has_property"
+      },
+      {
+        "source": "claim_information",
+        "target": "claim_type",
+        "label": "has claim type",
+        "type": "has_value"
+      },
+      {
+        "source": "claim_information",
+        "target": "causal_relationship",
+        "label": "has causal relationship",
+        "type": "has_property"
+      },
+      {
+        "source": "claim_information",
+        "target": "work_status",
+        "label": "includes work status",
+        "type": "has_property"
+      },
+      {
+        "source": "claim_information",
+        "target": "impairment_percentage",
+        "label": "assigns impairment",
+        "type": "has_property"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "chief_complaint",
+        "label": "presents with",
+        "type": "has_property"
+      },
+      {
+        "source": "chief_complaint",
+        "target": "body_region",
+        "label": "localizes to",
+        "type": "has_value"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "history_of_present_illness",
+        "label": "contains HPI",
+        "type": "part_of"
+      },
+      {
+        "source": "history_of_present_illness",
+        "target": "pain_rating",
+        "label": "includes pain rating",
+        "type": "has_property"
+      },
+      {
+        "source": "history_of_present_illness",
+        "target": "prior_treatment",
+        "label": "documents prior treatment",
+        "type": "has_property"
+      },
+      {
+        "source": "history_of_present_illness",
+        "target": "adl_impact",
+        "label": "describes ADL impact",
+        "type": "has_property"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "allergies",
+        "label": "documents allergies",
+        "type": "part_of"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "medications",
+        "label": "documents medications",
+        "type": "part_of"
+      },
+      {
+        "source": "medications",
+        "target": "medication_details",
+        "label": "specified by",
+        "type": "has_property"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "past_medical_history",
+        "label": "records PMH",
+        "type": "part_of"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "surgical_history",
+        "label": "records surgical history",
+        "type": "part_of"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "social_history",
+        "label": "records social history",
+        "type": "part_of"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "vital_signs",
+        "label": "includes vitals",
+        "type": "part_of"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "review_of_systems",
+        "label": "includes ROS",
+        "type": "part_of"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "physical_exam",
+        "label": "includes physical exam",
+        "type": "part_of"
+      },
+      {
+        "source": "physical_exam",
+        "target": "body_region",
+        "label": "organized by",
+        "type": "relates_to"
+      },
+      {
+        "source": "physical_exam",
+        "target": "range_of_motion",
+        "label": "measures",
+        "type": "has_property"
+      },
+      {
+        "source": "physical_exam",
+        "target": "muscle_strength",
+        "label": "measures",
+        "type": "has_property"
+      },
+      {
+        "source": "physical_exam",
+        "target": "special_tests",
+        "label": "performs",
+        "type": "has_property"
+      },
+      {
+        "source": "physical_exam",
+        "target": "sensation_testing",
+        "label": "includes",
+        "type": "has_property"
+      },
+      {
+        "source": "physical_exam",
+        "target": "reflexes",
+        "label": "documents",
+        "type": "has_property"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "diagnostic_tests",
+        "label": "references diagnostics",
+        "type": "part_of"
+      },
+      {
+        "source": "diagnostic_tests",
+        "target": "imaging_findings",
+        "label": "yields findings",
+        "type": "has_property"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "assessment",
+        "label": "concludes with",
+        "type": "part_of"
+      },
+      {
+        "source": "assessment",
+        "target": "icd_code",
+        "label": "coded as",
+        "type": "has_property"
+      },
+      {
+        "source": "assessment",
+        "target": "body_region",
+        "label": "mapped to",
+        "type": "relates_to"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "recommendations",
+        "label": "concludes with",
+        "type": "part_of"
+      },
+      {
+        "source": "recommendations",
+        "target": "treatment_justification",
+        "label": "supported by",
+        "type": "has_property"
+      },
+      {
+        "source": "recommendations",
+        "target": "functional_goals",
+        "label": "targets",
+        "type": "has_property"
+      },
+      {
+        "source": "treatment_justification",
+        "target": "prior_treatment",
+        "label": "references failed",
+        "type": "relates_to"
+      },
+      {
+        "source": "treatment_justification",
+        "target": "imaging_findings",
+        "label": "supported by",
+        "type": "relates_to"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "signature_block",
+        "label": "attested by",
+        "type": "part_of"
+      },
+      {
+        "source": "signature_block",
+        "target": "provider",
+        "label": "signed by",
+        "type": "relates_to"
+      },
+      {
+        "source": "clinical_visit_record",
+        "target": "radiology_report",
+        "label": "appends",
+        "type": "part_of"
+      },
+      {
+        "source": "radiology_report",
+        "target": "radiologist",
+        "label": "interpreted by",
+        "type": "has_property"
+      },
+      {
+        "source": "radiology_report",
+        "target": "imaging_findings",
+        "label": "contains",
+        "type": "has_property"
+      },
+      {
+        "source": "visit_type",
+        "target": "physical_exam",
+        "label": "constrains scope of",
+        "type": "constrains"
+      },
+      {
+        "source": "claim_type",
+        "target": "work_status",
+        "label": "requires documentation of",
+        "type": "constrains"
+      },
+      {
+        "source": "chief_complaint",
+        "target": "physical_exam",
+        "label": "drives structure of",
+        "type": "constrains"
+      },
+      {
+        "source": "adl_impact",
+        "target": "functional_goals",
+        "label": "informs",
+        "type": "relates_to"
+      }
+    ]
+  },
+  "pipeline": {
+    "classes": [
+      {
+        "id": "clinical_visit_record",
+        "label": "Clinical Visit Record",
+        "description": "The top-level document representing a single patient encounter at a pain care facility",
+        "parent": null,
+        "properties": [
+          {
+            "id": "visit_metadata",
+            "label": "Visit Metadata",
+            "description": "Administrative details about the specific clinical encounter including date and visit type",
+            "examples": [
+              "Date of Visit: 5/14/2024, Follow-Up Exam",
+              "Date of Visit: 3/10/2023, Initial Evaluation"
+            ]
+          },
+          {
+            "id": "claim_information",
+            "label": "Claim Information",
+            "description": "Legal and administrative information about the injury claim context",
+            "examples": [
+              "Type of Claim: WC",
+              "Type of Claim: No-Fault",
+              "Type of Claim: General Liability"
+            ]
+          },
+          {
+            "id": "chief_complaint",
+            "label": "Chief Complaint",
+            "description": "The primary symptoms or pain regions reported by the patient at the visit",
+            "examples": [
+              "neck pain, low back pain, bilateral knee pain, bilateral shoulder pain",
+              "lower back pain with radiculopathy"
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Medical Practice",
+            "label": "occurs at"
+          },
+          {
+            "type": "relates_to",
+            "target": "Provider",
+            "label": "authored by"
+          },
+          {
+            "type": "relates_to",
+            "target": "Patient",
+            "label": "documents encounter with"
+          },
+          {
+            "type": "part_of",
+            "target": "History of Present Illness (HPI)",
+            "label": "contains HPI"
+          },
+          {
+            "type": "part_of",
+            "target": "Allergies",
+            "label": "documents allergies"
+          },
+          {
+            "type": "part_of",
+            "target": "Medications",
+            "label": "documents medications"
+          },
+          {
+            "type": "part_of",
+            "target": "Past Medical History",
+            "label": "records PMH"
+          },
+          {
+            "type": "part_of",
+            "target": "Surgical History",
+            "label": "records surgical history"
+          },
+          {
+            "type": "part_of",
+            "target": "Social History",
+            "label": "records social history"
+          },
+          {
+            "type": "part_of",
+            "target": "Vital Signs",
+            "label": "includes vitals"
+          },
+          {
+            "type": "part_of",
+            "target": "Review of Systems (ROS)",
+            "label": "includes ROS"
+          },
+          {
+            "type": "part_of",
+            "target": "Physical Examination",
+            "label": "includes physical exam"
+          },
+          {
+            "type": "part_of",
+            "target": "Diagnostic Tests",
+            "label": "references diagnostics"
+          },
+          {
+            "type": "part_of",
+            "target": "Assessment / Diagnoses",
+            "label": "concludes with"
+          },
+          {
+            "type": "part_of",
+            "target": "Recommendations / Treatment Plan",
+            "label": "concludes with"
+          },
+          {
+            "type": "part_of",
+            "target": "Signature Block",
+            "label": "attested by"
+          },
+          {
+            "type": "part_of",
+            "target": "Radiology Report",
+            "label": "appends"
+          }
+        ],
+        "examples": [
+          "Follow-Up Exam",
+          "Initial Consultation",
+          "Post-Procedure Visit"
+        ]
+      },
+      {
+        "id": "practice",
+        "label": "Medical Practice",
+        "description": "The clinical facility or practice where the visit occurs, including name, locations, and contact information",
+        "parent": null,
+        "properties": [
+          {
+            "id": "practice_name",
+            "label": "Practice Name",
+            "description": "The formal name of the medical practice or rehabilitation center",
+            "examples": [
+              "Northshore Pain & Rehabilitation",
+              "Tristate Spine Center"
+            ]
+          },
+          {
+            "id": "practice_location",
+            "label": "Practice Location",
+            "description": "Physical address and telephone number of the practice; may include multiple locations",
+            "examples": [
+              "200 Madison Avenue, Suite 401, Hempstead, NY 11550",
+              "450 Garden Boulevard, Riverside, NY 11420"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Northshore Pain & Rehabilitation",
+          "Orthopedic Associates"
+        ]
+      },
+      {
+        "id": "provider",
+        "label": "Provider",
+        "description": "The licensed physician or clinician authoring or signing the visit record",
+        "parent": null,
+        "properties": [
+          {
+            "id": "provider_credentials",
+            "label": "Provider Credentials",
+            "description": "Professional degree and specialty designation of the provider",
+            "examples": [
+              "M.D.",
+              "D.O.",
+              "D.C."
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "James Carter, M.D.",
+          "Marcus Reid, D.O."
+        ]
+      },
+      {
+        "id": "patient",
+        "label": "Patient",
+        "description": "The individual receiving care, characterized by demographics and identifying information",
+        "parent": null,
+        "properties": [
+          {
+            "id": "patient_demographics",
+            "label": "Patient Demographics",
+            "description": "Core identifying attributes of the patient including name, date of birth, age, gender, and patient ID",
+            "examples": [
+              "Age: 34, Gender: Female",
+              "Age: 52, Gender: Male"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Maria Rivera, DOB 04/22/1988",
+          "Daniel Ortiz, DOB 11/05/1972"
+        ]
+      },
+      {
+        "id": "visit_metadata",
+        "label": "Visit Metadata",
+        "description": "Administrative details about the specific clinical encounter including date and visit type",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Date of Visit: 5/14/2024, Follow-Up Exam",
+          "Date of Visit: 3/10/2023, Initial Evaluation"
+        ]
+      },
+      {
+        "id": "claim_information",
+        "label": "Claim Information",
+        "description": "Legal and administrative information about the injury claim context",
+        "parent": null,
+        "properties": [
+          {
+            "id": "causal_relationship",
+            "label": "Causal Relationship",
+            "description": "Attribution of the injury or condition to a specific cause",
+            "examples": [
+              "Work related accident",
+              "Motor vehicle accident",
+              "Slip and fall"
+            ]
+          },
+          {
+            "id": "work_status",
+            "label": "Work Status",
+            "description": "Documentation of the patient's current and historical ability to work due to the injury",
+            "examples": [
+              "Patient currently not working, first missed work 7/8/2021",
+              "Full Work, Limited Work, No Work"
+            ]
+          },
+          {
+            "id": "impairment_percentage",
+            "label": "Temporary Impairment Percentage",
+            "description": "Clinician-assigned percentage of functional impairment due to the injury",
+            "examples": [
+              "100%",
+              "75%",
+              "50%"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Type of Claim: WC",
+          "Type of Claim: No-Fault",
+          "Type of Claim: General Liability"
+        ]
+      },
+      {
+        "id": "work_status",
+        "label": "Work Status",
+        "description": "Documentation of the patient's current and historical ability to work due to the injury",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Patient currently not working, first missed work 7/8/2021",
+          "Full Work, Limited Work, No Work"
+        ]
+      },
+      {
+        "id": "chief_complaint",
+        "label": "Chief Complaint",
+        "description": "The primary symptoms or pain regions reported by the patient at the visit",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "neck pain, low back pain, bilateral knee pain, bilateral shoulder pain",
+          "lower back pain with radiculopathy"
+        ]
+      },
+      {
+        "id": "history_of_present_illness",
+        "label": "History of Present Illness (HPI)",
+        "description": "Narrative description of the patient's symptoms, progression, prior treatments, and functional limitations",
+        "parent": null,
+        "properties": [
+          {
+            "id": "pain_rating",
+            "label": "Pain Rating",
+            "description": "Numeric pain scale score reported by the patient, typically 0-10",
+            "examples": [
+              "9/10",
+              "7/10",
+              "4/10",
+              "5/10"
+            ]
+          },
+          {
+            "id": "prior_treatment",
+            "label": "Prior Treatment",
+            "description": "Treatments the patient has previously received or is currently undergoing",
+            "examples": [
+              "epidural steroid injection",
+              "left total knee replacement",
+              "acupuncture",
+              "physical therapy"
+            ]
+          },
+          {
+            "id": "adl_impact",
+            "label": "ADL Impact",
+            "description": "Assessment of how the patient's condition affects their ability to perform activities of daily living",
+            "examples": [
+              "difficulty bathing, dressing, grooming",
+              "unable to cook",
+              "difficulty walking more than 2 blocks"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Patient continues to have back pain, grades pain 9/10, denies radiating pain",
+          "Patient reports neck pain 5/10 with dull to sharp quality"
+        ]
+      },
+      {
+        "id": "allergies",
+        "label": "Allergies",
+        "description": "Documented drug or substance allergies including reaction type",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Ceclor: itching",
+          "gabapentin: itching",
+          "NKDA"
+        ]
+      },
+      {
+        "id": "medications",
+        "label": "Medications",
+        "description": "All medications prescribed or currently taken by the patient, including dosage, frequency, and duration",
+        "parent": null,
+        "properties": [
+          {
+            "id": "medication_details",
+            "label": "Medication Details",
+            "description": "Specific attributes of each prescribed medication: name, formulation, dose, route, frequency, and duration",
+            "examples": [
+              "1 tablet twice daily for 30 days",
+              "1 application every 8 hours for 30 days"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Percocet 5-325mg twice daily",
+          "cyclobenzaprine ER 15mg daily",
+          "diclofenac topical gel 3%"
+        ]
+      },
+      {
+        "id": "past_medical_history",
+        "label": "Past Medical History",
+        "description": "Documented pre-existing medical conditions organized by body system",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Hypertension",
+          "Osteoporosis",
+          "Stroke",
+          "Kidney problems",
+          "Cancer"
+        ]
+      },
+      {
+        "id": "surgical_history",
+        "label": "Surgical History",
+        "description": "Prior surgical procedures undergone by the patient",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "appendectomy",
+          "bariatric sleeve surgery",
+          "left total knee replacement"
+        ]
+      },
+      {
+        "id": "social_history",
+        "label": "Social History",
+        "description": "Patient lifestyle factors including tobacco and alcohol use",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "current smoker, every day",
+          "social drinking",
+          "non-smoker"
+        ]
+      },
+      {
+        "id": "vital_signs",
+        "label": "Vital Signs",
+        "description": "Objective biometric measurements recorded at the visit",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Height: 67 in, Weight: 217 lbs, BMI: 34.0",
+          "BP: 128/72 Left Arm Sitting"
+        ]
+      },
+      {
+        "id": "review_of_systems",
+        "label": "Review of Systems (ROS)",
+        "description": "Systematic patient-reported symptom review across all major body systems",
+        "parent": null,
+        "properties": [],
+        "relations": [],
+        "examples": [
+          "Constitutional: Denies fever, chills",
+          "Musculoskeletal: Admits to neck pain, low back pain"
+        ]
+      },
+      {
+        "id": "physical_exam",
+        "label": "Physical Examination",
+        "description": "Objective clinical findings organized by body region and exam component",
+        "parent": null,
+        "properties": [
+          {
+            "id": "range_of_motion",
+            "label": "Range of Motion",
+            "description": "Measured degrees of movement in each direction for a given body region, compared to previous visit and normal range",
+            "examples": [
+              "Lumbar Flexion: 55° (Normal 90°)",
+              "Cervical Rotation Left: 65°, Right: 55°"
+            ]
+          },
+          {
+            "id": "muscle_strength",
+            "label": "Muscle Strength",
+            "description": "Graded muscle strength testing (0-5 scale) for specific muscle groups in a body region",
+            "examples": [
+              "Hip Flexion: 4/5 (Normal 5/5)",
+              "Shoulder Abduction: 4/5"
+            ]
+          },
+          {
+            "id": "special_tests",
+            "label": "Special Orthopedic Tests",
+            "description": "Named orthopedic or neurological provocation tests with positive/negative/equivocal results and laterality",
+            "examples": [
+              "SLR positive bilateral",
+              "McMurray's test positive",
+              "Neer's test positive",
+              "Spurling's test equivocal"
+            ]
+          },
+          {
+            "id": "sensation_testing",
+            "label": "Sensation Testing",
+            "description": "Assessment of sensory function at specified anatomical landmarks",
+            "examples": [
+              "Dorsal foot (1st Web): Normal",
+              "Medial forearm/elbow: Normal",
+              "Digit 3 (Middle Finger): Normal"
+            ]
+          },
+          {
+            "id": "reflexes",
+            "label": "Muscle Stretch Reflexes",
+            "description": "Deep tendon reflex findings at specific anatomical locations, graded on standard scale",
+            "examples": [
+              "Biceps 2+",
+              "Patellar reflex 2+ symmetrical",
+              "Brachioradialis 2+"
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Body Region",
+            "label": "organized by"
+          }
+        ],
+        "examples": [
+          "Exam Lumbar Spine",
+          "Exam Cervical Spine",
+          "Examination Knee Bilateral",
+          "Examination Shoulder Bilateral"
+        ]
+      },
+      {
+        "id": "diagnostic_tests",
+        "label": "Diagnostic Tests",
+        "description": "Imaging studies, laboratory tests, or other diagnostic evaluations with dates, technique, findings, and impressions",
+        "parent": null,
+        "properties": [
+          {
+            "id": "imaging_findings",
+            "label": "Imaging Findings",
+            "description": "Detailed radiologic observations at each spinal level or anatomical region with impression summary",
+            "examples": [
+              "L4-5: Anterolisthesis, severe bilateral facet arthropathy, moderate to severe canal stenosis",
+              "Grade 1 anterolisthesis of L4 on L5"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "MRI Lumbar Spine Non-Contrast 2/9/2024",
+          "X-ray bilateral knees",
+          "EMG/NCS"
+        ]
+      },
+      {
+        "id": "assessment",
+        "label": "Assessment / Diagnoses",
+        "description": "Formal diagnostic codes and labels representing the clinician's conclusions from the visit",
+        "parent": null,
+        "properties": [
+          {
+            "id": "icd_code",
+            "label": "ICD-10 Diagnosis Code",
+            "description": "Standardized alphanumeric code classifying each diagnosed condition",
+            "examples": [
+              "M54.59",
+              "M54.12",
+              "M23.8X2",
+              "M75.42"
+            ]
+          }
+        ],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Body Region",
+            "label": "mapped to"
+          }
+        ],
+        "examples": [
+          "M54.59 Other Low Back Pain",
+          "M17.2 Bilateral Post-Traumatic Osteoarthritis of Knee",
+          "M75.41 Impingement Syndrome Right Shoulder"
+        ]
+      },
+      {
+        "id": "recommendations",
+        "label": "Recommendations / Treatment Plan",
+        "description": "Ordered list of clinical recommendations including therapies, procedures, medications, and justifications",
+        "parent": null,
+        "properties": [
+          {
+            "id": "treatment_justification",
+            "label": "Treatment Justification",
+            "description": "Clinical rationale documenting why a recommended treatment is medically necessary, referencing failed conservative treatments and objective findings",
+            "examples": [
+              "Patient underwent 3 months of PT with less than 15% pain relief",
+              "Intra-articular injection with less than 20% relief, step-therapy failed"
+            ]
+          },
+          {
+            "id": "functional_goals",
+            "label": "Functional Goals",
+            "description": "Short-term and long-term measurable goals for the patient's recovery and functional improvement",
+            "examples": [
+              "Walk 1 additional block",
+              "Increase ROM by 5-10 degrees",
+              "Improve ADL performance including dressing and bathing"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "Physical Therapy",
+          "Acupuncture",
+          "Medial Branch Block L4-L5/L5-S1",
+          "Bilateral Knee Viscosupplementation"
+        ]
+      },
+      {
+        "id": "signature_block",
+        "label": "Signature Block",
+        "description": "Attestation section including provider signature, date, and co-signing provider if applicable",
+        "parent": null,
+        "properties": [],
+        "relations": [
+          {
+            "type": "relates_to",
+            "target": "Provider",
+            "label": "signed by"
+          }
+        ],
+        "examples": [
+          "James Carter, M.D. (signature)",
+          "Marcus Reid, D.O. (co-signer)"
+        ]
+      },
+      {
+        "id": "radiology_report",
+        "label": "Radiology Report",
+        "description": "Appended or referenced formal imaging report including technique, clinical history, findings, impression, and radiologist signature",
+        "parent": null,
+        "properties": [
+          {
+            "id": "radiologist",
+            "label": "Radiologist",
+            "description": "The physician who interpreted the imaging study, including name, credentials, and signature date",
+            "examples": [
+              "Eliana Tan, M.D., Signed 2/12/2024"
+            ]
+          },
+          {
+            "id": "imaging_findings",
+            "label": "Imaging Findings",
+            "description": "Detailed radiologic observations at each spinal level or anatomical region with impression summary",
+            "examples": [
+              "L4-5: Anterolisthesis, severe bilateral facet arthropathy, moderate to severe canal stenosis",
+              "Grade 1 anterolisthesis of L4 on L5"
+            ]
+          }
+        ],
+        "relations": [],
+        "examples": [
+          "MRI Lumbar Spine Non-Contrast",
+          "MRI Cervical Spine Non-Contrast"
+        ]
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "visit_type",
+        "label": "Visit Type",
+        "description": "Classification of the encounter that drives the scope and structure of the clinical note",
+        "values": []
+      },
+      {
+        "id": "claim_type",
+        "label": "Claim Type",
+        "description": "The legal classification of the injury or illness claim",
+        "values": []
+      },
+      {
+        "id": "body_region",
+        "label": "Body Region",
+        "description": "Anatomical area of complaint or examination; drives the structure of the physical exam",
+        "values": []
+      }
+    ],
+    "constraints": [],
+    "promptReady": "# Pain Management Clinical Visit Record Ontology\n\nModels the structure of pain management and rehabilitation follow-up visit records, including patient demographics, injury/claim context, clinical findings, diagnostics, and treatment recommendations. Used to generate structured clinical documentation for workers' compensation and musculoskeletal pain cases.\n\n**Domain:** healthcare\n\n## Classes\n\n### Clinical Visit Record\nThe top-level document representing a single patient encounter at a pain care facility\n\n**Properties:**\n- Visit Metadata: Administrative details about the specific clinical encounter including date and visit type\n  Examples: Date of Visit: 5/14/2024, Follow-Up Exam, Date of Visit: 3/10/2023, Initial Evaluation\n- Claim Information: Legal and administrative information about the injury claim context\n  Examples: Type of Claim: WC, Type of Claim: No-Fault, Type of Claim: General Liability\n- Chief Complaint: The primary symptoms or pain regions reported by the patient at the visit\n  Examples: neck pain, low back pain, bilateral knee pain, bilateral shoulder pain, lower back pain with radiculopathy\n\n**Relations:**\n- occurs at → Medical Practice\n- authored by → Provider\n- documents encounter with → Patient\n- contains HPI → History of Present Illness (HPI)\n- documents allergies → Allergies\n- documents medications → Medications\n- records PMH → Past Medical History\n- records surgical history → Surgical History\n- records social history → Social History\n- includes vitals → Vital Signs\n- includes ROS → Review of Systems (ROS)\n- includes physical exam → Physical Examination\n- references diagnostics → Diagnostic Tests\n- concludes with → Assessment / Diagnoses\n- concludes with → Recommendations / Treatment Plan\n- attested by → Signature Block\n- appends → Radiology Report\n\n**Examples:**\n- Follow-Up Exam\n- Initial Consultation\n- Post-Procedure Visit\n\n### Medical Practice\nThe clinical facility or practice where the visit occurs, including name, locations, and contact information\n\n**Properties:**\n- Practice Name: The formal name of the medical practice or rehabilitation center\n  Examples: Northshore Pain & Rehabilitation, Tristate Spine Center\n- Practice Location: Physical address and telephone number of the practice; may include multiple locations\n  Examples: 200 Madison Avenue, Suite 401, Hempstead, NY 11550, 450 Garden Boulevard, Riverside, NY 11420\n\n**Examples:**\n- Northshore Pain & Rehabilitation\n- Orthopedic Associates\n\n### Provider\nThe licensed physician or clinician authoring or signing the visit record\n\n**Properties:**\n- Provider Credentials: Professional degree and specialty designation of the provider\n  Examples: M.D., D.O., D.C.\n\n**Examples:**\n- James Carter, M.D.\n- Marcus Reid, D.O.\n\n### Patient\nThe individual receiving care, characterized by demographics and identifying information\n\n**Properties:**\n- Patient Demographics: Core identifying attributes of the patient including name, date of birth, age, gender, and patient ID\n  Examples: Age: 34, Gender: Female, Age: 52, Gender: Male\n\n**Examples:**\n- Maria Rivera, DOB 04/22/1988\n- Daniel Ortiz, DOB 11/05/1972\n\n### Visit Metadata\nAdministrative details about the specific clinical encounter including date and visit type\n\n**Examples:**\n- Date of Visit: 5/14/2024, Follow-Up Exam\n- Date of Visit: 3/10/2023, Initial Evaluation\n\n### Claim Information\nLegal and administrative information about the injury claim context\n\n**Properties:**\n- Causal Relationship: Attribution of the injury or condition to a specific cause\n  Examples: Work related accident, Motor vehicle accident, Slip and fall\n- Work Status: Documentation of the patient's current and historical ability to work due to the injury\n  Examples: Patient currently not working, first missed work 7/8/2021, Full Work, Limited Work, No Work\n- Temporary Impairment Percentage: Clinician-assigned percentage of functional impairment due to the injury\n  Examples: 100%, 75%, 50%\n\n**Examples:**\n- Type of Claim: WC\n- Type of Claim: No-Fault\n- Type of Claim: General Liability\n\n### Work Status\nDocumentation of the patient's current and historical ability to work due to the injury\n\n**Examples:**\n- Patient currently not working, first missed work 7/8/2021\n- Full Work, Limited Work, No Work\n\n### Chief Complaint\nThe primary symptoms or pain regions reported by the patient at the visit\n\n**Examples:**\n- neck pain, low back pain, bilateral knee pain, bilateral shoulder pain\n- lower back pain with radiculopathy\n\n### History of Present Illness (HPI)\nNarrative description of the patient's symptoms, progression, prior treatments, and functional limitations\n\n**Properties:**\n- Pain Rating: Numeric pain scale score reported by the patient, typically 0-10\n  Examples: 9/10, 7/10, 4/10, 5/10\n- Prior Treatment: Treatments the patient has previously received or is currently undergoing\n  Examples: epidural steroid injection, left total knee replacement, acupuncture, physical therapy\n- ADL Impact: Assessment of how the patient's condition affects their ability to perform activities of daily living\n  Examples: difficulty bathing, dressing, grooming, unable to cook, difficulty walking more than 2 blocks\n\n**Examples:**\n- Patient continues to have back pain, grades pain 9/10, denies radiating pain\n- Patient reports neck pain 5/10 with dull to sharp quality\n\n### Allergies\nDocumented drug or substance allergies including reaction type\n\n**Examples:**\n- Ceclor: itching\n- gabapentin: itching\n- NKDA\n\n### Medications\nAll medications prescribed or currently taken by the patient, including dosage, frequency, and duration\n\n**Properties:**\n- Medication Details: Specific attributes of each prescribed medication: name, formulation, dose, route, frequency, and duration\n  Examples: 1 tablet twice daily for 30 days, 1 application every 8 hours for 30 days\n\n**Examples:**\n- Percocet 5-325mg twice daily\n- cyclobenzaprine ER 15mg daily\n- diclofenac topical gel 3%\n\n### Past Medical History\nDocumented pre-existing medical conditions organized by body system\n\n**Examples:**\n- Hypertension\n- Osteoporosis\n- Stroke\n- Kidney problems\n- Cancer\n\n### Surgical History\nPrior surgical procedures undergone by the patient\n\n**Examples:**\n- appendectomy\n- bariatric sleeve surgery\n- left total knee replacement\n\n### Social History\nPatient lifestyle factors including tobacco and alcohol use\n\n**Examples:**\n- current smoker, every day\n- social drinking\n- non-smoker\n\n### Vital Signs\nObjective biometric measurements recorded at the visit\n\n**Examples:**\n- Height: 67 in, Weight: 217 lbs, BMI: 34.0\n- BP: 128/72 Left Arm Sitting\n\n### Review of Systems (ROS)\nSystematic patient-reported symptom review across all major body systems\n\n**Examples:**\n- Constitutional: Denies fever, chills\n- Musculoskeletal: Admits to neck pain, low back pain\n\n### Physical Examination\nObjective clinical findings organized by body region and exam component\n\n**Properties:**\n- Range of Motion: Measured degrees of movement in each direction for a given body region, compared to previous visit and normal range\n  Examples: Lumbar Flexion: 55° (Normal 90°), Cervical Rotation Left: 65°, Right: 55°\n- Muscle Strength: Graded muscle strength testing (0-5 scale) for specific muscle groups in a body region\n  Examples: Hip Flexion: 4/5 (Normal 5/5), Shoulder Abduction: 4/5\n- Special Orthopedic Tests: Named orthopedic or neurological provocation tests with positive/negative/equivocal results and laterality\n  Examples: SLR positive bilateral, McMurray's test positive, Neer's test positive, Spurling's test equivocal\n- Sensation Testing: Assessment of sensory function at specified anatomical landmarks\n  Examples: Dorsal foot (1st Web): Normal, Medial forearm/elbow: Normal, Digit 3 (Middle Finger): Normal\n- Muscle Stretch Reflexes: Deep tendon reflex findings at specific anatomical locations, graded on standard scale\n  Examples: Biceps 2+, Patellar reflex 2+ symmetrical, Brachioradialis 2+\n\n**Relations:**\n- organized by → Body Region\n\n**Examples:**\n- Exam Lumbar Spine\n- Exam Cervical Spine\n- Examination Knee Bilateral\n- Examination Shoulder Bilateral\n\n### Diagnostic Tests\nImaging studies, laboratory tests, or other diagnostic evaluations with dates, technique, findings, and impressions\n\n**Properties:**\n- Imaging Findings: Detailed radiologic observations at each spinal level or anatomical region with impression summary\n  Examples: L4-5: Anterolisthesis, severe bilateral facet arthropathy, moderate to severe canal stenosis, Grade 1 anterolisthesis of L4 on L5\n\n**Examples:**\n- MRI Lumbar Spine Non-Contrast 2/9/2024\n- X-ray bilateral knees\n- EMG/NCS\n\n### Assessment / Diagnoses\nFormal diagnostic codes and labels representing the clinician's conclusions from the visit\n\n**Properties:**\n- ICD-10 Diagnosis Code: Standardized alphanumeric code classifying each diagnosed condition\n  Examples: M54.59, M54.12, M23.8X2, M75.42\n\n**Relations:**\n- mapped to → Body Region\n\n**Examples:**\n- M54.59 Other Low Back Pain\n- M17.2 Bilateral Post-Traumatic Osteoarthritis of Knee\n- M75.41 Impingement Syndrome Right Shoulder\n\n### Recommendations / Treatment Plan\nOrdered list of clinical recommendations including therapies, procedures, medications, and justifications\n\n**Properties:**\n- Treatment Justification: Clinical rationale documenting why a recommended treatment is medically necessary, referencing failed conservative treatments and objective findings\n  Examples: Patient underwent 3 months of PT with less than 15% pain relief, Intra-articular injection with less than 20% relief, step-therapy failed\n- Functional Goals: Short-term and long-term measurable goals for the patient's recovery and functional improvement\n  Examples: Walk 1 additional block, Increase ROM by 5-10 degrees, Improve ADL performance including dressing and bathing\n\n**Examples:**\n- Physical Therapy\n- Acupuncture\n- Medial Branch Block L4-L5/L5-S1\n- Bilateral Knee Viscosupplementation\n\n### Signature Block\nAttestation section including provider signature, date, and co-signing provider if applicable\n\n**Relations:**\n- signed by → Provider\n\n**Examples:**\n- James Carter, M.D. (signature)\n- Marcus Reid, D.O. (co-signer)\n\n### Radiology Report\nAppended or referenced formal imaging report including technique, clinical history, findings, impression, and radiologist signature\n\n**Properties:**\n- Radiologist: The physician who interpreted the imaging study, including name, credentials, and signature date\n  Examples: Eliana Tan, M.D., Signed 2/12/2024\n- Imaging Findings: Detailed radiologic observations at each spinal level or anatomical region with impression summary\n  Examples: L4-5: Anterolisthesis, severe bilateral facet arthropathy, moderate to severe canal stenosis, Grade 1 anterolisthesis of L4 on L5\n\n**Examples:**\n- MRI Lumbar Spine Non-Contrast\n- MRI Cervical Spine Non-Contrast\n\n## Dimensions\n\n### Visit Type\nClassification of the encounter that drives the scope and structure of the clinical note\n\n### Claim Type\nThe legal classification of the injury or illness claim\n\n### Body Region\nAnatomical area of complaint or examination; drives the structure of the physical exam"
+  }
+}

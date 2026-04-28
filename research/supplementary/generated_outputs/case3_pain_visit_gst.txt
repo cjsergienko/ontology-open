@@ -1,0 +1,64 @@
+TITLE: Office Visit – Follow-Up for Hypertension and Type 2 Diabetes
+
+CONTENT:
+Patient presented for a scheduled 3-month follow-up to review blood pressure
+control and glycemic management. She reports general compliance with her
+medication regimen but admits to occasional missed doses of metformin "once
+or twice a week." She denies chest pain, shortness of breath, or visual
+changes. Reports mild fatigue in the afternoons, which she attributes to poor
+sleep. No edema noted. Diet history suggests continued high sodium intake;
+patient is resistant to further dietary restrictions but agreed to reduce
+processed food consumption.
+
+Physical Examination:
+  - Blood pressure: 148/92 mmHg (right arm, seated)
+  - Heart rate: 74 bpm, regular rhythm
+  - Weight: 187 lbs (up 3 lbs from last visit)
+  - BMI: 29.4
+  - Fasting blood glucose (in-office): 138 mg/dL
+  - HbA1c (lab, drawn 2 days prior): 7.9%
+  - Lungs: clear to auscultation bilaterally
+  - Lower extremities: no pitting edema
+
+Assessment:
+  1. Hypertension – suboptimally controlled; likely compounded by dietary
+     sodium and medication non-adherence.
+  2. Type 2 Diabetes Mellitus – HbA1c above target of 7.0%; modest
+     worsening since last visit.
+  3. Fatigue – likely multifactorial (sleep hygiene, suboptimal glucose
+     control).
+
+Plan:
+  1. Increase lisinopril from 10 mg to 20 mg daily.
+  2. Counseled patient on importance of consistent metformin dosing;
+     provided pill organizer handout.
+  3. Referred to diabetes education class (next available session:
+     March 14).
+  4. Ordered repeat comprehensive metabolic panel and lipid panel.
+  5. Sleep hygiene counseling provided; deferred formal sleep study
+     pending lifestyle modifications.
+  6. Return to clinic in 8 weeks or sooner if symptoms worsen.
+
+Electronically signed by: Dr. Sandra M. Okafor, MD
+Date of signature: 2025-01-23 at 14:37
+
+METADATA:
+  patient_name:        Margaret L. Trevino
+  date_of_birth:       1961-08-04
+  patient_id:          MRN-00492817
+  visit_date:          2025-01-23
+  visit_time:          13:50
+  visit_type:          Follow-up / Established Patient
+  facility:            Riverside Family Medicine Clinic
+  facility_address:    4402 Elm Creek Blvd, Suite 110, Austin, TX 78731
+  attending_physician: Dr. Sandra M. Okafor, MD
+  npi:                 1538274600
+  insurance_carrier:   BlueCross BlueShield of Texas
+  insurance_id:        BCB-TX-774821-C
+  copay_collected:     $35.00
+  room_number:         Exam Room 3
+  nurse_intake:        Rosa Delgado, LVN
+  next_appointment:    2025-03-20
+  allergies:           Sulfonamides (rash), Codeine (nausea)
+  current_medications: Metformin 1000 mg BID, Lisinopril 10 mg QD,
+                       Atorvastatin 20 mg QD, Aspirin 81 mg QD

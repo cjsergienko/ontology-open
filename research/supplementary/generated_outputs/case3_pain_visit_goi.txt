@@ -1,0 +1,511 @@
+# TRISTATE SPINE & PAIN MANAGEMENT CENTER
+### Pain Management and Rehabilitation Services
+
+**Main Office:** 318 Westchester Avenue, Suite 210, White Plains, NY 10604 | Tel: (914) 555-0182
+**Satellite Office:** 75 Commerce Drive, Suite 104, Yonkers, NY 10701 | Tel: (914) 555-0247
+
+---
+
+# FOLLOW-UP EXAMINATION — CLINICAL VISIT RECORD
+
+**Date of Visit:** 09/17/2024
+**Visit Type:** Follow-Up Exam
+**Patient ID:** TSP-2024-08841
+
+---
+
+## PATIENT INFORMATION
+
+| Field | Value |
+|---|---|
+| **Patient Name** | Robert A. Kowalski |
+| **Date of Birth** | 03/14/1974 |
+| **Age** | 50 |
+| **Gender** | Male |
+| **Patient ID** | TSP-2024-08841 |
+
+---
+
+## CLAIM INFORMATION
+
+| Field | Value |
+|---|---|
+| **Type of Claim** | WC (Workers' Compensation) |
+| **Claim Number** | WC-NY-2023-774412 |
+| **Date of Injury** | 06/05/2023 |
+| **Causal Relationship** | Work related accident — patient sustained injuries while lifting heavy equipment at a construction site, resulting in acute cervical and lumbar spine trauma with bilateral shoulder involvement |
+| **Employer** | Consolidated Building Systems, Inc. |
+| **Insurance Carrier** | Empire State Workers' Compensation Group |
+
+### Work Status
+- **Current Work Status:** No Work — Patient is currently not working
+- **First Date Missed Work:** 06/06/2023
+- **Temporary Impairment Percentage:** 75%
+- **Work Capacity Assessment:** Patient remains unable to perform the essential functions of his pre-injury occupation (construction laborer) due to persistent cervical and lumbar pain with restricted range of motion and bilateral upper extremity weakness. Limited work is not currently feasible given the physical demands of his trade. Reassessment will occur at next follow-up visit.
+
+---
+
+## CHIEF COMPLAINT
+
+Patient presents today with complaints of:
+- **Cervical Spine (Neck):** Neck pain with radiation into bilateral upper extremities
+- **Lumbar Spine (Low Back):** Low back pain with radiation into the left lower extremity
+- **Bilateral Shoulders:** Pain and restricted movement, right greater than left
+
+*(Body Regions: Cervical Spine | Lumbar Spine | Bilateral Shoulders)*
+
+---
+
+## HISTORY OF PRESENT ILLNESS (HPI)
+
+Mr. Kowalski is a 50-year-old male with a documented workers' compensation injury of 06/05/2023, sustained during a lifting incident at a construction worksite. He presents today for a follow-up evaluation of his cervical spine, lumbar spine, and bilateral shoulder pain.
+
+**Cervical Spine / Neck:**
+Patient continues to report persistent neck pain. He rates his cervical pain at **7/10** on the numeric pain rating scale. The pain is described as a deep, aching quality with intermittent sharp exacerbations, radiating into both upper extremities, right greater than left, with associated paresthesias in the right thumb and index finger. He reports that prolonged sitting and overhead activity worsen his symptoms.
+
+**Lumbar Spine / Low Back:**
+Patient rates his low back pain at **8/10**. He describes a constant dull ache with episodic sharp, stabbing pain, particularly with bending and prolonged standing. He endorses radiating pain down the left lower extremity into the posterior thigh and calf, consistent with L5-S1 dermatomal distribution. He denies bowel or bladder dysfunction.
+
+**Bilateral Shoulders:**
+Patient rates his right shoulder pain at **6/10** and left shoulder at **4/10**. He reports pain with reaching overhead, difficulty lifting objects above shoulder height, and disrupted sleep due to right shoulder pain.
+
+**Prior Treatments:**
+- Physical therapy: completed 3-month course (07/2023–09/2023) with less than 15% sustained pain relief
+- Acupuncture: 12 sessions completed (10/2023–12/2023) with minimal improvement
+- Cervical epidural steroid injection at C5-C6 (02/14/2024): approximately 20% temporary pain relief, duration 3 weeks
+- Lumbar epidural steroid injection at L4-L5 (02/28/2024): approximately 25% temporary pain relief, duration 4 weeks
+- Right shoulder intra-articular corticosteroid injection (04/10/2024): less than 20% relief
+
+**ADL Impact:**
+Patient reports significant functional limitations affecting his activities of daily living. He has difficulty bathing (unable to raise arms to wash hair), dressing (cannot fasten shirt buttons or put on a coat without assistance), grooming, and cannot perform household tasks such as cooking or cleaning. He is unable to walk more than 2 city blocks due to lumbar pain and left leg radiculopathy. He requires assistance from his spouse for many daily tasks.
+
+---
+
+## ALLERGIES
+
+| Substance | Reaction |
+|---|---|
+| Codeine | Nausea and vomiting |
+| Sulfa drugs | Skin rash |
+
+---
+
+## MEDICATIONS
+
+### Prescriptions Issued Today
+
+| # | Medication | Formulation | Dose | Route | Frequency | Duration |
+|---|---|---|---|---|---|---|
+| 1 | Oxycodone/Acetaminophen (Percocet) | 5 mg / 325 mg tablet | 1 tablet | Oral | Every 6 hours as needed for pain | 30 days |
+| 2 | Cyclobenzaprine ER | 15 mg capsule | 1 capsule | Oral | Once daily at bedtime | 30 days |
+| 3 | Diclofenac Sodium Topical Gel | 1% gel | 2 g (4 pumps) | Topical | Apply to affected area every 8 hours | 30 days |
+| 4 | Pantoprazole | 40 mg tablet | 1 tablet | Oral | Once daily before breakfast | 30 days |
+
+### Current Ongoing Medications (Not Changed Today)
+
+| Medication | Dose | Frequency | Notes |
+|---|---|---|---|
+| Gabapentin | 300 mg | Three times daily | For neuropathic pain / radiculopathy |
+| Lisinopril | 10 mg | Once daily | For hypertension (pre-existing) |
+| Atorvastatin | 20 mg | Once daily at bedtime | For hyperlipidemia (pre-existing) |
+
+---
+
+## PAST MEDICAL HISTORY
+
+**Cardiovascular System:**
+- Hypertension (diagnosed 2016)
+- Hyperlipidemia (diagnosed 2018)
+
+**Musculoskeletal System:**
+- Degenerative disc disease, lumbar spine (pre-existing, exacerbated by work injury)
+- Right rotator cuff partial tear (diagnosed post-injury, MRI 08/2023)
+
+**Neurological System:**
+- Migraine headaches (occasional, not currently managed)
+
+**Endocrine System:**
+- Prediabetes (diagnosed 2021, managed with diet)
+
+**Oncological:**
+- No history of cancer
+
+**Other:**
+- No history of kidney disease or stroke
+
+---
+
+## SURGICAL HISTORY
+
+| Procedure | Year | Notes |
+|---|---|---|
+| Appendectomy | 1998 | Uncomplicated |
+| Right knee arthroscopy with partial meniscectomy | 2011 | Full recovery prior to injury |
+
+---
+
+## SOCIAL HISTORY
+
+- **Tobacco:** Current smoker — approximately 10 cigarettes per day for 25 years (12.5 pack-year history)
+- **Alcohol:** Social drinker — reports occasional beer on weekends, approximately 2–3 drinks per week
+- **Illicit Substance Use:** Denies
+- **Occupation:** Construction laborer (currently on workers' compensation leave since 06/06/2023)
+- **Marital Status:** Married; spouse provides assistance with ADLs
+
+---
+
+## VITAL SIGNS
+
+| Parameter | Value |
+|---|---|
+| **Date/Time Recorded** | 09/17/2024 at 10:22 AM |
+| **Height** | 70 in (5'10") |
+| **Weight** | 224 lbs |
+| **BMI** | 32.1 (Obese Class I) |
+| **BSA** | 2.13 m² |
+| **Blood Pressure** | 138/86 mmHg — Right Arm, Sitting |
+| **Heart Rate** | 78 bpm, regular |
+| **Respiratory Rate** | 16 breaths/min |
+| **Temperature** | 98.4°F (oral) |
+| **O₂ Saturation** | 97% on room air |
+
+*BMI Calculation: Weight (lbs) ÷ [Height (in)]² × 703 = 224 ÷ (70²) × 703 = 224 ÷ 4900 × 703 = 32.1 ✓*
+
+---
+
+## REVIEW OF SYSTEMS (ROS)
+
+**Constitutional:** Denies fever, chills, unexplained weight loss, or fatigue beyond that attributable to pain and disrupted sleep. Admits to poor sleep quality secondary to pain.
+
+**Head, Eyes, Ears, Nose, Throat (HEENT):** Denies headache today; admits to occasional migraine history. Denies visual changes, hearing loss, or throat pain.
+
+**Cardiovascular:** Denies chest pain, palpitations, or lower extremity edema. Admits to history of hypertension.
+
+**Respiratory:** Admits to tobacco use. Denies shortness of breath, cough, or wheezing at rest.
+
+**Gastrointestinal:** Denies nausea, vomiting, diarrhea, or constipation. Denies bowel dysfunction related to current spinal complaints.
+
+**Genitourinary:** Denies bladder dysfunction. Denies urinary incontinence or retention. Denies any related complaint.
+
+**Musculoskeletal:** Admits to cervical spine pain (7/10), lumbar spine pain (8/10), right shoulder pain (6/10), and left shoulder pain (4/10). Admits to bilateral upper extremity paresthesias, right greater than left. Admits to left lower extremity radicular pain. Admits to limited range of motion in cervical spine, lumbar spine, and bilateral shoulders.
+
+**Neurological:** Admits to right hand paresthesias (thumb and index finger). Admits to left lower extremity numbness and tingling (posterior thigh and calf). Denies loss of consciousness, seizures, or syncope.
+
+**Psychiatric:** Admits to increased stress related to work disability and financial concerns. Denies active depression diagnosis or suicidal ideation.
+
+**Integumentary:** Denies rash, lesions, or skin changes.
+
+**Endocrine:** Admits to prediabetes, diet-controlled. Denies polydipsia or polyuria.
+
+---
+
+## PHYSICAL EXAMINATION
+
+**General:** Patient is a well-developed, overweight male in mild-to-moderate distress. He ambulates with a mild antalgic gait, guarding his lumbar spine. He is alert and oriented to person, place, and time. He is cooperative and provides a reliable history.
+
+---
+
+### EXAM — CERVICAL SPINE
+*(Body Region: Cervical Spine)*
+
+**Inspection / Palpation:**
+Cervical paraspinal musculature is visibly tense with palpable spasm from C3 through C7 bilaterally. Tenderness to palpation at C5-C6 and C6-C7 facet joints, right greater than left. No stepoff deformity. No midline tenderness.
+
+**Range of Motion (Cervical Spine):**
+
+| Movement | Previous Visit (07/22/2024) | Current Visit (09/17/2024) | Normal |
+|---|---|---|---|
+| Flexion | 30° | 35° | 50° |
+| Extension | 25° | 28° | 60° |
+| Left Lateral Flexion | 20° | 22° | 45° |
+| Right Lateral Flexion | 18° | 20° | 45° |
+| Left Rotation | 45° | 48° | 80° |
+| Right Rotation | 40° | 42° | 80° |
+
+*Mild improvement in all planes compared to prior visit; all movements remain significantly below normal.*
+
+**Muscle Strength (Cervical / Upper Extremity):**
+
+| Muscle Group | Side | Previous | Current | Normal |
+|---|---|---|---|---|
+| Shoulder Abduction (C5) | Right | 4/5 | 4/5 | 5/5 |
+| Shoulder Abduction (C5) | Left | 4+/5 | 4+/5 | 5/5 |
+| Elbow Flexion (C6) | Right | 4/5 | 4/5 | 5/5 |
+| Elbow Flexion (C6) | Left | 4+/5 | 5/5 | 5/5 |
+| Wrist Extension (C6) | Right | 4/5 | 4/5 | 5/5 |
+| Wrist Extension (C6) | Left | 5/5 | 5/5 | 5/5 |
+| Grip Strength | Right | 4/5 | 4/5 | 5/5 |
+| Grip Strength | Left | 5/5 | 5/5 | 5/5 |
+
+**Sensation Testing (Cervical Dermatomes):**
+
+| Dermatomal Level | Location | Finding |
+|---|---|---|
+| C5 | Lateral upper arm | Diminished, bilateral |
+| C6 | Thumb and index finger (right) | Diminished |
+| C6 | Thumb and index finger (left) | Normal |
+| C7 | Middle finger (Digit 3), bilateral | Normal |
+| C8 | Little finger, bilateral | Normal |
+
+**Muscle Stretch Reflexes (Cervical):**
+
+| Reflex | Side | Grade |
+|---|---|---|
+| Biceps (C5-C6) | Right | 1+ (hyporeflexic) |
+| Biceps (C5-C6) | Left | 2+ |
+| Brachioradialis (C6) | Right | 1+ (hyporeflexic) |
+| Brachioradialis (C6) | Left | 2+ |
+| Triceps (C7) | Bilateral | 2+ symmetrical |
+
+**Special Orthopedic Tests (Cervical):**
+
+| Test | Result | Laterality |
+|---|---|---|
+| Spurling's Compression Test | Positive | Right |
+| Spurling's Compression Test | Equivocal | Left |
+| Cervical Distraction Test | Positive | Bilateral (pain relief with distraction) |
+| Adson's Test | Negative | Bilateral |
+| Upper Limb Tension Test (ULTT-A) | Positive | Right |
+
+---
+
+### EXAM — LUMBAR SPINE
+*(Body Region: Lumbar Spine)*
+
+**Inspection / Palpation:**
+Lumbar paraspinal musculature demonstrates significant bilateral spasm at L3 through S1. Tenderness to deep palpation at L4-L5 and L5-S1 facet joints bilaterally. SI joint tenderness noted bilaterally, left greater than right. Antalgic posture with loss of lumbar lordosis.
+
+**Range of Motion (Lumbar Spine):**
+
+| Movement | Previous Visit (07/22/2024) | Current Visit (09/17/2024) | Normal |
+|---|---|---|---|
+| Flexion | 45° | 50° | 90° |
+| Extension | 10° | 12° | 25° |
+| Left Lateral Flexion | 15° | 18° | 25° |
+| Right Lateral Flexion | 18° | 20° | 25° |
+| Left Rotation | 20° | 22° | 35° |
+| Right Rotation | 22° | 24° | 35° |
+
+*Mild improvement from prior visit; all movements remain substantially restricted compared to normal.*
+
+**Muscle Strength (Lumbar / Lower Extremity):**
+
+| Muscle Group | Side | Previous | Current | Normal |
+|---|---|---|---|---|
+| Hip Flexion (L1-L2) | Left | 4/5 | 4/5 | 5/5 |
+| Hip Flexion (L1-L2) | Right | 5/5 | 5/5 | 5/5 |
+| Knee Extension (L3-L4) | Left | 4+/5 | 4+/5 | 5/5 |
+| Knee Extension (L3-L4) | Right | 5/5 | 5/5 | 5/5 |
+| Ankle Dorsiflexion (L4-L5) | Left | 4/5 | 4/5 | 5/5 |
+| Ankle Dorsiflexion (L4-L5) | Right | 5/5 | 5/5 | 5/5 |
+| Great Toe Extension (L5) | Left | 4/5 | 4/5 | 5/5 |
+| Plantarflexion (S1) | Left | 4+/5 | 4+/5 | 5/5 |
+
+**Sensation Testing (Lumbar Dermatomes):**
+
+| Dermatomal Level | Location | Finding |
+|---|---|---|
+| L3 | Medial thigh | Normal bilateral |
+| L4 | Medial calf | Diminished, left |
+| L5 | Dorsal foot, 1st web space | Diminished, left |
+| S1 | Lateral foot / plantar heel | Diminished, left |
+
+**Muscle Stretch Reflexes (Lumbar):**
+
+| Reflex | Side | Grade |
+|---|---|---|
+| Patellar (L3-L4) | Right | 2+ |
+| Patellar (L3-L4) | Left | 2+ |
+| Achilles (S1) | Right | 2+ |
+| Achilles (S1) | Left | 1+ (hyporeflexic) |
+
+**Special Orthopedic Tests (Lumbar):**
+
+| Test | Result | Laterality |
+|---|---|---|
+| Straight Leg Raise (SLR) | Positive at 45° | Left |
+| Straight Leg Raise (SLR) | Negative | Right |
+| Crossed SLR | Equivocal | Left elicited by right leg raise |
+| Patrick's (FABER) Test | Positive | Left |
+| Kemp's Test | Positive | Bilateral |
+| FABER Test | Negative | Right |
+
+---
+
+### EXAMINATION — SHOULDERS BILATERAL
+*(Body Region: Bilateral Shoulders)*
+
+**Inspection / Palpation:**
+Right shoulder: Mild deltoid atrophy compared to left. Tenderness to palpation over right supraspinatus tendon insertion, right acromioclavicular (AC) joint, and right anterior bicipital groove. Left shoulder: Mild tenderness over the superior AC joint; paraspinal musculature minimally tense. No deformity or effusion appreciated bilaterally.
+
+**Range of Motion (Bilateral Shoulders):**
+
+| Movement | Right Prev. | Right Current | Left Prev. | Left Current | Normal |
+|---|---|---|---|---|---|
+| Flexion | 110° | 115° | 145° | 150° | 180° |
+| Extension | 25° | 28° | 40° | 42° | 60° |
+| Abduction | 95° | 100° | 140° | 145° | 180° |
+| Internal Rotation | 45° | 48° | 60° | 65° | 90° |
+| External Rotation | 35° | 38° | 60° | 62° | 90° |
+
+**Muscle Strength (Bilateral Shoulders):**
+
+| Muscle Group | Side | Previous | Current | Normal |
+|---|---|---|---|---|
+| Shoulder Abduction | Right | 4/5 | 4/5 | 5/5 |
+| Shoulder Abduction | Left | 4+/5 | 4+/5 | 5/5 |
+| External Rotation | Right | 3+/5 | 4/5 | 5/5 |
+| External Rotation | Left | 4+/5 | 5/5 | 5/5 |
+| Supraspinatus (Empty Can) | Right | 3+/5 | 4/5 | 5/5 |
+| Supraspinatus (Empty Can) | Left | 4+/5 | 5/5 | 5/5 |
+
+**Sensation Testing (Shoulder / Upper Extremity):**
+
+| Location | Finding |
+|---|---|
+| Lateral upper arm (axillary n.) | Diminished, right |
+| Lateral upper arm (axillary n.) | Normal, left |
+| Medial forearm / elbow | Normal, bilateral |
+
+**Muscle Stretch Reflexes (Shoulder Region):**
+
+| Reflex | Side | Grade |
+|---|---|---|
+| Biceps (C5-C6) | Right | 1+ (noted above under cervical) |
+| Biceps (C5-C6) | Left | 2+ |
+
+**Special Orthopedic Tests (Bilateral Shoulders):**
+
+| Test | Result | Laterality |
+|---|---|---|
+| Neer's Impingement Test | Positive | Right |
+| Neer's Impingement Test | Negative | Left |
+| Hawkins-Kennedy Test | Positive | Right |
+| Hawkins-Kennedy Test | Equivocal | Left |
+| Drop Arm Test | Positive | Right |
+| Drop Arm Test | Negative | Left |
+| Speed's Test (bicipital tendinitis) | Positive | Right |
+| Apprehension Test | Negative | Bilateral |
+| AC Joint Compression Test | Positive | Right |
+
+---
+
+## DIAGNOSTIC TESTS
+
+### 1. MRI Cervical Spine Without Contrast
+**Date of Study:** 08/06/2024
+**Ordering Provider:** Dr. Leonard J. Vasquez, M.D.
+**Performing Facility:** Advanced Imaging of Westchester, White Plains, NY
+
+**Technique:** Multi-planar, multi-sequence MRI of the cervical spine performed without intravenous contrast on a 3.0 Tesla magnet. Sagittal T1, sagittal T2, sagittal STIR, axial T2, and axial GRE sequences obtained.
+
+**Clinical History:** 50-year-old male with cervical pain and bilateral upper extremity radiculopathy following work injury 06/05/2023.
+
+**Imaging Findings:**
+- **C2-C3:** Minimal disc desiccation. No significant disc herniation or neural foraminal narrowing.
+- **C3-C4:** Mild disc desiccation with a small central disc protrusion. Mild bilateral uncovertebral joint hypertrophy. Mild bilateral neural foraminal narrowing. No significant canal stenosis.
+- **C4-C5:** Moderate disc desiccation with a moderate right paracentral disc herniation causing moderate right-sided neural foraminal narrowing and mild to moderate central canal stenosis. Moderate right uncovertebral joint arthropathy.
+- **C5-C6:** Moderate to severe disc desiccation with a large right paracentral and foraminal disc herniation with associated osteophyte complex. Severe right C6 neural foraminal narrowing with probable right C6 nerve root compression. Moderate left neural foraminal narrowing. Moderate to severe central canal stenosis. Facet arthropathy bilateral.
+- **C6-C7:** Moderate disc desiccation with a moderate central disc herniation and moderate bilateral neural foraminal narrowing. Mild facet arthropathy bilateral.
+- **C7-T1:** Minimal degenerative changes. No significant herniation or foraminal compromise.
+
+**Impression:**
+1. Most significant findings at C5-C6: Large right paracentral/foraminal disc herniation with osteophyte complex causing severe right C6 neural foraminal narrowing and probable C6 nerve root compression, with moderate to severe central canal stenosis.
+2. Moderate right paracentral disc herniation at C4-C5 with moderate central canal stenosis and right neural foraminal narrowing.
+3. Multilevel degenerative disc disease and spondylosis, C3-C7.
+4. Findings are consistent with clinical presentation of right upper extremity radiculopathy and bilateral cervicalgia.
+
+---
+
+### 2. MRI Lumbar Spine Without Contrast
+**Date of Study:** 08/08/2024
+**Ordering Provider:** Dr. Leonard J. Vasquez, M.D.
+**Performing Facility:** Advanced Imaging of Westchester, White Plains, NY
+
+**Technique:** Multi-planar, multi-sequence MRI of the lumbar spine performed without intravenous contrast on a 3.0 Tesla magnet. Sagittal T1, sagittal T2, sagittal STIR, axial T2, and axial T1 fat-saturated sequences obtained.
+
+**Clinical History:** 50-year-old male with low back pain and left lower extremity radiculopathy following work injury 06/05/2023.
+
+**Imaging Findings:**
+- **L1-L2:** Normal disc height and signal. No herniation or stenosis.
+- **L2-L3:** Mild disc desiccation. Small central disc bulge without significant canal or foraminal compromise.
+- **L3-L4:** Moderate disc desiccation with a moderate broad-based disc bulge and mild bilateral facet arthropathy. Mild bilateral neural foraminal narrowing. Mild central canal stenosis.
+- **L4-L5:** Moderate to severe disc desiccation with a moderate left paracentral disc herniation extending into the left lateral recess, causing moderate left L5 nerve root compression. Moderate bilateral facet arthropathy with hypertrophic changes. Moderate central canal stenosis.
+- **L5-S1:** Severe disc desiccation with a large left paracentral and foraminal disc extrusion with inferior migration, causing severe left S1 nerve root compression. Severe left neural foraminal narrowing. Moderate right neural foraminal narrowing. Severe bilateral facet arthropathy. Moderate to severe central canal stenosis.
+
+**Impression:**
+1. Most significant findings at L5-S1: Large left paracentral/foraminal disc extrusion with inferior migration causing severe left S1 nerve root compression and moderate to severe central canal stenosis.
+2. Moderate left paracentral disc herniation at L4-L5 causing moderate left L5 nerve root compression.
+3. Multilevel degenerative disc disease and spondylosis, L2-S1.
+4. Findings are consistent with left L5-S1 radiculopathy as reported clinically.
+
+---
+
+### 3. MRI Right Shoulder Without Contrast
+**Date of Study:** 08/12/2024
+**Ordering Provider:** Dr. Leonard J. Vasquez, M.D.
+**Performing Facility:** Advanced Imaging of Westchester, White Plains, NY
+
+**Technique:** Multi-planar, multi-sequence MRI of the right shoulder performed without intravenous contrast. Coronal T1, coronal PD fat-sat, sagittal T2, and axial T2 sequences obtained.
+
+**Clinical History:** 50-year-old male with right shoulder pain following work injury 06/05/2023.
+
+**Imaging Findings:**
+- **Rotator Cuff:** Partial thickness articular surface tear of the supraspinatus tendon at the footprint, measuring approximately 8 mm in AP dimension and involving approximately 40% of the tendon thickness. Mild supraspinatus tendinopathy proximally. Infraspinatus tendon intact. Subscapularis tendon intact.
+- **Biceps Tendon:** Mild tenosynovitis of the long head of the biceps tendon. No tear.
+- **Acromioclavicular (AC) Joint:** Moderate AC joint degenerative changes with inferior osteophyte formation causing mild subacromial space narrowing (acromiohumeral interval approximately 8 mm).
+- **Glenohumeral Joint:** Trace glenohumeral joint effusion. No evidence of full-thickness labral tear. Mild posterior labral fraying.
+- **Osseous Structures:** No acute fracture. Mild humeral head subchondral cystic change.
+
+**Impression:**
+1. Partial thickness articular surface tear of the right supraspinatus tendon (~40% thickness), consistent with clinical presentation.
+2. Moderate AC joint degenerative changes with inferior osteophyte causing mild subacromial impingement.
+3. Mild long head biceps tenosynovitis.
+4. Trace glenohumeral joint effusion.
+
+---
+
+## ASSESSMENT / DIAGNOSES
+
+### Cervical Spine *(Body Region: Cervical Spine)*
+
+| ICD-10 Code | Diagnosis |
+|---|---|
+| M54.12 | Radiculopathy, Cervical Region — bilateral upper extremity radiculopathy, right greater than left |
+| M50.12 | Cervical Disc Degeneration with Radiculopathy, C5-C6 — large right paracentral/foraminal disc herniation with severe right C6 nerve root compression |
+| M50.122 | Cervical Disc Disorder with Radiculopathy, C4-C5 — moderate right paracentral disc herniation |
+| M47.812 | Spondylosis with Radiculopathy, Cervical Region |
+
+### Lumbar Spine *(Body Region: Lumbar Spine)*
+
+| ICD-10 Code | Diagnosis |
+|---|---|
+| M54.42 | Lumbago with Sciatica, Left Side — left L5-S1 radiculopathy secondary to disc extrusion |
+| M51.17 | Intervertebral Disc Degeneration with Radiculopathy, Lumbosacral Region — L5-S1 disc extrusion with left S1 nerve root compression |
+| M51.16 | Intervertebral Disc Degeneration with Radiculopathy, Lumbar Region — L4-L5 disc herniation with left L5 nerve root compression |
+| M47.816 | Spondylosis with Radiculopathy, Lumbar Region |
+| M54.59 | Other Low Back Pain — chronic axial low back pain superimposed on acute radiculopathy |
+
+### Bilateral Shoulders *(Body Region: Bilateral Shoulders)*
+
+| ICD-10 Code | Diagnosis |
+|---|---|
+| M75.111 | Complete Rotator Cuff Tear of Right Shoulder — partial thickness articular surface supraspinatus tear, right |
+| M75.31 | Calcific Tendinitis of Right Shoulder — right supraspinatus tendinopathy |
+| M75.51 | Bursitis of Right Shoulder — right subacromial impingement with AC joint degenerative changes |
+| M75.52 | Bursitis of Left Shoulder — left shoulder subacromial irritation |
+| M19.211 | Secondary Osteoarthritis, Right Acromioclavicular Joint — post-traumatic AC joint degenerative changes |
+
+---
+
+## RECOMMENDATIONS / TREATMENT PLAN
+
+The following treatment recommendations are made based upon the patient's clinical presentation, objective examination findings, reviewed imaging, failure of prior conservative and interventional treatments, and ongoing functional limitations. All recommendations are medically necessary and causally related to the work injury of 06/05/2023.
+
+---
+
+**1. Continued Pain Management — Medication Adjustment**
+
+Patient's current medication regimen is maintained with additions as listed above. Oxycodone/acetaminophen (Percocet 5/325 mg) is prescribed for pain management given the severity of multilevel cervical and lumbar radiculopathy with associated shoulder pathology. Cyclobenzaprine ER 15 mg is added for muscle spasm. Diclofenac topical gel 1% is added for regional anti-inflammatory benefit with reduced systemic GI exposure. Pantoprazole 40 mg is prescribed as GI prophylaxis given concurrent NSAID use.
+
+*Treatment Justification:* Patient has undergone 3 months of physical therapy with less than 15% sustained pain relief, 12 sessions of acupuncture with minimal improvement, bilateral epidural steroid injections with only transient and partial relief (20–25% for 3–4 weeks), and right shoulder intra-articular corticosteroid injection with less than 20% relief. Step-therapy has been exhausted for multiple regions. Ongoing opioid management with scheduled reassessment is appropriate given the severity of the objective MRI findings (large L5-S1 disc extrusion, severe S1 nerve root compression, large right C5-C6 disc herniation, partial rotator cuff tear) and the degree of functional
