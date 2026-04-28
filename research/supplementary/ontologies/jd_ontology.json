@@ -1,136 +1,896 @@
 {
-  "id": "ccec7699-4b05-4c61-8834-6c8a08888794",
-  "name": "Job Description Ontology",
-  "description": "Ontology-driven job description generation — 8 categories, 42 dimensions, 42 role families. O*NET-aligned.",
-  "domain": "hiring",
-  "nodes": [
-    {"id": "jd_root", "type": "class", "label": "JobDescription", "description": "Job Description document"},
-    {"id": "cat_role_identity", "type": "dimension", "label": "About the Role", "description": "What is this role?"},
-    {"id": "cat_org_context", "type": "dimension", "label": "Organization Context", "description": "Who is hiring?"},
-    {"id": "cat_candidate_profile", "type": "dimension", "label": "Candidate Profile", "description": "Who should apply?"},
-    {"id": "cat_work_style", "type": "dimension", "label": "Work Style & Culture", "description": "What kind of person thrives here?", "metadata": {"generate": "context"}},
-    {"id": "cat_tech_reqs", "type": "dimension", "label": "Requirements", "description": "What hard skills?"},
-    {"id": "cat_comp_benefits", "type": "dimension", "label": "Compensation & Benefits", "description": "What is the value proposition?"},
-    {"id": "cat_jd_messaging", "type": "dimension", "label": "JD Messaging & Tone", "description": "How should this JD communicate?", "metadata": {"generate": "context"}},
-    {"id": "cat_jd_structure", "type": "dimension", "label": "JD Structure & Delivery", "description": "How is this JD built?", "metadata": {"generate": "context"}},
-    {"id": "dim_role_family", "type": "property", "label": "role_family", "description": "O*NET-aligned occupational family (42 families)"},
-    {"id": "dim_seniority_level", "type": "property", "label": "seniority_level", "description": "Career level & scope of responsibility"},
-    {"id": "dim_role_archetype", "type": "dimension", "label": "role_archetype", "description": "Day-to-day operating mode of the role"},
-    {"id": "dim_functional_domain", "type": "property", "label": "functional_domain", "description": "Business function being served", "metadata": {"generate": "context"}},
-    {"id": "dim_specialization", "type": "property", "label": "specialization_focus", "description": "Specific area of specialization (16 options)"},
-    {"id": "dim_industry", "type": "property", "label": "industry", "description": "14 industry verticals"},
-    {"id": "dim_company_stage", "type": "property", "label": "company_stage", "description": "Startup to enterprise maturity stage"},
-    {"id": "dim_company_size", "type": "property", "label": "company_size", "description": "Team size & organizational scale"},
-    {"id": "dim_work_arrangement", "type": "property", "label": "work_arrangement", "description": "Remote / hybrid / on-site / flexible"},
-    {"id": "dim_employer_brand", "type": "property", "label": "employer_brand_voice", "description": "Tone of the employer brand"},
-    {"id": "dim_experience_band", "type": "property", "label": "experience_band", "description": "Years of relevant experience range"},
-    {"id": "dim_education_req", "type": "property", "label": "education_requirement", "description": "Formal education expectations"},
-    {"id": "dim_career_trajectory", "type": "property", "label": "career_trajectory", "description": "Candidate career movement pattern"},
-    {"id": "dim_cert_profile", "type": "property", "label": "certification_profile", "description": "Industry certifications expected"},
-    {"id": "dim_candidate_market", "type": "property", "label": "candidate_market", "description": "Talent pool targeting"},
-    {"id": "dim_work_style_profile", "type": "property", "label": "work_style_profile", "description": "O*NET Work Styles (16 dimensions, pick 3-5)", "metadata": {"generate": "context"}},
-    {"id": "dim_autonomy_level", "type": "property", "label": "autonomy_level", "description": "Degree of independent decision-making", "metadata": {"generate": "context"}},
-    {"id": "dim_collaboration_model", "type": "property", "label": "collaboration_model", "description": "How teamwork is structured (7 models)", "metadata": {"generate": "context"}},
-    {"id": "dim_leadership_model", "type": "property", "label": "leadership_model", "description": "Leadership style expected (8 models)", "metadata": {"generate": "context"}},
-    {"id": "dim_problem_solving", "type": "property", "label": "problem_solving_style", "description": "How problems are approached (6 styles)", "metadata": {"generate": "context"}},
-    {"id": "dim_growth_orientation", "type": "property", "label": "growth_orientation", "description": "Individual growth expectations", "metadata": {"generate": "context"}},
-    {"id": "dim_skill_domains", "type": "property", "label": "skill_domains", "description": "40 skill domain tags"},
-    {"id": "dim_tech_stack_era", "type": "property", "label": "tech_stack_era", "description": "Technology vintage / generation", "metadata": {"generate": "context"}},
-    {"id": "dim_tool_ecosystem", "type": "property", "label": "tool_ecosystem", "description": "25 tool ecosystem clusters", "metadata": {"generate": "context"}},
-    {"id": "dim_technical_depth", "type": "property", "label": "technical_depth", "description": "Depth vs. breadth of technical knowledge", "metadata": {"generate": "context"}},
-    {"id": "dim_domain_knowledge", "type": "property", "label": "domain_knowledge", "description": "Domain-specific knowledge required (13 areas)", "metadata": {"generate": "context"}},
-    {"id": "dim_comp_philosophy", "type": "property", "label": "compensation_philosophy", "description": "Pay philosophy & structure (7 options)"},
-    {"id": "dim_equity_structure", "type": "property", "label": "equity_structure", "description": "Equity & long-term incentive structure", "metadata": {"generate": "context"}},
-    {"id": "dim_benefits_emphasis", "type": "property", "label": "benefits_emphasis", "description": "Benefits package focus areas (12 options)"},
-    {"id": "dim_career_progression", "type": "property", "label": "career_progression", "description": "Career path & promotion signals", "metadata": {"generate": "context"}},
-    {"id": "dim_tone_voice", "type": "property", "label": "tone_of_voice", "description": "Writing tone & register (10 voices)", "metadata": {"generate": "context"}},
-    {"id": "dim_copy_depth", "type": "property", "label": "copy_depth", "description": "How much descriptive copy to generate", "metadata": {"generate": "context"}},
-    {"id": "dim_persuasion_strat", "type": "property", "label": "jd_persuasion_strategy", "description": "Persuasion framework for the JD (6 strategies)", "metadata": {"generate": "context"}},
-    {"id": "dim_urgency_framing", "type": "property", "label": "urgency_framing", "description": "How urgency is communicated", "metadata": {"generate": "context"}},
-    {"id": "dim_jd_sections", "type": "property", "label": "jd_sections", "description": "Which sections to include (15 options)", "metadata": {"generate": "context"}},
-    {"id": "dim_req_classification", "type": "property", "label": "requirement_classification", "description": "Must-have vs. nice-to-have framing", "metadata": {"generate": "context"}},
-    {"id": "dim_posting_platform", "type": "property", "label": "posting_platform", "description": "Target posting platform (8 platforms)", "metadata": {"generate": "context"}},
-    {"id": "dim_jd_format", "type": "property", "label": "jd_format", "description": "Format style (bullets / prose / hybrid)", "metadata": {"generate": "context"}},
-    {"id": "val_sen_intern", "type": "value", "label": "intern", "description": "Structured mentorship, 0 yrs, task-level"},
-    {"id": "val_sen_entry", "type": "value", "label": "entry_level", "description": "0-1 yrs, executes defined tasks with guidance"},
-    {"id": "val_sen_mid", "type": "value", "label": "mid_level", "description": "2-5 yrs, owns features end-to-end"},
-    {"id": "val_sen_senior", "type": "value", "label": "senior", "description": "5-8 yrs, drives decisions, mentors others"},
-    {"id": "val_sen_staff", "type": "value", "label": "staff_principal", "description": "8-15 yrs, org-wide technical influence"},
-    {"id": "val_sen_director", "type": "value", "label": "director_vp", "description": "10-20 yrs, manages managers, dept strategy"},
-    {"id": "val_sen_csuite", "type": "value", "label": "c_suite", "description": "15+ yrs, company strategy, board reporting"},
-    {"id": "val_rf_swe", "type": "value", "label": "software_engineering", "description": "Building, testing, maintaining software systems"},
-    {"id": "val_rf_data", "type": "value", "label": "data_analytics", "description": "Extracting insights from data to drive decisions"},
-    {"id": "val_rf_pm", "type": "value", "label": "product_management", "description": "Product vision, strategy, and roadmap delivery"},
-    {"id": "val_rf_design", "type": "value", "label": "design_ux", "description": "User experience and visual interface design"},
-    {"id": "val_rf_devops", "type": "value", "label": "devops_infra", "description": "Infrastructure, CI/CD, platform reliability"},
-    {"id": "val_rf_mktg", "type": "value", "label": "marketing_growth", "description": "Customer acquisition via campaigns & growth loops"},
-    {"id": "val_rf_sales", "type": "value", "label": "sales", "description": "Revenue generation through B2B/B2C sales cycles"},
-    {"id": "val_rf_hr", "type": "value", "label": "hr_people", "description": "Talent acquisition, employee experience, org dev"},
-    {"id": "constraint_skill_lookup", "type": "constraint", "label": "skill_profile_lookup", "description": "role_skill_profiles dimension is auto-resolved from role_family + seniority_level. Not routed directly."}
-  ],
-  "edges": [
-    {"id": "e_root_role_identity", "source": "jd_root", "target": "cat_role_identity", "type": "has_property"},
-    {"id": "e_root_org_context", "source": "jd_root", "target": "cat_org_context", "type": "has_property"},
-    {"id": "e_root_candidate_profile", "source": "jd_root", "target": "cat_candidate_profile", "type": "has_property"},
-    {"id": "e_root_work_style", "source": "jd_root", "target": "cat_work_style", "type": "has_property"},
-    {"id": "e_root_tech_reqs", "source": "jd_root", "target": "cat_tech_reqs", "type": "has_property"},
-    {"id": "e_root_comp_benefits", "source": "jd_root", "target": "cat_comp_benefits", "type": "has_property"},
-    {"id": "e_root_jd_messaging", "source": "jd_root", "target": "cat_jd_messaging", "type": "has_property"},
-    {"id": "e_root_jd_structure", "source": "jd_root", "target": "cat_jd_structure", "type": "has_property"},
-    {"id": "e_cat_role_family", "source": "cat_role_identity", "target": "dim_role_family", "type": "has_property"},
-    {"id": "e_cat_seniority_level", "source": "cat_role_identity", "target": "dim_seniority_level", "type": "has_property"},
-    {"id": "e_cat_role_archetype", "source": "cat_role_identity", "target": "dim_role_archetype", "type": "has_property"},
-    {"id": "e_cat_functional_domain", "source": "cat_role_identity", "target": "dim_functional_domain", "type": "has_property"},
-    {"id": "e_cat_specialization", "source": "cat_role_identity", "target": "dim_specialization", "type": "has_property"},
-    {"id": "e_cat_industry", "source": "cat_org_context", "target": "dim_industry", "type": "has_property"},
-    {"id": "e_cat_company_stage", "source": "cat_org_context", "target": "dim_company_stage", "type": "has_property"},
-    {"id": "e_cat_company_size", "source": "cat_org_context", "target": "dim_company_size", "type": "has_property"},
-    {"id": "e_cat_work_arrangement", "source": "cat_org_context", "target": "dim_work_arrangement", "type": "has_property"},
-    {"id": "e_cat_employer_brand", "source": "cat_org_context", "target": "dim_employer_brand", "type": "has_property"},
-    {"id": "e_cat_experience_band", "source": "cat_candidate_profile", "target": "dim_experience_band", "type": "has_property"},
-    {"id": "e_cat_education_req", "source": "cat_candidate_profile", "target": "dim_education_req", "type": "has_property"},
-    {"id": "e_cat_career_trajectory", "source": "cat_candidate_profile", "target": "dim_career_trajectory", "type": "has_property"},
-    {"id": "e_cat_cert_profile", "source": "cat_candidate_profile", "target": "dim_cert_profile", "type": "has_property"},
-    {"id": "e_cat_candidate_market", "source": "cat_candidate_profile", "target": "dim_candidate_market", "type": "has_property"},
-    {"id": "e_cat_work_style_profile", "source": "cat_work_style", "target": "dim_work_style_profile", "type": "has_property"},
-    {"id": "e_cat_autonomy_level", "source": "cat_work_style", "target": "dim_autonomy_level", "type": "has_property"},
-    {"id": "e_cat_collaboration_model", "source": "cat_work_style", "target": "dim_collaboration_model", "type": "has_property"},
-    {"id": "e_cat_leadership_model", "source": "cat_work_style", "target": "dim_leadership_model", "type": "has_property"},
-    {"id": "e_cat_problem_solving", "source": "cat_work_style", "target": "dim_problem_solving", "type": "has_property"},
-    {"id": "e_cat_growth_orientation", "source": "cat_work_style", "target": "dim_growth_orientation", "type": "has_property"},
-    {"id": "e_cat_skill_domains", "source": "cat_tech_reqs", "target": "dim_skill_domains", "type": "has_property"},
-    {"id": "e_cat_tech_stack_era", "source": "cat_tech_reqs", "target": "dim_tech_stack_era", "type": "has_property"},
-    {"id": "e_cat_tool_ecosystem", "source": "cat_tech_reqs", "target": "dim_tool_ecosystem", "type": "has_property"},
-    {"id": "e_cat_technical_depth", "source": "cat_tech_reqs", "target": "dim_technical_depth", "type": "has_property"},
-    {"id": "e_cat_domain_knowledge", "source": "cat_tech_reqs", "target": "dim_domain_knowledge", "type": "has_property"},
-    {"id": "e_cat_comp_philosophy", "source": "cat_comp_benefits", "target": "dim_comp_philosophy", "type": "has_property"},
-    {"id": "e_cat_equity_structure", "source": "cat_comp_benefits", "target": "dim_equity_structure", "type": "has_property"},
-    {"id": "e_cat_benefits_emphasis", "source": "cat_comp_benefits", "target": "dim_benefits_emphasis", "type": "has_property"},
-    {"id": "e_cat_career_progression", "source": "cat_comp_benefits", "target": "dim_career_progression", "type": "has_property"},
-    {"id": "e_cat_tone_voice", "source": "cat_jd_messaging", "target": "dim_tone_voice", "type": "has_property"},
-    {"id": "e_cat_copy_depth", "source": "cat_jd_messaging", "target": "dim_copy_depth", "type": "has_property"},
-    {"id": "e_cat_persuasion_strat", "source": "cat_jd_messaging", "target": "dim_persuasion_strat", "type": "has_property"},
-    {"id": "e_cat_urgency_framing", "source": "cat_jd_messaging", "target": "dim_urgency_framing", "type": "has_property"},
-    {"id": "e_cat_jd_sections", "source": "cat_jd_structure", "target": "dim_jd_sections", "type": "has_property"},
-    {"id": "e_cat_req_classification", "source": "cat_jd_structure", "target": "dim_req_classification", "type": "has_property"},
-    {"id": "e_cat_posting_platform", "source": "cat_jd_structure", "target": "dim_posting_platform", "type": "has_property"},
-    {"id": "e_cat_jd_format", "source": "cat_jd_structure", "target": "dim_jd_format", "type": "has_property"},
-    {"id": "e_sen_sen_intern", "source": "dim_seniority_level", "target": "val_sen_intern", "type": "has_value"},
-    {"id": "e_sen_sen_entry", "source": "dim_seniority_level", "target": "val_sen_entry", "type": "has_value"},
-    {"id": "e_sen_sen_mid", "source": "dim_seniority_level", "target": "val_sen_mid", "type": "has_value"},
-    {"id": "e_sen_sen_senior", "source": "dim_seniority_level", "target": "val_sen_senior", "type": "has_value"},
-    {"id": "e_sen_sen_staff", "source": "dim_seniority_level", "target": "val_sen_staff", "type": "has_value"},
-    {"id": "e_sen_sen_director", "source": "dim_seniority_level", "target": "val_sen_director", "type": "has_value"},
-    {"id": "e_sen_sen_csuite", "source": "dim_seniority_level", "target": "val_sen_csuite", "type": "has_value"},
-    {"id": "e_rf_rf_swe", "source": "dim_role_family", "target": "val_rf_swe", "type": "has_value"},
-    {"id": "e_rf_rf_data", "source": "dim_role_family", "target": "val_rf_data", "type": "has_value"},
-    {"id": "e_rf_rf_pm", "source": "dim_role_family", "target": "val_rf_pm", "type": "has_value"},
-    {"id": "e_rf_rf_design", "source": "dim_role_family", "target": "val_rf_design", "type": "has_value"},
-    {"id": "e_rf_rf_devops", "source": "dim_role_family", "target": "val_rf_devops", "type": "has_value"},
-    {"id": "e_rf_rf_mktg", "source": "dim_role_family", "target": "val_rf_mktg", "type": "has_value"},
-    {"id": "e_rf_rf_sales", "source": "dim_role_family", "target": "val_rf_sales", "type": "has_value"},
-    {"id": "e_rf_rf_hr", "source": "dim_role_family", "target": "val_rf_hr", "type": "has_value"},
-    {"id": "e_rf_to_constraint", "source": "dim_role_family", "target": "constraint_skill_lookup", "type": "constrains"},
-    {"id": "e_sen_to_constraint", "source": "dim_seniority_level", "target": "constraint_skill_lookup", "type": "constrains"}
-  ]
+  "ontology": {
+    "name": "Job Description Ontology",
+    "description": "Ontology-driven job description generation — 8 categories, 42 dimensions, 42 role families. O*NET-aligned.",
+    "domain": "hiring"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "jd_root",
+        "type": "class",
+        "label": "JobDescription",
+        "description": "Job Description document"
+      },
+      {
+        "id": "cat_role_identity",
+        "type": "dimension",
+        "label": "About the Role",
+        "description": "What is this role?"
+      },
+      {
+        "id": "cat_org_context",
+        "type": "dimension",
+        "label": "Organization Context",
+        "description": "Who is hiring?"
+      },
+      {
+        "id": "cat_candidate_profile",
+        "type": "dimension",
+        "label": "Candidate Profile",
+        "description": "Who should apply?"
+      },
+      {
+        "id": "cat_work_style",
+        "type": "dimension",
+        "label": "Work Style & Culture",
+        "description": "What kind of person thrives here?",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "cat_tech_reqs",
+        "type": "dimension",
+        "label": "Requirements",
+        "description": "What hard skills?"
+      },
+      {
+        "id": "cat_comp_benefits",
+        "type": "dimension",
+        "label": "Compensation & Benefits",
+        "description": "What is the value proposition?"
+      },
+      {
+        "id": "cat_jd_messaging",
+        "type": "dimension",
+        "label": "JD Messaging & Tone",
+        "description": "How should this JD communicate?",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "cat_jd_structure",
+        "type": "dimension",
+        "label": "JD Structure & Delivery",
+        "description": "How is this JD built?",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_role_family",
+        "type": "property",
+        "label": "role_family",
+        "description": "O*NET-aligned occupational family (42 families)"
+      },
+      {
+        "id": "dim_seniority_level",
+        "type": "property",
+        "label": "seniority_level",
+        "description": "Career level & scope of responsibility"
+      },
+      {
+        "id": "dim_role_archetype",
+        "type": "dimension",
+        "label": "role_archetype",
+        "description": "Day-to-day operating mode of the role"
+      },
+      {
+        "id": "dim_functional_domain",
+        "type": "property",
+        "label": "functional_domain",
+        "description": "Business function being served",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_specialization",
+        "type": "property",
+        "label": "specialization_focus",
+        "description": "Specific area of specialization (16 options)"
+      },
+      {
+        "id": "dim_industry",
+        "type": "property",
+        "label": "industry",
+        "description": "14 industry verticals"
+      },
+      {
+        "id": "dim_company_stage",
+        "type": "property",
+        "label": "company_stage",
+        "description": "Startup to enterprise maturity stage"
+      },
+      {
+        "id": "dim_company_size",
+        "type": "property",
+        "label": "company_size",
+        "description": "Team size & organizational scale"
+      },
+      {
+        "id": "dim_work_arrangement",
+        "type": "property",
+        "label": "work_arrangement",
+        "description": "Remote / hybrid / on-site / flexible"
+      },
+      {
+        "id": "dim_employer_brand",
+        "type": "property",
+        "label": "employer_brand_voice",
+        "description": "Tone of the employer brand"
+      },
+      {
+        "id": "dim_experience_band",
+        "type": "property",
+        "label": "experience_band",
+        "description": "Years of relevant experience range"
+      },
+      {
+        "id": "dim_education_req",
+        "type": "property",
+        "label": "education_requirement",
+        "description": "Formal education expectations"
+      },
+      {
+        "id": "dim_career_trajectory",
+        "type": "property",
+        "label": "career_trajectory",
+        "description": "Candidate career movement pattern"
+      },
+      {
+        "id": "dim_cert_profile",
+        "type": "property",
+        "label": "certification_profile",
+        "description": "Industry certifications expected"
+      },
+      {
+        "id": "dim_candidate_market",
+        "type": "property",
+        "label": "candidate_market",
+        "description": "Talent pool targeting"
+      },
+      {
+        "id": "dim_work_style_profile",
+        "type": "property",
+        "label": "work_style_profile",
+        "description": "O*NET Work Styles (16 dimensions, pick 3-5)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_autonomy_level",
+        "type": "property",
+        "label": "autonomy_level",
+        "description": "Degree of independent decision-making",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_collaboration_model",
+        "type": "property",
+        "label": "collaboration_model",
+        "description": "How teamwork is structured (7 models)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_leadership_model",
+        "type": "property",
+        "label": "leadership_model",
+        "description": "Leadership style expected (8 models)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_problem_solving",
+        "type": "property",
+        "label": "problem_solving_style",
+        "description": "How problems are approached (6 styles)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_growth_orientation",
+        "type": "property",
+        "label": "growth_orientation",
+        "description": "Individual growth expectations",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_skill_domains",
+        "type": "property",
+        "label": "skill_domains",
+        "description": "40 skill domain tags"
+      },
+      {
+        "id": "dim_tech_stack_era",
+        "type": "property",
+        "label": "tech_stack_era",
+        "description": "Technology vintage / generation",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_tool_ecosystem",
+        "type": "property",
+        "label": "tool_ecosystem",
+        "description": "25 tool ecosystem clusters",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_technical_depth",
+        "type": "property",
+        "label": "technical_depth",
+        "description": "Depth vs. breadth of technical knowledge",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_domain_knowledge",
+        "type": "property",
+        "label": "domain_knowledge",
+        "description": "Domain-specific knowledge required (13 areas)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_comp_philosophy",
+        "type": "property",
+        "label": "compensation_philosophy",
+        "description": "Pay philosophy & structure (7 options)"
+      },
+      {
+        "id": "dim_equity_structure",
+        "type": "property",
+        "label": "equity_structure",
+        "description": "Equity & long-term incentive structure",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_benefits_emphasis",
+        "type": "property",
+        "label": "benefits_emphasis",
+        "description": "Benefits package focus areas (12 options)"
+      },
+      {
+        "id": "dim_career_progression",
+        "type": "property",
+        "label": "career_progression",
+        "description": "Career path & promotion signals",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_tone_voice",
+        "type": "property",
+        "label": "tone_of_voice",
+        "description": "Writing tone & register (10 voices)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_copy_depth",
+        "type": "property",
+        "label": "copy_depth",
+        "description": "How much descriptive copy to generate",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_persuasion_strat",
+        "type": "property",
+        "label": "jd_persuasion_strategy",
+        "description": "Persuasion framework for the JD (6 strategies)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_urgency_framing",
+        "type": "property",
+        "label": "urgency_framing",
+        "description": "How urgency is communicated",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_jd_sections",
+        "type": "property",
+        "label": "jd_sections",
+        "description": "Which sections to include (15 options)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_req_classification",
+        "type": "property",
+        "label": "requirement_classification",
+        "description": "Must-have vs. nice-to-have framing",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_posting_platform",
+        "type": "property",
+        "label": "posting_platform",
+        "description": "Target posting platform (8 platforms)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "dim_jd_format",
+        "type": "property",
+        "label": "jd_format",
+        "description": "Format style (bullets / prose / hybrid)",
+        "metadata": {
+          "generate": "context"
+        }
+      },
+      {
+        "id": "val_sen_intern",
+        "type": "value",
+        "label": "intern",
+        "description": "Structured mentorship, 0 yrs, task-level"
+      },
+      {
+        "id": "val_sen_entry",
+        "type": "value",
+        "label": "entry_level",
+        "description": "0-1 yrs, executes defined tasks with guidance"
+      },
+      {
+        "id": "val_sen_mid",
+        "type": "value",
+        "label": "mid_level",
+        "description": "2-5 yrs, owns features end-to-end"
+      },
+      {
+        "id": "val_sen_senior",
+        "type": "value",
+        "label": "senior",
+        "description": "5-8 yrs, drives decisions, mentors others"
+      },
+      {
+        "id": "val_sen_staff",
+        "type": "value",
+        "label": "staff_principal",
+        "description": "8-15 yrs, org-wide technical influence"
+      },
+      {
+        "id": "val_sen_director",
+        "type": "value",
+        "label": "director_vp",
+        "description": "10-20 yrs, manages managers, dept strategy"
+      },
+      {
+        "id": "val_sen_csuite",
+        "type": "value",
+        "label": "c_suite",
+        "description": "15+ yrs, company strategy, board reporting"
+      },
+      {
+        "id": "val_rf_swe",
+        "type": "value",
+        "label": "software_engineering",
+        "description": "Building, testing, maintaining software systems"
+      },
+      {
+        "id": "val_rf_data",
+        "type": "value",
+        "label": "data_analytics",
+        "description": "Extracting insights from data to drive decisions"
+      },
+      {
+        "id": "val_rf_pm",
+        "type": "value",
+        "label": "product_management",
+        "description": "Product vision, strategy, and roadmap delivery"
+      },
+      {
+        "id": "val_rf_design",
+        "type": "value",
+        "label": "design_ux",
+        "description": "User experience and visual interface design"
+      },
+      {
+        "id": "val_rf_devops",
+        "type": "value",
+        "label": "devops_infra",
+        "description": "Infrastructure, CI/CD, platform reliability"
+      },
+      {
+        "id": "val_rf_mktg",
+        "type": "value",
+        "label": "marketing_growth",
+        "description": "Customer acquisition via campaigns & growth loops"
+      },
+      {
+        "id": "val_rf_sales",
+        "type": "value",
+        "label": "sales",
+        "description": "Revenue generation through B2B/B2C sales cycles"
+      },
+      {
+        "id": "val_rf_hr",
+        "type": "value",
+        "label": "hr_people",
+        "description": "Talent acquisition, employee experience, org dev"
+      },
+      {
+        "id": "constraint_skill_lookup",
+        "type": "constraint",
+        "label": "skill_profile_lookup",
+        "description": "role_skill_profiles dimension is auto-resolved from role_family + seniority_level. Not routed directly."
+      }
+    ],
+    "edges": [
+      {
+        "source": "jd_root",
+        "target": "cat_role_identity",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_org_context",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_candidate_profile",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_work_style",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_tech_reqs",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_comp_benefits",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_jd_messaging",
+        "type": "has_property"
+      },
+      {
+        "source": "jd_root",
+        "target": "cat_jd_structure",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_role_identity",
+        "target": "dim_role_family",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_role_identity",
+        "target": "dim_seniority_level",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_role_identity",
+        "target": "dim_role_archetype",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_role_identity",
+        "target": "dim_functional_domain",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_role_identity",
+        "target": "dim_specialization",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_org_context",
+        "target": "dim_industry",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_org_context",
+        "target": "dim_company_stage",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_org_context",
+        "target": "dim_company_size",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_org_context",
+        "target": "dim_work_arrangement",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_org_context",
+        "target": "dim_employer_brand",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_candidate_profile",
+        "target": "dim_experience_band",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_candidate_profile",
+        "target": "dim_education_req",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_candidate_profile",
+        "target": "dim_career_trajectory",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_candidate_profile",
+        "target": "dim_cert_profile",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_candidate_profile",
+        "target": "dim_candidate_market",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_work_style",
+        "target": "dim_work_style_profile",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_work_style",
+        "target": "dim_autonomy_level",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_work_style",
+        "target": "dim_collaboration_model",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_work_style",
+        "target": "dim_leadership_model",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_work_style",
+        "target": "dim_problem_solving",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_work_style",
+        "target": "dim_growth_orientation",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_tech_reqs",
+        "target": "dim_skill_domains",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_tech_reqs",
+        "target": "dim_tech_stack_era",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_tech_reqs",
+        "target": "dim_tool_ecosystem",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_tech_reqs",
+        "target": "dim_technical_depth",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_tech_reqs",
+        "target": "dim_domain_knowledge",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_comp_benefits",
+        "target": "dim_comp_philosophy",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_comp_benefits",
+        "target": "dim_equity_structure",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_comp_benefits",
+        "target": "dim_benefits_emphasis",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_comp_benefits",
+        "target": "dim_career_progression",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_messaging",
+        "target": "dim_tone_voice",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_messaging",
+        "target": "dim_copy_depth",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_messaging",
+        "target": "dim_persuasion_strat",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_messaging",
+        "target": "dim_urgency_framing",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_structure",
+        "target": "dim_jd_sections",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_structure",
+        "target": "dim_req_classification",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_structure",
+        "target": "dim_posting_platform",
+        "type": "has_property"
+      },
+      {
+        "source": "cat_jd_structure",
+        "target": "dim_jd_format",
+        "type": "has_property"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_intern",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_entry",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_mid",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_senior",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_staff",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_director",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "val_sen_csuite",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_swe",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_data",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_pm",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_design",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_devops",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_mktg",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_sales",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "val_rf_hr",
+        "type": "has_value"
+      },
+      {
+        "source": "dim_role_family",
+        "target": "constraint_skill_lookup",
+        "type": "constrains"
+      },
+      {
+        "source": "dim_seniority_level",
+        "target": "constraint_skill_lookup",
+        "type": "constrains"
+      }
+    ]
+  },
+  "pipeline": {
+    "classes": [
+      {
+        "id": "jd_root",
+        "label": "JobDescription",
+        "description": "Job Description document",
+        "parent": null,
+        "properties": [
+          {
+            "id": "cat_role_identity",
+            "label": "About the Role",
+            "description": "What is this role?"
+          },
+          {
+            "id": "cat_org_context",
+            "label": "Organization Context",
+            "description": "Who is hiring?"
+          },
+          {
+            "id": "cat_candidate_profile",
+            "label": "Candidate Profile",
+            "description": "Who should apply?"
+          },
+          {
+            "id": "cat_work_style",
+            "label": "Work Style & Culture",
+            "description": "What kind of person thrives here?"
+          },
+          {
+            "id": "cat_tech_reqs",
+            "label": "Requirements",
+            "description": "What hard skills?"
+          },
+          {
+            "id": "cat_comp_benefits",
+            "label": "Compensation & Benefits",
+            "description": "What is the value proposition?"
+          },
+          {
+            "id": "cat_jd_messaging",
+            "label": "JD Messaging & Tone",
+            "description": "How should this JD communicate?"
+          },
+          {
+            "id": "cat_jd_structure",
+            "label": "JD Structure & Delivery",
+            "description": "How is this JD built?"
+          }
+        ],
+        "relations": []
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "cat_role_identity",
+        "label": "About the Role",
+        "description": "What is this role?",
+        "values": []
+      },
+      {
+        "id": "cat_org_context",
+        "label": "Organization Context",
+        "description": "Who is hiring?",
+        "values": []
+      },
+      {
+        "id": "cat_candidate_profile",
+        "label": "Candidate Profile",
+        "description": "Who should apply?",
+        "values": []
+      },
+      {
+        "id": "cat_work_style",
+        "label": "Work Style & Culture",
+        "description": "What kind of person thrives here?",
+        "values": []
+      },
+      {
+        "id": "cat_tech_reqs",
+        "label": "Requirements",
+        "description": "What hard skills?",
+        "values": []
+      },
+      {
+        "id": "cat_comp_benefits",
+        "label": "Compensation & Benefits",
+        "description": "What is the value proposition?",
+        "values": []
+      },
+      {
+        "id": "cat_jd_messaging",
+        "label": "JD Messaging & Tone",
+        "description": "How should this JD communicate?",
+        "values": []
+      },
+      {
+        "id": "cat_jd_structure",
+        "label": "JD Structure & Delivery",
+        "description": "How is this JD built?",
+        "values": []
+      },
+      {
+        "id": "dim_role_archetype",
+        "label": "role_archetype",
+        "description": "Day-to-day operating mode of the role",
+        "values": []
+      }
+    ],
+    "constraints": [
+      {
+        "id": "constraint_skill_lookup",
+        "label": "skill_profile_lookup",
+        "description": "role_skill_profiles dimension is auto-resolved from role_family + seniority_level. Not routed directly.",
+        "appliesTo": []
+      }
+    ],
+    "promptReady": "# Job Description Ontology\n\nOntology-driven job description generation — 8 categories, 42 dimensions, 42 role families. O*NET-aligned.\n\n**Domain:** hiring\n\n## Classes\n\n### JobDescription\nJob Description document\n\n**Properties:**\n- About the Role: What is this role?\n- Organization Context: Who is hiring?\n- Candidate Profile: Who should apply?\n- Work Style & Culture: What kind of person thrives here?\n- Requirements: What hard skills?\n- Compensation & Benefits: What is the value proposition?\n- JD Messaging & Tone: How should this JD communicate?\n- JD Structure & Delivery: How is this JD built?\n\n## Dimensions\n\n### About the Role\nWhat is this role?\n\n### Organization Context\nWho is hiring?\n\n### Candidate Profile\nWho should apply?\n\n### Work Style & Culture\nWhat kind of person thrives here?\n\n### Requirements\nWhat hard skills?\n\n### Compensation & Benefits\nWhat is the value proposition?\n\n### JD Messaging & Tone\nHow should this JD communicate?\n\n### JD Structure & Delivery\nHow is this JD built?\n\n### role_archetype\nDay-to-day operating mode of the role\n\n## Constraints\n\n- **skill_profile_lookup**: role_skill_profiles dimension is auto-resolved from role_family + seniority_level. Not routed directly."
+  }
 }
