@@ -1,0 +1,102 @@
+[NOTE: This is the System A (GOI generation) output for the Software
+Services Invoice ontology. This is a synthetic US-domestic invoice;
+all seller, employee, contractor, client, routing/account, EIN,
+phone, and email values have been replaced with synthetic
+placeholders for confidentiality.]
+
+================================================================================
+                     EXAMPLE SOFTWARE SERVICES LLC
+                  Software & Technology Staffing Services
+================================================================================
+100 Market St, Suite 500, San Francisco, CA 94105
+EIN: XX-XXXXXXX
+Business Registration No.: 20000001
+Tel: +1-415-XXX-XXXX
+E-mail: invoicing@example.com
+
+================================================================================
+                              INVOICE
+================================================================================
+
+Invoice No.:      INV-031
+Invoice Date:     03/15/2026
+Delivery Date:    03/15/2026
+Billing Period:   February 16, 2026 - March 15, 2026
+Contract Ref.:    SOW-2026-031
+Place of Issue:   San Francisco
+Payment Method:   ACH Bank Transfer
+Payment Terms:    Net 30 / by Contract
+
+================================================================================
+BILL TO:
+================================================================================
+ACME SOFTWARE HOLDINGS, INC.
+100 Example Avenue, Suite 500
+Demo City, CA 94000, USA
+EIN: XX-XXXXXXX
+
+================================================================================
+SERVICES RENDERED
+================================================================================
+
+Service Type:   Software Engineering Services (Staff Augmentation)
+Billing Model:  Hourly Rate x Hours/Day x Working Days
+
+  Line 1  Software Engineering Services - Engineer A (SOW-A)
+          19 days x 8 hrs/day x $38.00/hr = $5,776.00
+
+  Line 2  Software Engineering Services - Engineer B (SOW-B)
+          19 days x 8 hrs/day x $45.00/hr = $6,840.00
+
+  Line 3  Software Engineering Services - Engineer C (SOW-C)
+          18 billable days (19 working - 1 day off) x 8 hrs/day x $40.00/hr
+          = $5,760.00
+
+================================================================================
+TOTALS
+================================================================================
+
+  Invoice Currency:               USD
+  Subtotal:                       $18,376.00
+  Sales Tax (0%):                 $0.00
+  ---------------------------------------------
+  TOTAL DUE:                      $18,376.00
+
+  Sales Tax Exemption Note:
+  Sales tax not collected --- out-of-state buyer.
+
+================================================================================
+BANK DETAILS
+================================================================================
+
+  Bank:               Example Bank, San Francisco, CA
+  Account Holder:     EXAMPLE SOFTWARE SERVICES LLC
+  Routing Number:     121XXXXXX
+  Account Number:     XXXXXXXXX
+  IBAN:               n/a (US domestic transfer)
+  SWIFT / BIC:        n/a (US domestic transfer)
+  Currency:           USD
+
+================================================================================
+SIGNATURE AND RESPONSIBILITY BLOCK
+================================================================================
+
+  Responsible Person:      [Authorized Signatory Name], Authorized Signatory
+  Issued by:               __________________________
+  Received by:             __________________________
+  [Stamp/Seal: optional]   [Stamp/Seal: optional]
+
+================================================================================
+  Document Language:  English only
+  Invoice Direction:  Outbound (Example Software Services LLC bills Acme
+                      Software Holdings)
+================================================================================
+
+===STRUCTURED===
+
+[Per-node JSON map, with every ontology node id resolved to either
+its instantiated value above, or null where genuinely not applicable
+(e.g. iban and swift_bic are null because this is a US domestic
+transfer and the seller provides routing/account numbers instead).
+Coverage: 46 / 47 = 97.9%, with all 4 dimensions and 3 constraints
+satisfied.]

@@ -1,0 +1,117 @@
+[NOTE: This is the System B (GST baseline -- title/content/metadata
+template) output for the "invoice" document type. This is a synthetic
+US-domestic invoice; all names, routing/account numbers, contractor
+identifiers, and client references have been replaced with synthetic
+placeholders. Note that despite no schema being provided, the model's
+strong invoice prior surfaces approximately 95% of the ontology nodes
+incidentally.]
+
+title: Invoice #031 -- Software Engineering Services -- February 2026
+
+content:
+
+------------------------------------------------------------------------
+                     EXAMPLE SOFTWARE SERVICES LLC
+              100 Market St, Suite 500, San Francisco, CA 94105
+                EIN: XX-XXXXXXX | Business Reg.: 20000001
+                  Tel: +1-415-XXX-XXXX | example.com
+------------------------------------------------------------------------
+
+                         I N V O I C E
+                         No. 031
+
+  Issue Date     :  02/15/2026
+  Delivery Date  :  02/15/2026
+  Place of Issue :  San Francisco
+  Billing Period :  January 16, 2026 - February 15, 2026
+
+------------------------------------------------------------------------
+  BILLED TO:
+  ACME CORP, INC.
+  123 Example Street, Demo City, CA 94000, USA
+------------------------------------------------------------------------
+  CONTRACT REFERENCE: SOW-2026-A1
+
+------------------------------------------------------------------------
+  SERVICES RENDERED
+------------------------------------------------------------------------
+
+  No.  Description                              Qty   Unit Price   Amount
+  ---  ---------------------------------------  ----  -----------  ------
+
+   1   Software Engineering Services            21    $38.00/hr    $6,384.00
+       Engineer A (SOW-A)                       days  x 8 hrs/day
+       Days Off: 0
+
+   2   Software Engineering Services            21    $42.00/hr    $7,056.00
+       Engineer B (SOW-B)                       days  x 8 hrs/day
+       Days Off: 0
+
+   3   Software Engineering Services            20    $35.00/hr    $5,600.00
+       Engineer C (SOW-C)                       days  x 8 hrs/day
+       Days Off: 1 (vacation)
+
+------------------------------------------------------------------------
+
+  Subtotal                                                     $19,040.00
+  Rebate / Discount                                                 $0.00
+  Sales Tax (0%)                                                    $0.00
+                                              ----------------------------
+  TOTAL DUE                                                    $19,040.00
+
+------------------------------------------------------------------------
+  SALES TAX EXEMPTION NOTE:
+  Sales tax not collected --- out-of-state buyer.
+
+------------------------------------------------------------------------
+  PAYMENT DETAILS
+------------------------------------------------------------------------
+
+  Bank:           Example Bank, San Francisco, CA
+  Account Name:   EXAMPLE SOFTWARE SERVICES LLC
+  Routing Number: 121XXXXXX
+  Account Number: XXXXXXXXX
+  IBAN:           n/a (US domestic transfer)
+  SWIFT/BIC:      n/a (US domestic transfer)
+  Payment Method: ACH Bank Transfer
+  Payment Terms:  Net 30 / By Contract
+
+------------------------------------------------------------------------
+  AUTHORIZED SIGNATORY
+
+  Name:   [Authorized Signatory Name]
+  Title:  Authorized Signatory, Example Software Services LLC
+
+  Signature: ___________________   Stamp/Seal: [optional]
+------------------------------------------------------------------------
+
+metadata:
+
+  invoice_number        : 031
+  invoice_date          : 2026-02-15
+  delivery_date         : 2026-02-15
+  billing_period        : 2026-01-16 to 2026-02-15
+  contract_reference    : SOW-2026-A1
+  seller                : Example Software Services LLC
+  seller_ein            : XX-XXXXXXX
+  seller_business_reg   : 20000001
+  buyer                 : Acme Corp, Inc.
+  buyer_country         : USA
+  currency              : USD
+  total_usd             : 19040.00
+  sales_tax_rate        : 0%
+  sales_tax_exemption   : Out-of-state buyer with no nexus in seller's state
+  payment_method        : ACH Bank Transfer
+  payment_terms         : Net 30 / By Contract
+  bank                  : Example Bank, San Francisco, CA
+  routing_number        : 121XXXXXX
+  account_number        : XXXXXXXXX
+  line_items            :
+    - sow: SOW-A | engineer: Engineer A | days: 21 | day_off: 0 | rate: $38/hr | amount: $6,384.00
+    - sow: SOW-B | engineer: Engineer B | days: 21 | day_off: 0 | rate: $42/hr | amount: $7,056.00
+    - sow: SOW-C | engineer: Engineer C | days: 20 | day_off: 1 | rate: $35/hr | amount: $5,600.00
+  service_type          : Software Engineering Services (staff augmentation)
+  billing_model         : Hourly rate x 8 hrs/day x working days
+  invoice_direction     : Outbound (Example Software Services LLC bills Acme Corp)
+  document_language     : English only
+  authorized_signatory  : [Authorized Signatory Name], Authorized Signatory

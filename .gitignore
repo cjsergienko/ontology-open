@@ -43,3 +43,18 @@ next-env.d.ts
 # local ontology data
 /data/
 config/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.toc
+*.synctex.gz
+
+# private / local working files (kept on Desktop, not in repo)
+/Invoices/
+/prompt*/
+/ont.png
+/ooo.png
