@@ -549,7 +549,7 @@ corpus of 20 real B2B invoices internal to the author's
 organization; this corpus is withheld from supplementary materials due
 to seller, client, and contractor confidentiality, but a
 structurally-identical anonymized version of the resulting ontology is
-included. The JD Creation Taxonomy v3.0 ontology was induced from
+included. The Job Description Ontology ontology was induced from
 senior engineering job postings published on
 \url{https://pivotshiring.com}; three anonymized postings are
 reproduced in the supplementary bundle.
@@ -574,7 +574,7 @@ run on the same LLM with identical decoding settings; no corpus is
 consumed---generation is from scratch in both cases. We evaluate two
 ontologies of contrasting familiarity: a Software Services Invoice
 ontology (a document type the LLM has seen at scale during
-pretraining) and a JD Creation Taxonomy v3.0 ontology (a custom
+pretraining) and a Job Description Ontology ontology (a custom
 schema with non-standard dimensions). Full verbatim prompts are
 included in the supplementary bundle.
 
@@ -595,7 +595,7 @@ widen the gap dramatically.}
 \textbf{Case} & \textbf{Ontology} & \textbf{Nodes} & \textbf{GOI (A)} & \textbf{GST (B)} & \textbf{Gap} \\
 \midrule
 1 & Software Services Invoice & 47 & \textbf{97.9\%} & 95.7\% & 2.2~pp \\
-2 & JD Creation Taxonomy v3.0 & 26\textsuperscript{*} & \textbf{100.0\%} & 65.4\% & 34.6~pp \\
+2 & Job Description Ontology & 26\textsuperscript{*} & \textbf{100.0\%} & 65.4\% & 34.6~pp \\
 \bottomrule
 \end{tabular}
 \\[2pt]
@@ -618,7 +618,7 @@ gap is only 2.2~pp because the LLM has seen enough invoices during
 pretraining to recover most ontology nodes incidentally even from a
 generic template.
 
-{\sloppy\emph{Case~2 (custom).} On the JD Creation Taxonomy v3.0 ontology
+{\sloppy\emph{Case~2 (custom).} On the Job Description Ontology ontology
 (63 nodes total; 38 non-context applicable; 26 applicable to a single
 JD instance per the ontology's own coverage contract), System~A
 instantiated 26/26 applicable non-context nodes (100\%). System~B
@@ -715,9 +715,9 @@ at \url{https://ontology.live}; video demonstrations are on the
 (\url{https://www.youtube.com/@GenerativeOntologyInduction}).
 
 \paragraph{Supplementary Materials.}\sloppy A reproducibility bundle at
-\texttt{research/supplementary/} contains the JD Creation Taxonomy
-v3.0 ontology JSON (63 nodes), an anonymized structural version of
-the Software Services Invoice ontology JSON (47 nodes; example
+\texttt{research/supplementary/} contains the Job Description
+Ontology JSON (63 nodes), an anonymized structural version of
+the Software Services Invoice ontology JSON (48 nodes; example
 values replaced with synthetic placeholders), the four
 LLM-generated documents used in \S\ref{sec:ontology-as-prompt}, and
 the two prompt templates (System~A and~B). Three publicly-listed
