@@ -9,7 +9,7 @@ Open-source companion to the paper **"Generative Ontology Induction: Domain-Agno
 - **Paper PDF (this repo):** [`research/GOI_research_paper.pdf`](research/GOI_research_paper.pdf) — 11 pages, Springer LNCS format
 - **LaTeX source:** [`research/GOI_research_paper.tex`](research/GOI_research_paper.tex)
 - **arXiv:** TBD — pending moderator review (submission `7503066`)
-- **Zenodo DOI (code + supplementary, archival):** [`10.5281/zenodo.19772179`](https://doi.org/10.5281/zenodo.19772179)
+- **Zenodo DOI (code + supplementary, archival):** [`10.5281/zenodo.19893755`](https://doi.org/10.5281/zenodo.19893755)
 - **Live demo:** [https://ontology.live](https://ontology.live) (Google sign-in; see "Try the live app" below)
 - **Author:** Sergei Sergienko — Pivots Global — `ssergienko@ontology.live`
 - **Contact:** `contact@ontology.live`
@@ -249,7 +249,7 @@ The app runs at **http://localhost:3900**. The maintainer's deployment is expose
   note   = {arXiv preprint, submission 7503066 (under review).
             Code and supplementary at
             https://github.com/cjsergienko/ontology-open;
-            archival DOI 10.5281/zenodo.19772179.}
+            archival DOI 10.5281/zenodo.19893755.}
 }
 ```
 

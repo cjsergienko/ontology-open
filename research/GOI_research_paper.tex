@@ -49,7 +49,7 @@ from Document Corpora Using Large Language Models}
 
 \titlerunning{Generative Ontology Induction}
 
-\author{Sergei Sergienko\inst{1}\,\href{https://orcid.org/0009-0009-5180-7115}{(ORCID: 0009-0009-5180-7115)}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19772179}{10.5281/zenodo.19772179}).}}
+\author{Sergei Sergienko\inst{1}\,\href{https://orcid.org/0009-0009-5180-7115}{(ORCID: 0009-0009-5180-7115)}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19893755}{10.5281/zenodo.19893755}).}}
 
 \authorrunning{S. Sergienko}
 
@@ -355,6 +355,7 @@ Figure~\ref{fig:pipeline} shows the end-to-end pipeline.
 
 \begin{figure}[t]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   node distance=4mm,
   every node/.style={
@@ -372,7 +373,8 @@ Figure~\ref{fig:pipeline} shows the end-to-end pipeline.
 \draw[arr] (prompt) -- (llm);
 \draw[arr] (llm) -- (graph);
 \draw[arr] (graph) -- (export);
-\end{tikzpicture}
+\end{tikzpicture}%
+}
 \caption{GOI's end-to-end ontology induction pipeline. Multi-format
 documents are sampled into a single multi-document prompt that
 elicits a typed graph; the resulting structure exports directly to
@@ -639,7 +641,7 @@ scratch. The gold standard (the ontology itself) coincides with the
 input, so this evaluation is intrinsically reproducible: the ontology
 defines its own coverage contract.
 
-\paragraph{Protocol.} For each ontology, \textbf{System~A} is the GOI
+\medskip\noindent\textbf{Protocol.} For each ontology, \textbf{System~A} is the GOI
 generation prompt: the full GOI ontology JSON with an instruction to
 emit a JSON map keyed by ontology node id, instantiating every class,
 populating every property, reflecting each dimension, and satisfying
@@ -665,10 +667,10 @@ sections such as context/background, assumptions and risks,
 acceptance criteria, and communication plan). Full verbatim prompts
 are included in the supplementary bundle.
 
-\paragraph{Results.} Table~\ref{tab:generative_validation} summarises
+\medskip\noindent\textbf{Results.} Table~\ref{tab:generative_validation} summarises
 the four cases.
 
-\begin{table}[t]
+\begin{table}[!htbp]
 \centering
 \caption{Generative validation: structural-node coverage (classes,
 properties, and dimensions; non-context only) of LLM-generated
@@ -697,7 +699,7 @@ total; 24 flagged \texttt{generate=context}; 23 applicable to a
 single JD instance).}
 \end{table}
 
-\emph{Case~1 (familiar).} On the Software Services Invoice ontology
+\medskip\noindent\textbf{Case~1 (familiar).} On the Software Services Invoice ontology
 (45 structural nodes), System~A instantiated 44/45 nodes (97.8\%),
 including all six classes, all four dimensions, and all three
 constraints with verified arithmetic (line totals sum to invoice
@@ -711,7 +713,7 @@ invoice prior. The gap closes to zero because the LLM has seen enough
 invoices during pretraining to recover essentially the entire
 structural backbone incidentally even from a generic template.
 
-{\sloppy\emph{Case~2 (custom).} On the Job Description Ontology
+\medskip\noindent{\sloppy\textbf{Case~2 (custom).} On the Job Description Ontology
 (63 nodes total; 47 structural; 24 flagged \texttt{generate=context};
 23 applicable structural nodes per the ontology's own coverage
 contract), System~A instantiated 23/23 applicable non-context nodes
@@ -726,7 +728,7 @@ like employer-brand voice, candidate-market targeting,
 career-trajectory pattern, or certification-profile expectations;
 without an explicit schema, these axes simply do not surface.\par}
 
-\emph{Case~3 (specialised, anonymized).} On the Pain-Management
+\medskip\noindent\textbf{Case~3 (specialised, anonymized).} On the Pain-Management
 Clinical Visit Record Ontology (45 structural nodes), System~A
 instantiated 43/45 nodes (95.6\%); the two uninstantiated nodes
 (\texttt{Signature Block} and \texttt{Radiologist}) were lost to
@@ -748,7 +750,7 @@ structural specialisation the ontology contributes in a
 healthcare-documentation context where the LLM's prior reverts to
 the generic primary-care template.
 
-\emph{Case~4 (legal, anonymized).} On the Professional Services
+\medskip\noindent\textbf{Case~4 (legal, anonymized).} On the Professional Services
 Contract \& Statement of Work Ontology (46 structural nodes),
 System~A instantiated 46/46 nodes (100\%), including all subclasses
 and relations across the parties block, the milestone table, the IP,
@@ -781,7 +783,7 @@ familiar the document type is to the model}, whereas the generic
 template's coverage is contingent on the training-data prior and
 collapses on novel or specialised structure.
 
-\paragraph{Implication.} For industrial deployment, the headline
+\medskip\noindent\textbf{Implication.} For industrial deployment, the headline
 metric is not raw coverage on familiar document types but
 \emph{worst-case} coverage on novel or specialised schemas, where
 downstream pipelines cannot rely on the LLM's prior to fill the gaps.
@@ -871,7 +873,7 @@ numbers, contact information, agreement identifiers, and signatory
 names replaced with synthetic legally-plausible equivalents), the
 eight LLM-generated documents used in
 \S\ref{sec:ontology-as-prompt}, the two prompt templates (System~A
-and~B; see Appendix~\ref{app:prompts}), and the broadened-NCS
+and~B), and the broadened-NCS
 scoring protocol with per-case detection log. Three publicly-listed
 job postings used to induce the JD ontology are at
 \texttt{research/job\_descriptions/}.\par
@@ -998,70 +1000,5 @@ Automatic Constructors for Domain Knowledge Graph. In: Proc.\ ACL
 (2024)
 
 \end{thebibliography}
-
-% -------------------------------------------------------
-\appendix
-\section{Generation Prompts}
-\label{app:prompts}
-% -------------------------------------------------------
-
-The two prompts used in the \S\ref{sec:ontology-as-prompt} generative
-validation are reproduced verbatim below for reproducibility.
-
-\subsection*{System A - GOI generation prompt}
-
-\begin{verbatim}
-You are a structured-document author. The ontology below defines
-the schema and rules for a class of business documents. Your task
-is to GENERATE one realistic, fully-instantiated example document
-of this type, in plain text format suitable for a real-world reader.
-
-The generated document MUST:
-- instantiate every class node defined in the ontology
-- populate every property attached to those classes (use plausible,
-  realistic values --- invent names, dates, amounts, descriptions
-  as needed)
-- explicitly reflect EACH dimension node by making its value
-  visible in the document body
-- satisfy every constraint node (perform any required arithmetic,
-  include any required citations, derived fields, or invariants)
-- be self-consistent: numbers add up, dates align, identifiers are
-  coherent
-
-# Ontology (authoritative schema and rules)
-{ontology JSON}
-
-# Output rules
-Return TWO things, separated by the literal line "===STRUCTURED===":
-
-1. The human-readable document text (what a real document of this
-   type would look like --- header, body, structured sections,
-   footer as appropriate to the document type).
-2. A JSON object listing, for every node id in the ontology, the
-   exact value or text snippet you used in the document. Use null
-   only for nodes you genuinely could not instantiate.
-
-Begin.
-\end{verbatim}
-
-\subsection*{System B - GST baseline prompt}
-
-\begin{verbatim}
-You are a structured-document author. Generate one realistic
-example document of type "{document_type}" using the following
-minimal template:
-
-  - title:    a short subject line for the document
-  - content:  the body of the document
-  - metadata: a free-form key/value block of any incidental details
-
-Use plausible invented values. Return as plain text.
-
-Begin.
-\end{verbatim}
-
-\noindent The placeholder \texttt{\{document\_type\}} is set to
-\texttt{"invoice"} for Case~1 and \texttt{"job posting"} for
-Case~2.
 
 \end{document}
