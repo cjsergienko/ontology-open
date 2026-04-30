@@ -14,3 +14,5 @@ Begin.
 Substitute {document_type} per case:
   - Case 1: "invoice"
   - Case 2: "job posting"
+  - Case 3: "clinical visit record"
+  - Case 4: "professional services contract"
