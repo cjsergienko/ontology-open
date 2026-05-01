@@ -24,7 +24,10 @@
   colorlinks=true,
   linkcolor=blue!60!black,
   citecolor=blue!60!black,
-  urlcolor=blue!60!black
+  urlcolor=blue!60!black,
+  pdftitle={Generative Ontology Induction: Domain-Agnostic Schema Discovery from Document Corpora Using Large Language Models},
+  pdfauthor={Sergei Sergienko},
+  pdfkeywords={ontology learning, schema induction, large language models, knowledge graphs, domain-agnostic methods, generative models}
 }
 
 % Override LNCS's inset abstract with a full-width version
@@ -36,7 +39,7 @@
     \listparindent=\z@
     \itemindent\listparindent
     \rightmargin=0pt}%
-  \item[\hskip\labelsep\bfseries\abstractname\textbf{.}]}
+  \item[\hskip\labelsep\bfseries\abstractname]}
 {\endlist}
 \makeatother
 
@@ -49,7 +52,7 @@ from Document Corpora Using Large Language Models}
 
 \titlerunning{Generative Ontology Induction}
 
-\author{Sergei Sergienko\inst{1}\,\href{https://orcid.org/0009-0009-5180-7115}{(ORCID: 0009-0009-5180-7115)}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19893755}{10.5281/zenodo.19893755}).}}
+\author{Sergei Sergienko\,\href{https://orcid.org/0009-0009-5180-7115}{(ORCID: 0009-0009-5180-7115)}\thanks{An earlier version of this work was previously deposited on Zenodo (DOI: \href{https://doi.org/10.5281/zenodo.19893755}{10.5281/zenodo.19893755}).}}
 
 \authorrunning{S. Sergienko}
 
@@ -88,7 +91,7 @@ structural coverage holds regardless of how familiar the document
 type is to the model.
 
 \keywords{Ontology learning \and Schema induction \and Large language
-models \and Knowledge graphs \and Domain-agnostic methods \and
+models \and Knowledge graphs \and \mbox{Domain-agnostic} methods \and
 Generative models \and Cross-functional teams}
 }
 \end{abstract}
@@ -279,7 +282,7 @@ for ontology specialists or for general non-technical users-none
 explicitly address the communication dynamics of cross-functional AI
 product teams.
 
-Protég\'e~\cite{musen2015protege} continues to be the dominant expert
+Prot\'eg\'e~\cite{musen2015protege} continues to be the dominant expert
 ontology editor but is primarily engineered for ontology specialists
 rather than business or domain users, which is repeatedly noted in the
 literature.
@@ -403,10 +406,10 @@ types and seven edge types, designed for cross-domain applicability:
     cardinalities, or co-occurrence.
 \end{itemize}
 
-\paragraph{Edge Types ($|\mathcal{T}_E| = 7$):}
+{\sloppy\paragraph{Edge Types ($|\mathcal{T}_E| = 7$):}
 \texttt{is\_a}, \texttt{has\_property}, \texttt{has\_value},
 \texttt{relates\_to}, \texttt{part\_of}, \texttt{constrains},
-\texttt{instance\_of}.
+\texttt{instance\_of}.\par}
 
 This type system is deliberately domain-neutral. The same six node types
 and seven edge types apply equally to a corpus of scientific papers, job
@@ -481,7 +484,8 @@ prompts and data-validation pipelines read the pipeline view.
 \subsection{Interactive Visualization and Editing}
 
 The GOI interface is built on React Flow, providing a drag-and-drop
-canvas for visual exploration and editing of induced schemas. Users can:
+canvas for visual exploration and editing of induced schemas
+(Figure~\ref{fig:editor}). Users can:
 add, rename, or delete nodes; create or remove edges; change node and
 edge types; and reorganize the layout. The canvas supports zoom,
 pan, and node search. All edits are persisted in a SQLite database via
@@ -548,11 +552,12 @@ The \textbf{Node Coverage Score} is defined as:
   \text{NCS}(\mathcal{G}, o) = \frac{|\{s \in S : s \text{ is mentioned in } o\}|}{|S|}.
 \]
 
+{\sloppy
 In practice, the metric is reported alongside the diagnostic tuple
 $(|S|,\ |\{s \in S : s\text{ is reflected in }o\}|,\ \text{NCS})$, plus
 the per-node verdict for error analysis. The original
 dimension-only formulation reported in earlier drafts is recovered as
-the special case of restricting $S$ to dimension nodes.
+the special case of restricting $S$ to dimension nodes.\par}
 
 \subsection{Computation}
 
@@ -854,10 +859,16 @@ prior.
 % Acknowledgments / Funding / Data Availability
 % -------------------------------------------------------
 \section*{Acknowledgments and Data Availability}
-This research received no external funding. Source code and a live
-demonstration of the reference implementation are available at
-\url{https://ontology.live} (repository:
-\url{https://github.com/cjsergienko/ontology-open}).
+This research received no external funding. Source code, a live
+demonstration of the reference implementation, video walkthroughs,
+and an archival snapshot are available at the following links:
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item Live demo: \url{https://ontology.live}
+  \item Source code: \url{https://github.com/cjsergienko/ontology-open}
+  \item Video walkthroughs: \url{https://www.youtube.com/@GenerativeOntologyInduction}
+  \item Archival snapshot (Zenodo): \url{https://doi.org/10.5281/zenodo.19893755}
+\end{itemize}
 
 \paragraph{Supplementary Materials.}\sloppy A reproducibility bundle at
 \texttt{research/supplementary/} contains the Job Description
@@ -876,7 +887,7 @@ eight LLM-generated documents used in
 and~B), and the broadened-NCS
 scoring protocol with per-case detection log. Three publicly-listed
 job postings used to induce the JD ontology are at
-\texttt{research/job\_descriptions/}.\par
+\texttt{research/supplementary/job\_descriptions/}.\par
 
 % -------------------------------------------------------
 % Bibliography

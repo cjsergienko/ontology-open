@@ -782,7 +782,14 @@ We discussed limitations including LLM consistency challenges, maximum token con
 
 Future work will focus on hierarchical schema induction for large corpora, provenance tracking and confidence scoring, OWL export with axiom inference, enhanced relationship discovery, active learning for iterative refinement, benchmark dataset creation, multi-modal schema induction, and user studies measuring the organizational impact of GOI-produced schemas on team coordination. By lowering barriers to ontology engineering and enabling domain-agnostic schema discovery, GOI contributes to the broader goal of making structured knowledge accessible to both AI systems and the diverse human teams that build them.
 
-The code, documentation, and example ontologies are available at https://github.com/cjsergienko/ontology-open. A live demo is available at https://ontology.live. We invite the research community to apply GOI to new document types, extend the framework, and contribute to the development of universal ontology induction methods.
+The code, documentation, and example ontologies are available at the following links:
+
+- Live demo: https://ontology.live
+- Source code: https://github.com/cjsergienko/ontology-open
+- Video walkthroughs: https://www.youtube.com/@GenerativeOntologyInduction
+- Archival snapshot (Zenodo): https://doi.org/10.5281/zenodo.19893755
+
+We invite the research community to apply GOI to new document types, extend the framework, and contribute to the development of universal ontology induction methods.
 
 ---
 
